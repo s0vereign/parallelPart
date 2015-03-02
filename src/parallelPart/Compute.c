@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <math.h>
 
 #include "Params.c"
@@ -11,53 +10,48 @@ void compute(
     int len
 ) {
     
-    for(double t = t_start; t < t_end - edt; t +0 dt) {
-        computeNewImpulse(t, dt, px, py, pz, m, q, len);
-        computeNewPosition(t, dt, x, y, z, px, py, pz, m, len);
+    for(double t = t_start; t < t_end - dt; t += dt) {
+        for(int i = 0; i < len; i++) {
+            computeNewImpulse(t, dt, px[i], py[i], pz[i], m[i], q[i]);
+            computeNewPosition(t, dt, x[i], y[i], z[i], px[i], py[i], pz[i], m[i]);
+        }
     }
 }
 
 void computeNewImpulse(
     double t, double dt,
     double[] px, double[] py, double[] pz,
-    double[] m, double[] q,
-    int len
+    double[] m, double[] q
 ) {
     
-    for(int i = 0; i < len; i++) {
-        double  Fx, Fy, Fz,
-                vx, vy, vz,
-                gamma;
-                
-        gamma = computeGamma(px[i], py[i], pz[i], m[i]);
-        
-        vx = computeVi(px[i], gamma, m[i];
-        vy = computeVi(pz[i], gamma, m[i];
-        vz = computeVi(py[i], gamma, m[i];
-        
-        computeFb(vx, vy, vz, x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
-     
-        computeLorentz(q[i], x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
-        
-        px[i] = px[i] + Fx * dt;
-        py[i] = py[i] + Fy * dt;
-        pz[i] = pz[i] + Fz * dt;
-        
-    }    
+    double  Fx, Fy, Fz,
+            vx, vy, vz,
+            gamma;
+            
+    gamma = computeGamma(px, py, pz, m);
+    
+    vx = computeVi(px, gamma, m;
+    vy = computeVi(pz, gamma, m;
+    vz = computeVi(py, gamma, m;
+    
+    computeFb(vx, vy, vz, x, y, z, &Fx, &Fy, &Fz, t);
+ 
+    computeLorentz(q, x, y, z, &Fx, &Fy, &Fz, t);
+    
+    px = px + Fx * dt;
+    py = py + Fy * dt;
+    pz = pz + Fz * dt;
 }
 
 double computeNewPosition(
     double t, double dt,
-    double[] x, double[] y, double[] z,
-    double[] px, double[] py, double[] pz,
-    double[] m, int len
+    double x, double y, double z,
+    double px, double py, double pz,
+    double m
 ) {
-    
-    for(int i = 0; i < len; i++) {
-        x[i] += 300000000 * px[i]/m[i] * dt;
-        y[i] += 300000000 * py[i]/m[i] * dt;
-        z[i] += 300000000 * pz[i]/m[i] * dt;
-    }
+    x += 300000000 * px / m * dt;
+    y += 300000000 * py / m * dt;
+    z += 300000000 * pz / m * dt;
 }
 
 double computeGamma(double px, double py, double pz, double m) {
