@@ -1,8 +1,17 @@
+#include <stdio.h>
+#include "Init.c"
+#include "Destruct.c"
+#include "Compute.c"
+
+
+int main(){
 
 
 
-E=E(x,y,z,t)
 
+
+}
+/*
 Initialisiere Daten!
 
   Initialisiere alle Partikeldaten!
@@ -51,3 +60,6 @@ Beende!
 
   Gib den Speicher frei!
     Nutze die Referenz auf den belegten Speicher und gib ihm frei!
+
+
+    */
