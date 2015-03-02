@@ -1,0 +1,34 @@
+
+
+
+
+
+Initialisiere Daten!
+
+  Initialisiere alle Partikeldaten!
+    Initialisiere für alle Partikel:
+    Ladung,Masse,Impuls,Position
+      Setze: Ladung=double *Q, Masse = double *m, Impuls = double* px,py,pz, Position = double* x,y,z
+
+  Initialisiere Parameter-> Zeiten, Felder!
+     Initialisiere startZeit, Endzeit, Zeitschritt
+       Setzte: startZeit= double t_start, endZeit = double t_end , Zeitschritt = double dt
+
+     Initialisiere E-Feld,B-Feld.
+       Setze E_Feld=double Ex,Ey,Ez, Setze B_Feld =double Bx,By,Bz
+
+
+
+Rechne!
+
+  Berechne für alle Partikel die Position zu allen Zeiten im Intervall!
+    Berechne für den jeweiligen Zeitschritt die Lorentzkraft für alle Partikel
+    Integriere aus den benötigten Daten die neue Position
+
+    Berechne den aktuellen Impuls aus der Lorentzkraft für alle Partikel
+    Berechne aus dem Impuls die neue Positionen!
+
+Beende!(gib aus!)
+
+  Gib die errechneten Daten aus!
+  Gib den Speicher frei!
