@@ -1,16 +1,8 @@
+#ifndef INIT_C
+#define INIT_C
+
 #include <stdlib.h>
 #include <stdio.h>
-
-
-
-int getlength(){
-  double len = 100;
-  return len;
-
-
-
-
-}
 
 typedef struct part{
 
@@ -48,20 +40,10 @@ particle init_1(int length){
 
 
 
- double *init_params(){
+void init_params(double* t_start, double* t_end, double* dt){
 
-   double t_start = 0;
-   double t_end   = 0;
-   double dt      = 0;
-
-
-   double param[3];
-
-   param[0] = t_start;
-   param[1] = t_end;
-   param[2] = dt;
-
-   return param;
-
-
- }
+   *t_start = 0;
+   *t_end   = 0;
+   *dt      = 0;
+}
+#endif

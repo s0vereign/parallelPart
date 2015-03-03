@@ -16,15 +16,16 @@ void main() {
 
 
 //initialize the particles
-  len = getlength();
+  int len = 100;
+  double t_start, t_end, dt;
   particle p = init_1(len);
-  double s[3] = init_params();
+  init_params(&t_start, &t_end, &dt);
 
 //start the computation with p
 
-  compute(s[0],s[1],s[2],
+  compute(t_start, t_end, dt,
           p.x,p.y,p.z,
-          p.px,p.py,p.pz
+          p.px,p.py,p.pz,
           p.m,p.q, len);
 
 
