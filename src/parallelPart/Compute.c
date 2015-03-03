@@ -16,13 +16,13 @@ double computeVi(double pi, double gamma, double m) {
 void computeFb(
     double vx, double vy, double vz,
     double x, double y, double z,
-    double* Fx, double *Fy, double *Fz,
+    double *Fx, double *Fy, double *Fz,
     double t
 ) {
     //F_i,b = e_ikl * v_k * b_l
-    *Fx = vy * Bz(t, x, y, z) - vz * By(t, x, y, z);
-    *Fy = vz * Bx(t, x, y, z) - vx * Bz(t, x, y, z);
-    *Fz = vx * By(t, x, y, z) - vy * Bx(t, x, y, z);
+    *Fx = vy * Bz(x, y, z,t) - vz * By(x, y, z,t);
+    *Fy = vz * Bx(x, y, z,t) - vx * Bz(x, y, z,t);
+    *Fz = vx * By(x, y, z,t) - vy * Bx(x, y, z,t);
 }
 
 
@@ -32,9 +32,9 @@ void computeLorentz(
     double *Fx, double *Fy, double *Fz,
     double t
 ) {
-    *Fx = q * ( Ex(t, x, y, z) + *Fx);
-    *Fy = q * ( Ey(t, x, y, z) + *Fy);
-    *Fz = q * ( Eu(t, x, y, z) + *Fz);
+    *Fx = q * ( Ex(x, y, z,t) + *Fx);
+    *Fy = q * ( Ey(x, y, z,t) + *Fy);
+    *Fz = q * ( Ez(x, y, z,t) + *Fz);
 }
 
 void computeNewImpulse(
@@ -85,13 +85,13 @@ void compute(
     double t;
     int i;
     for( t = t_start; t < t_end - dt; t += dt) {
-        
+
         for(i = 0; i < len; i++) {
-            
+
             computeNewImpulse(t, dt, &px[i], &py[i], &pz[i], x[i], y[i], z[i], m[i], q[i]);
             computeNewPosition(t, dt, x[i], y[i], z[i], px[i], py[i], pz[i], m[i]);
-            
+
         }
-        
+
     }
 }
