@@ -104,14 +104,8 @@ void compute(
     for( t = t_start; t < t_end - dt; t += dt) {
 
         for(i = 0; i < len; i++) {
-<<<<<<< HEAD
-
-
-            double  gamma = computeGamma(px[i], py[i], pz[i], m[i]),
-=======
             
             long double  gamma = computeGamma(px[i], py[i], pz[i], m[i]),
->>>>>>> prints
 
                     vx = computeVi(px[i], gamma, m[i]),
                     vy = computeVi(py[i], gamma, m[i]),
