@@ -1,27 +1,27 @@
 #ifndef PARAMS_H
 #define PARAMS_H
 
-double Ex(double x,double y,double z,double t){
+long double Ex(long double x,long double y,long double z,long double t){
 
-  double i= 0;
-
-  return i;
-
-
-}
-
-double Ey(double x,double y,double z,double t){
-
-  double i= 0;
+  long double i= 0;
 
   return i;
 
 
 }
 
-double Ez(double x,double y,double z,double t){
+long double Ey(long double x,long double y,long double z,long double t){
 
-  double i = 0;
+  long double i= 0;
+
+  return i;
+
+
+}
+
+long double Ez(long double x,long double y,long double z,long double t){
+
+  long double i = 0;
   return i;
 
 
@@ -29,14 +29,14 @@ double Ez(double x,double y,double z,double t){
 
 }
 
-double Bx(double x,double y,double z,double t){
+long double Bx(long double x,long double y,long double z,long double t){
 
-  double i = 0;
+  long double i = 0;
   return i;
 
 }
 
-double By(double x,double y,double z,double t){
+long double By(long double x,long double y,long double z,long double t){
 
 
   return 10;
@@ -45,7 +45,7 @@ double By(double x,double y,double z,double t){
 }
 
 
-double Bz(double x,double y,double z,double t){
+long double Bz(long double x,long double y,long double z,long double t){
 
 
   return 0;
