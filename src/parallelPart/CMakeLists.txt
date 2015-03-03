@@ -19,3 +19,7 @@ file(GLOB_RECURSE SRC_FILES "*.c")
 add_executable(parallelparts ${SRC_FILES})
 
 target_link_libraries(parallelparts)
+
+if(UNIX)
+	target_link_libraries(parallelparts m)
+endif()
