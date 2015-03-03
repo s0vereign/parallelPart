@@ -2,6 +2,7 @@
 #define COMPUTE_H
 
 #include <math.h>
+#include <stdio.h>
 
 #include "Params.h"
 #include "Prints.h"
@@ -40,40 +41,25 @@ void computeLorentz(
 }
 
 void computeNewImpulse(
-    double t, double dt,
+    double dt,
     double *px, double *py, double *pz,
-    double x, double y, double z,
-    double m, double q
+    double Fx, double Fy, double Fz
 ) {
-
-    double  Fx, Fy, Fz,
-            vx, vy, vz,
-            gamma;
-
-    gamma = computeGamma(*px, *py, *pz, m);
-
-    vx = computeVi(*px, gamma, m);
-    vy = computeVi(*pz, gamma, m);
-    vz = computeVi(*py, gamma, m);
-
-    computeFb(vx, vy, vz, x, y, z, &Fx, &Fy, &Fz, t);
-
-    computeLorentz(q, x, y, z, &Fx, &Fy, &Fz, t);
-
     *px = *px + Fx * dt;
     *py = *py + Fy * dt;
     *pz = *pz + Fz * dt;
 }
 
 double computeNewPosition(
-    double t, double dt,
-    double x, double y, double z,
+    double dt,
+    double *x, double *y, double *z,
     double px, double py, double pz,
-    double m
-) {
-    x += 300000000 * px / m * dt;
-    y += 300000000 * py / m * dt;
-    z += 300000000 * pz / m * dt;
+    double Fx, double Fy, double Fz,
+    double gamma, double m
+) {    
+    *x += 300000000 * px / gamma / m * dt + 1 / 2 * dt*dt * Fx * 300000000 * 300000000 / gamma / m ;
+    *y += 300000000 * py / gamma / m * dt + 1 / 2 * dt*dt * Fy * 300000000 * 300000000 / gamma / m ;
+    *z += 300000000 * pz / gamma / m * dt + 1 / 2 * dt*dt * Fz * 300000000 * 300000000 / gamma / m ;
 }
 
 void compute(
@@ -90,8 +76,19 @@ void compute(
         
         for(i = 0; i < len; i++) {
             
-            computeNewImpulse(t, dt, &px[i], &py[i], &pz[i], x[i], y[i], z[i], m[i], q[i]);
-            computeNewPosition(t, dt, x[i], y[i], z[i], px[i], py[i], pz[i], m[i]);
+            double  gamma = computeGamma(px[i], py[i], pz[i], m[i]),
+            
+                    vx = computeVi(px[i], gamma, m[i]),
+                    vy = computeVi(pz[i], gamma, m[i]),
+                    vz = computeVi(py[i], gamma, m[i]),
+                
+                    Fx, Fy, Fz;
+                    
+            computeFb(vx, vy, vz, x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
+            computeLorentz(q[i], x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
+            
+            computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
+            computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
             
         }
         
