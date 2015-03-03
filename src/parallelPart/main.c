@@ -10,11 +10,6 @@
 
 void main() {
 
-
-
-
-
-
 //initialize the particles
   int len = 100;
   double t_start, t_end, dt;
