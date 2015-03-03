@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include <math.h>
+
 typedef struct part{
 
   long double *x,*y,*z,
@@ -30,11 +32,6 @@ particle init_1(int length){
         p.py = (long double*)malloc(sizeof(long double)*length);
         p.pz = (long double*)malloc(sizeof(long double)*length);
 
-        for(i=0; i < length; i++) {
-
-            p.px[i] = 1e5;
-        }
-
         //Initialize the Mass & Charge
 
         p.q = (long double*)malloc(sizeof(long double)*length);
@@ -46,7 +43,19 @@ particle init_1(int length){
         p.m = (long double*)malloc(sizeof(long double)*length);
 
         for(i=0; i < length; i++) {
-            p.m[i] = 0.5e6;
+            p.m[i] = 0.51e6;
+        }
+        
+        
+        for(i=0; i < length; i++) {
+
+            p.px[i] = sqrt((20e6+p.m[i])*(20e6+p.m[i]) + p.m[i] * p.m[i]);
+            p.py[i] = 0;
+            p.pz[i] = 0;
+            
+            p.x[i] = 0;
+            p.y[i] = 0;
+            p.z[i] = 0;
         }
 
         return p;
@@ -58,7 +67,7 @@ particle init_1(int length){
 void init_params(long double* t_start, long double* t_end, long double* dt){
 
    *t_start = 0;
-   *t_end   = 1e-10;
-   *dt      = 1e-15;
+   *t_end   = 1e-8;
+   *dt      = 1e-14;
 }
 #endif
