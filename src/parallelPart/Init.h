@@ -32,7 +32,7 @@ particle init_1(int length){
 
         for(i=0; i < length; i++) {
 
-            p.px[i] = 1e10;
+            p.px[i] = 1e7;
 
         }
 

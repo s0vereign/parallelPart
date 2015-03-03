@@ -3,7 +3,7 @@
 
 double Ex(double x,double y,double z,double t){
 
-  double i= 0;
+  double i=2000;
 
   return i;
 
@@ -39,7 +39,7 @@ double Bx(double x,double y,double z,double t){
 double By(double x,double y,double z,double t){
 
 
-  return 1000;
+  return 10;
 
 
 }
