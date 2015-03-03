@@ -1,50 +1,50 @@
 
 
-double E_x(x,y,z,t){
+double E_x(double x,double y,double z,double t){
 
-  double x= 0;
+  double i= 0;
 
-  return x;
-
-
-}
-
-double E_y(x,y,z,t){
-
-  double y=0;
-
-  return y;
+  return i;
 
 
 }
 
-double E_z(x,y,z,t){
+double E_y(double x,double y,double z,double t){
 
-  double z = 0;
-  return z;
+  double i=0;
+
+  return i;
+
+
+}
+
+double E_z(double x,double y,double z,double t){
+
+  double i = 0;
+  return i;
 
 
 
 
 }
 
-double B_x(x,y,z,t){
+double B_x(double x,double y,double z,double t){
+
+  double i = 0;
+  return i;
+
+}
+
+double B_y(double x,double y,double z,double t){
 
 
   return 0;
 
-}
-
-double B_y(x,y,z,t){
-
-
-  return 0;
-
 
 }
 
 
-double B_z(x,y,z,t){
+double B_z(double x,double y,double z,double t){
 
 
   return 0;

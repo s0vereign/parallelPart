@@ -4,7 +4,7 @@
 
 
 int getlength(){
-
+  double len = 100;
   return len;
 
 
@@ -12,20 +12,20 @@ int getlength(){
 
 }
 
-typedef struct particle{
+typedef struct part{
 
   double *x,*y,*z,
          *px,*py,*pz,
          *q,*m;
 
 
-}
+} particle;
 
 
 particle init_1(int length){
 
 
-        particle  p;
+       particle  p;
 
         //Initialize the Positions
         p.x = (double*)malloc(sizeof(double)*length);
@@ -48,12 +48,12 @@ particle init_1(int length){
 
 
 
- *double init_params(){
+ double *init_params(){
 
    double t_start = 0;
    double t_end   = 0;
    double dt      = 0;
-   
+
 
    double param[3];
 
