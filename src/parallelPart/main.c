@@ -16,7 +16,7 @@ void main() {
 
 
 //initialize the particles
-  len = getlength();
+  int len = 1000;
   particle p = init_1(len);
   double s[3] = init_params();
 

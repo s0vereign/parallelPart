@@ -3,15 +3,6 @@
 
 
 
-int getlength(){
-  double len = 100;
-  return len;
-
-
-
-
-}
-
 typedef struct part{
 
   double *x,*y,*z,
