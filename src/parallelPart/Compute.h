@@ -25,11 +25,9 @@ void computeFb(
     long double t
 ) {
     //F_i,b = e_ikl * v_k * b_l
-
     *Fx = vy * Bz(x, y, z, t) - vz * By(x, y, z, t);
     *Fy = vz * Bx(x, y, z, t) - vx * Bz(x, y, z, t);
     *Fz = vx * By(x, y, z, t) - vy * Bx(x, y, z, t);
-    
 }
 
 
@@ -39,7 +37,6 @@ void computeLorentz(
     long double *Fx, long double *Fy, long double *Fz,
     long double t
 ) {
-
     *Fx = q * ( Ex(x, y, z, t) + *Fx);
     *Fy = q * ( Ey(x, y, z, t) + *Fy);
     *Fz = q * ( Ez(x, y, z, t) + *Fz);
@@ -55,11 +52,11 @@ void computeNewImpulse(
                 ePx = *px / valueP, //unit vector in impulse direction
                 ePy = *py / valueP,
                 ePz = *pz / valueP,
-                
+
                 fPx = (Fx * ePx + Fy * ePy + Fz * ePz) * ePx, // force parallel to impulse
                 fPy = (Fx * ePx + Fy * ePy + Fz * ePz) * ePy,
                 fPz = (Fx * ePx + Fy * ePy + Fz * ePz) * ePz,
-                
+
                 fSx = Fx - fPx, //force vertical to impulse
                 fSy = Fy - fPy,
                 fSz = Fz - fPz,
@@ -102,7 +99,7 @@ void compute(
     for( t = t_start; t < t_end - dt; t += dt) {
 
         for(i = 0; i < len; i++) {
-            
+
             long double  gamma = computeGamma(px[i], py[i], pz[i], m[i]),
 
                     vx = computeVi(px[i], gamma, m[i]),
@@ -113,14 +110,13 @@ void compute(
 
             computeFb(vx, vy, vz, x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
             computeLorentz(q[i], x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
-            
+
             computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
             computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
 
         }
 
         print(t, x, y, z, px, py, pz, len);
-
     }
 }
 #endif

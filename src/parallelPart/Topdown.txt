@@ -15,7 +15,7 @@ Initialisiere Daten!
      Initialisiere startZeit, Endzeit, Zeitschritt
        Setzte: startZeit= long double t_start, endZeit = long double t_end , Zeitschritt = long double dt
 
-  
+
 
 
 Rechne!

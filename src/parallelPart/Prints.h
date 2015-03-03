@@ -18,7 +18,7 @@ void print(long double t,
     int len
 ) {
     FILE *f = fopen("results.txt", "a+");
-    
+
     int i;
     char buf[BUF];
     char *buffer = (char*) malloc(sizeof(char) * len * BUF);
@@ -29,8 +29,8 @@ void print(long double t,
     }
     strcat(buffer, "\n");
     fwrite( buffer, sizeof(char), strlen(buffer), f);
-    
-    free(buffer);    
+
+    free(buffer);
     fclose(f);
 }
 
