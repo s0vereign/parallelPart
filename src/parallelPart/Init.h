@@ -43,7 +43,7 @@ particle init_1(int length){
 void init_params(double* t_start, double* t_end, double* dt){
 
    *t_start = 0;
-   *t_end   = 0;
-   *dt      = 0;
+   *t_end   = 1e-10;
+   *dt      = 1e-12;
 }
 #endif

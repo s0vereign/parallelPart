@@ -4,6 +4,7 @@
 #include <math.h>
 
 #include "Params.h"
+#include "Prints.h"
 
 double computeGamma(double px, double py, double pz, double m) {
     return sqrt(1 + (px*px + py*py + pz*pz) / (m*m));
@@ -94,6 +95,7 @@ void compute(
             
         }
         
+        print(t, x, y, z, px, py, pz, len);
     }
 }
 #endif
