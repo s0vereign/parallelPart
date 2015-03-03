@@ -1,5 +1,8 @@
+#ifndef DESTRUCT_H
+#define DESTRUCT_H
+
 #include <stdlib.h>
-#include "Init.c"
+#include "Init.h"
 
 
 
@@ -21,3 +24,4 @@ void destruct(particle p){
 
 
 }
+#endif

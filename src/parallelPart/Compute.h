@@ -1,6 +1,9 @@
+#ifndef COMPUTE_H
+#define COMPUTE_H
+
 #include <math.h>
 
-#include "Params.c"
+#include "Params.h"
 
 double computeGamma(double px, double py, double pz, double m) {
     return sqrt(1 + (px*px + py*py + pz*pz) / (m*m));
@@ -11,8 +14,6 @@ double computeVi(double pi, double gamma, double m) {
     return 300000000 * pi / (gamma * m);
 }
 
-
-
 void computeFb(
     double vx, double vy, double vz,
     double x, double y, double z,
@@ -20,9 +21,10 @@ void computeFb(
     double t
 ) {
     //F_i,b = e_ikl * v_k * b_l
-    *Fx = vy * Bz(x, y, z,t) - vz * By(x, y, z,t);
-    *Fy = vz * Bx(x, y, z,t) - vx * Bz(x, y, z,t);
-    *Fz = vx * By(x, y, z,t) - vy * Bx(x, y, z,t);
+
+    *Fx = vy * Bz(x, y, z, t) - vz * By(x, y, z, t);
+    *Fy = vz * Bx(x, y, z, t) - vx * Bz(x, y, z, t);
+    *Fz = vx * By(x, y, z, t) - vy * Bx(x, y, z, t);
 }
 
 
@@ -32,9 +34,10 @@ void computeLorentz(
     double *Fx, double *Fy, double *Fz,
     double t
 ) {
-    *Fx = q * ( Ex(x, y, z,t) + *Fx);
-    *Fy = q * ( Ey(x, y, z,t) + *Fy);
-    *Fz = q * ( Ez(x, y, z,t) + *Fz);
+
+    *Fx = q * ( Ex(x, y, z, t) + *Fx);
+    *Fy = q * ( Ey(x, y, z, t) + *Fy);
+    *Fz = q * ( Ez(x, y, z, t) + *Fz);
 }
 
 void computeNewImpulse(
@@ -95,3 +98,4 @@ void compute(
 
     }
 }
+#endif

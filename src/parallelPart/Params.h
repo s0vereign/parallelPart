@@ -1,5 +1,5 @@
-#ifndef PARAMS_C
-#define PARAMS_C
+#ifndef PARAMS_H
+#define PARAMS_H
 
 double Ex(double x,double y,double z,double t){
 

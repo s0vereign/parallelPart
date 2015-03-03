@@ -1,12 +1,9 @@
 #include <stdio.h>
-#include "Init.c"
-#include "Destruct.c"
-#include "Compute.c"
-#include "Params.c"
 
-
-
-
+#include "Init.h"
+#include "Destruct.h"
+#include "Compute.h"
+#include "Params.h"
 
 void main() {
 
@@ -17,19 +14,13 @@ void main() {
   init_params(&t_start, &t_end, &dt);
 
 //start the computation with p
-
   compute(t_start, t_end, dt,
           p.x,p.y,p.z,
           p.px,p.py,p.pz,
           p.m,p.q, len);
 
 
-
   destruct(p);
-
-
-
-
 
 
 }
