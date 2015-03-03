@@ -19,11 +19,11 @@ particle init_1(int length){
 
       //get the first standard distribution
        std::default_random_engine generator;
-       std::normal_distribution<long double> distribution1(2e6, 1e6);
+       std::normal_distribution<long double> distribution1(0, 55);
 
        //get the second standard distribution
 
-       std::normal_distribution<long double> distribution2(1e6, 1e5);
+       std::normal_distribution<long double> distribution2(10, 55);
 
 
        particle  p;
@@ -45,25 +45,26 @@ particle init_1(int length){
 
 
         for(i=0; i < length; i++) {
+            
+            if(i < 5){
 
-            if(i < 50){
-
-              p.x[i] = distribution1(generator);
+              p.px[i] = distribution1(generator);
+              printf("%Lf \n",p.px[i]);
 
 
             }
             else{
 
 
-              p.x[i] = distribution2(generator);
+              p.px[i] = distribution2(generator);
 
 
 
 
             }
-
-            p.py[i] = 1e3;
-            p.pz[i] = 0;
+           
+            p.py[i] = 0;
+            p.pz[i] = 0.5;
             p.x[i]  = 0;
             p.y[i]  = 0;
             p.z[i]  = 0;
@@ -74,7 +75,7 @@ particle init_1(int length){
         p.q = (long double*)malloc(sizeof(long double)*length);
 
         for(i = 0; i < length; i++) {
-            p.q[i] = 1;
+            p.q[i] = -1;
         }
 
         p.m = (long double*)malloc(sizeof(long double)*length);
@@ -92,7 +93,7 @@ particle init_1(int length){
 void init_params(long double* t_start, long double* t_end, long double* dt){
 
    *t_start = 0;
-   *t_end   = 1e-7;
+   *t_end   = 1e-6;
    *dt      = 1e-10;
 }
 #endif
