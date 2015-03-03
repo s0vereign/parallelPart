@@ -15,9 +15,7 @@ Initialisiere Daten!
      Initialisiere startZeit, Endzeit, Zeitschritt
        Setzte: startZeit= double t_start, endZeit = double t_end , Zeitschritt = double dt
 
-     Initialisiere E-Feld,B-Feld.
-       Setze E_Feld=double Ex,Ey,Ez, Setze B_Feld =double Bx,By,Bz
-
+  
 
 
 Rechne!

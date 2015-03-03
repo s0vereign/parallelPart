@@ -3,7 +3,14 @@
 
 
 
+int getlength(){
 
+  return len;
+
+
+
+
+}
 
 typedef struct particle{
 
@@ -36,5 +43,25 @@ particle init_1(int length){
         p.m = (double*)malloc(sizeof(double)*length);
 
         return p;
+
+ }
+
+
+
+ *double init_params(){
+
+   double t_start = 0;
+   double t_end   = 0;
+   double dt      = 0;
+   
+
+   double param[3];
+
+   param[0] = t_start;
+   param[1] = t_end;
+   param[2] = dt;
+
+   return param;
+
 
  }

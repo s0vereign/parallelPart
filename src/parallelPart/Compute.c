@@ -10,8 +10,8 @@ void compute(
     double* m, double* q,
     int len
 ) {
-    
-    for(double t = t_start; t < t_end - edt; t +0 dt) {
+
+    for(double t = t_start; t < t_end - dt; t += dt) {
         computeNewImpulse(t, dt, px, py, pz, m, q, len);
         computeNewPosition(t, dt, x, y, z, px, py, pz, m, len);
     }
@@ -23,27 +23,19 @@ void computeNewImpulse(
     double[] m, double[] q,
     int len
 ) {
-    
+
     for(int i = 0; i < len; i++) {
         double  Fx, Fy, Fz,
                 vx, vy, vz,
                 gamma;
-                
+
         gamma = computeGamma(px[i], py[i], pz[i], m[i]);
-        
-        vx = computeVi(px[i], gamma, m[i];
-        vy = computeVi(pz[i], gamma, m[i];
-        vz = computeVi(py[i], gamma, m[i];
-        
-        computeFb(vx, vy, vz, x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
-     
-        computeLorentz(q[i], x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
-        
+        etlength();
         px[i] = px[i] + Fx * dt;
         py[i] = py[i] + Fy * dt;
         pz[i] = pz[i] + Fz * dt;
-        
-    }    
+
+    }
 }
 
 double computeNewPosition(
@@ -52,7 +44,7 @@ double computeNewPosition(
     double[] px, double[] py, double[] pz,
     double[] m, int len
 ) {
-    
+
     for(int i = 0; i < len; i++) {
         x[i] += 300000000 * px[i]/m[i] * dt;
         y[i] += 300000000 * py[i]/m[i] * dt;
@@ -69,6 +61,8 @@ double computeVi(double pi, double gamma, double m) {
     return 300000000 * pi / (gamma * m);
 }
 
+
+
 void computeFb(
     double vx, double vy, double vz,
     double x, double y, double z,
@@ -78,8 +72,9 @@ void computeFb(
     //F_i,b = e_ikl * v_k * b_l
     *Fx = vy * Bz(t, x, y, z) - vz * By(t, x, y, z);
     *Fy = vz * Bx(t, x, y, z) - vx * Bz(t, x, y, z);
-    *Fz = vx * By(t, x, y, z) - vy * Bx(t, x, y, z);    
+    *Fz = vx * By(t, x, y, z) - vy * Bx(t, x, y, z);
 }
+
 
 void computeLorentz(
     double q,

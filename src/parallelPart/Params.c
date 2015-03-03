@@ -1,12 +1,3 @@
-double t_start,t_end,dt;
-t_start = 0;
-t_end = 0;
-dt = 0;
-
-
-
-
-
 
 
 double E_x(x,y,z,t){
