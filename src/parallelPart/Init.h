@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <random>
 
 typedef struct part{
 
@@ -16,9 +17,19 @@ typedef struct part{
 
 particle init_1(int length){
 
+      //get the first standard distribution
+       std::default_random_engine generator;
+       std::normal_distribution<long double> distribution1(2e6, 1e6);
+
+       //get the second standard distribution
+
+       std::normal_distribution<long double> distribution2(1e6, 1e5);
+
 
        particle  p;
        int i;
+
+
 
         //Initialize the Positions
         p.x = (long double*)malloc(sizeof(long double)*length);
@@ -30,9 +41,32 @@ particle init_1(int length){
         p.py = (long double*)malloc(sizeof(long double)*length);
         p.pz = (long double*)malloc(sizeof(long double)*length);
 
+
+
+
         for(i=0; i < length; i++) {
 
-            p.px[i] = 1e5;
+            if(i < 50){
+
+              p.x[i] = distribution1(generator);
+
+
+            }
+            else{
+
+
+              p.x[i] = distribution2(generator);
+
+
+
+
+            }
+
+            p.py[i] = 1e3;
+            p.pz[i] = 0;
+            p.x[i]  = 0;
+            p.y[i]  = 0;
+            p.z[i]  = 0;
         }
 
         //Initialize the Mass & Charge
@@ -40,7 +74,7 @@ particle init_1(int length){
         p.q = (long double*)malloc(sizeof(long double)*length);
 
         for(i = 0; i < length; i++) {
-            p.q[i] = -1;
+            p.q[i] = 1;
         }
 
         p.m = (long double*)malloc(sizeof(long double)*length);
@@ -58,7 +92,7 @@ particle init_1(int length){
 void init_params(long double* t_start, long double* t_end, long double* dt){
 
    *t_start = 0;
-   *t_end   = 1e-10;
-   *dt      = 1e-15;
+   *t_end   = 1e-7;
+   *dt      = 1e-10;
 }
 #endif
