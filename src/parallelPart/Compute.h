@@ -3,9 +3,11 @@
 
 #include <math.h>
 #include <stdio.h>
-
+#include <omp.h>
 #include "Params.h"
 #include "Prints.h"
+
+
 
 long double computeGamma(long double px, long double py, long double pz, long double m) {
     return sqrt(1 + (px*px + py*py + pz*pz) / (m*m));
@@ -48,8 +50,8 @@ void computeNewImpulse(
     long double Fx, long double Fy, long double Fz
 ) {
     //energy-saving!
-    long double valueP = sqrt( (*px) * (*px) + (*py) * (*py) + (*pz) * (*pz)),
-                ePx = *px / valueP, //unit vector in impulse direction
+  //  long double valueP = sqrt( (*px) * (*px) + (*py) * (*py) + (*pz) * (*pz)),
+              /*  ePx = *px / valueP, //unit vector in impulse direction
                 ePy = *py / valueP,
                 ePz = *pz / valueP,
 
@@ -67,14 +69,20 @@ void computeNewImpulse(
 
                 px2 = px1 + 3e8 * fSx * dt, //impulse part 2: whole impulse without energy saving
                 py2 = py1 + 3e8 * fSy * dt,
-                pz2 = pz1 + 3e8 * fSz * dt;
+                pz2 = pz1 + 3e8 * fSz * dt;*/
 
-    //~ *px = *px + 3e8 * Fx * dt;
-    //~ *py = *py + 3e8 * Fy * dt;
-    //~ *pz = *pz + 3e8 * Fz * dt;
+    *px = *px + 3e8 * Fx * dt;
+    *py = *py + 3e8 * Fy * dt;
+    *pz = *pz + 3e8 * Fz * dt;
+    
+
+    /*
     *px = px2 / sqrt(px2*px2 + py2*py2 + pz2*pz2) * sqrt(px1*px1 + py1*py1 + pz1*pz1); //resulting impulse
     *py = py2 / sqrt(px2*px2 + py2*py2 + pz2*pz2) * sqrt(px1*px1 + py1*py1 + pz1*pz1);
     *pz = pz2 / sqrt(px2*px2 + py2*py2 + pz2*pz2) * sqrt(px1*px1 + py1*py1 + pz1*pz1);
+
+    */
+
 }
 
 long double computeNewPosition(
@@ -99,6 +107,7 @@ void compute(
 
     long double t;
     int i;
+    #pragma omp parallel for 
     for( t = t_start; t < t_end - dt; t += dt) {
 
         for(i = 0; i < len; i++) {
