@@ -39,7 +39,7 @@ long double Bx(long double x,long double y,long double z,long double t){
 long double By(long double x,long double y,long double z,long double t){
 
 
-  return 10;
+  return 1000;
 
 
 }
