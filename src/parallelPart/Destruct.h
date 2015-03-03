@@ -17,7 +17,7 @@ void destruct(particle p){
   free(p.pz);
   free(p.q);
   free(p.m);
-  
+
 
 
 
