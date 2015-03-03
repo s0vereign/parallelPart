@@ -79,13 +79,7 @@ void compute(
 
         for(i = 0; i < len; i++) {
 
-<<<<<<< HEAD
-            computeNewImpulse(t, dt, &px[i], &py[i], &pz[i], x[i], y[i], z[i], m[i], q[i]);
-            computeNewPosition(t, dt, x[i], y[i], z[i], px[i], py[i], pz[i], m[i]);
 
-        }
-
-=======
             double  gamma = computeGamma(px[i], py[i], pz[i], m[i]),
 
                     vx = computeVi(px[i], gamma, m[i]),
@@ -103,7 +97,7 @@ void compute(
         }
 
         print(t, x, y, z, px, py, pz, len);
->>>>>>> prints
+
     }
 }
 #endif
