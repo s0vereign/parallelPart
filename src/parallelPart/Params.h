@@ -39,7 +39,7 @@ double Bx(double x,double y,double z,double t){
 double By(double x,double y,double z,double t){
 
 
-  return 10;
+  return 1000;
 
 
 }

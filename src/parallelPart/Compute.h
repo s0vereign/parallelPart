@@ -7,6 +7,7 @@
 #include "Params.h"
 #include "Prints.h"
 
+
 double computeGamma(double px, double py, double pz, double m) {
     return sqrt(1 + (px*px + py*py + pz*pz) / (m*m));
 }
@@ -19,7 +20,7 @@ double computeVi(double pi, double gamma, double m) {
 void computeFb(
     double vx, double vy, double vz,
     double x, double y, double z,
-    double* Fx, double *Fy, double *Fz,
+    double *Fx, double *Fy, double *Fz,
     double t
 ) {
     //F_i,b = e_ikl * v_k * b_l
@@ -45,9 +46,9 @@ void computeNewImpulse(
     double *px, double *py, double *pz,
     double Fx, double Fy, double Fz
 ) {
-    *px = *px + Fx * dt;
-    *py = *py + Fy * dt;
-    *pz = *pz + Fz * dt;
+    *px = *px + 300000000 * Fx * dt;
+    *py = *py + 300000000 * Fy * dt;
+    *pz = *pz + 300000000 * Fz * dt;
 }
 
 double computeNewPosition(
@@ -56,10 +57,10 @@ double computeNewPosition(
     double px, double py, double pz,
     double Fx, double Fy, double Fz,
     double gamma, double m
-) {    
-    *x += 300000000 * px / gamma / m * dt + 1 / 2 * dt*dt * Fx * 300000000 * 300000000 / gamma / m ;
-    *y += 300000000 * py / gamma / m * dt + 1 / 2 * dt*dt * Fy * 300000000 * 300000000 / gamma / m ;
-    *z += 300000000 * pz / gamma / m * dt + 1 / 2 * dt*dt * Fz * 300000000 * 300000000 / gamma / m ;
+) {
+    *x += 300000000 * px / gamma / m * dt + 1 / 2 * dt*dt * Fx * 300000000 * 300000000  / gamma / m ;
+    *y += 300000000 * py / gamma / m * dt + 1 / 2 * dt*dt * Fy * 300000000 * 300000000  / gamma / m ;
+    *z += 300000000 * pz / gamma / m * dt + 1 / 2 * dt*dt * Fz * 300000000 * 300000000  / gamma / m ;
 }
 
 void compute(
@@ -73,25 +74,25 @@ void compute(
     double t;
     int i;
     for( t = t_start; t < t_end - dt; t += dt) {
-        
+
         for(i = 0; i < len; i++) {
-            
+
             double  gamma = computeGamma(px[i], py[i], pz[i], m[i]),
-            
+
                     vx = computeVi(px[i], gamma, m[i]),
-                    vy = computeVi(pz[i], gamma, m[i]),
-                    vz = computeVi(py[i], gamma, m[i]),
-                
+                    vy = computeVi(py[i], gamma, m[i]),
+                    vz = computeVi(pz[i], gamma, m[i]),
+
                     Fx, Fy, Fz;
-                    
+
             computeFb(vx, vy, vz, x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
             computeLorentz(q[i], x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
-            
-            computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
             computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
-            
+            computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
+
+
         }
-        
+
         print(t, x, y, z, px, py, pz, len);
     }
 }

@@ -31,21 +31,21 @@ particle init_1(int length){
         p.pz = (double*)malloc(sizeof(double)*length);
 
         for(i=0; i < length; i++) {
-            
-            p.px[i] = 1e6;
-            
+
+            p.px[i] = 1e10;
+
         }
 
         //Initialize the Mass & Charge
 
         p.q = (double*)malloc(sizeof(double)*length);
-        
+
         for(i = 0; i < length; i++) {
             p.q[i] = -1;
         }
-        
+
         p.m = (double*)malloc(sizeof(double)*length);
-        
+
         for(i=0; i < length; i++) {
             p.m[i] = 0.5e6;
         }
@@ -59,7 +59,7 @@ particle init_1(int length){
 void init_params(double* t_start, double* t_end, double* dt){
 
    *t_start = 0;
-   *t_end   = 1e-7;
-   *dt      = 1e-12;
+   *t_end   = 9e-8;
+   *dt      = 1e-13;
 }
 #endif
