@@ -8,12 +8,12 @@ Initialisiere Daten!
   Initialisiere alle Partikeldaten!
     Initialisiere für alle Partikel:
     Ladung,Masse,Impuls,Position
-      Setze: Ladung=double *Q, Masse = double *m, Impuls = double* px,py,pz, Position = double* x,y,z
+      Setze: Ladung=long double *Q, Masse = long double *m, Impuls = long double* px,py,pz, Position = long double* x,y,z
 
 
   Initialisiere Parameter-> Zeiten, Felder!
      Initialisiere startZeit, Endzeit, Zeitschritt
-       Setzte: startZeit= double t_start, endZeit = double t_end , Zeitschritt = double dt
+       Setzte: startZeit= long double t_start, endZeit = long double t_end , Zeitschritt = long double dt
 
   
 
