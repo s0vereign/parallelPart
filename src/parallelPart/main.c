@@ -10,7 +10,7 @@ int main() {
 
 //initialize the particles
   int len = 1;
-  double t_start, t_end, dt;
+  long double t_start, t_end, dt;
   particle p = init_1(len);
   init_params(&t_start, &t_end, &dt);
   truncateFile();

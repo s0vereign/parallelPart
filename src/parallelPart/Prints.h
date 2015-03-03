@@ -12,9 +12,9 @@ void truncateFile() {
     fclose(f);
 }
 
-void print(double t,
-    double x[], double y[], double z[],
-    double px[], double py[], double pz[],
+void print(long double t,
+    long double x[], long double y[], long double z[],
+    long double px[], long double py[], long double pz[],
     int len
 ) {
     FILE *f = fopen("results.txt", "a+");
@@ -24,7 +24,7 @@ void print(double t,
     char *buffer = (char*) malloc(sizeof(char) * len * BUF);
     strcpy(buffer, "");
     for(i = 0; i < len; i++) {
-        snprintf(buf, 100, "%014.10f %014.10f %014.10f ", x[i], y[i], z[i]);
+        snprintf(buf, 100, "%014.10Lf %014.10Lf %014.10Lf ", x[i], y[i], z[i]);
         strcat(buffer, buf);
     }
     strcat(buffer, "\n");
