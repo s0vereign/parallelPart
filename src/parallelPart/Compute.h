@@ -3,6 +3,9 @@
 
 #include <math.h>
 #include <stdio.h>
+
+#include <omp.h>
+
 #include "Params.h"
 #include "Prints.h"
 
@@ -110,7 +113,7 @@ void compute(
 
 
     for( t = t_start; t < t_end - dt; t += dt) {
-
+#pragma omp parallel for
         for(i = 0; i < len; i++) {
 
             long double  gamma = computeGamma(px[i], py[i], pz[i], m[i]),
@@ -131,7 +134,7 @@ void compute(
 
         }
 
-        print(t, x, y, z, px, py, pz, len);
+        //~ print(t, x, y, z, px, py, pz, len);
     }
 }
 #endif
