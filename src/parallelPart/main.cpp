@@ -1,28 +1,25 @@
 #include <stdio.h>
-
 #include <mpi.h>
-#include <omp.h>
-#include <stdio.h>
-
 #include "Init.h"
 #include "Destruct.h"
 #include "Compute.h"
 #include "Params.h"
 #include "Prints.h"
+#include "Parsearg.h"
 
 int main(int argc, char** argv) {
 
-    omp_set_num_threads(1);
-    MPI_Init(&argc, &argv);
-    
+    MPI_Init(&argc, argv);
+
     int id, processors;
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
     MPI_Comm_size(MPI_COMM_WORLD, &processors);
 
-   printf("Id: %i", id);
-
 //initialize the particles
     int len = 10;
+    int cores = 1;
+  //  getConfiguration(argc,argv);
+    parse
     long double t_start, t_end, dt;
     particle p = init_1(len, id, processors);
     init_params(&t_start, &t_end, &dt);
@@ -36,7 +33,7 @@ int main(int argc, char** argv) {
         id, processors);
 
     destruct(p);
-    
+
     MPI_Finalize();
 
     return EXIT_SUCCESS;

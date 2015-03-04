@@ -9,8 +9,23 @@ cmake_minimum_required(VERSION 2.8.12)
 #################
 
 project(parallelParts)
-set(CMAKE_CXX_FLAGS "-std=c++11")
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++11")
 
+
+
+
+#################
+# Find Boost
+#################
+
+find_package(Boost 1.49.0 REQUIRED COMPONENTS program_options REQUIRED)
+
+if(Boost_FOUND)
+    include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
+    set(LIBS ${LIBS} ${Boost_LIBRARIES})
+else()
+    message(FATAL_ERROR "Could'nt find essential Boost-libraries. Sorry :(")
+endif()
 
 ##########
 #Find OpenMP
@@ -37,7 +52,7 @@ endif()
 #Find OpenMPI
 ##########
 find_package(MPI)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  ${MPI_COMPILE_FLAGS}")
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}  ${MPI_COMPILE_FLAGS})
 include_directories(${MPI_INCLUDE_PATH})
 
 
@@ -48,9 +63,11 @@ include_directories(${MPI_INCLUDE_PATH})
 
 file(GLOB_RECURSE SRC_FILES "*.cpp")
 
+message(${SRC_FILES})
+
 add_executable(parallelparts ${SRC_FILES})
 
-target_link_libraries(parallelparts ${MPI_LIBRARIES})
+target_link_libraries(parallelparts ${OpenMP_CXX_FLAGS} ${MPI_LIBRARIES} )
 
 if(UNIX)
 	target_link_libraries(parallelparts m)

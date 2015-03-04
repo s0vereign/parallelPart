@@ -4,7 +4,6 @@
 #include <math.h>
 #include <stdio.h>
 
-#include <omp.h>
 #include <mpi.h>
 
 #include "Params.h"
@@ -81,11 +80,11 @@ void computeNewImpulse(
     //~ *py = *py + 3e8 * Fy * dt;
     //~ *pz = *pz + 3e8 * Fz * dt;
 
-    
+
     *px = px2 / sqrt(px2*px2 + py2*py2 + pz2*pz2) * sqrt(px1*px1 + py1*py1 + pz1*pz1); //resulting impulse
     *py = py2 / sqrt(px2*px2 + py2*py2 + pz2*pz2) * sqrt(px1*px1 + py1*py1 + pz1*pz1);
     *pz = pz2 / sqrt(px2*px2 + py2*py2 + pz2*pz2) * sqrt(px1*px1 + py1*py1 + pz1*pz1);
-    
+
 }
 
 long double computeNewPosition(
@@ -115,8 +114,8 @@ void compute(
         upperBound = MIN(ceil(len / p) * (id + 1), len);
 
     for( t = t_start; t < t_end - dt; t += dt) {
-        
-#pragma omp parallel for
+
+
         for(i = lowerBound; i < upperBound; i++) {
 
             long double  gamma = computeGamma(px[i], py[i], pz[i], m[i]),
