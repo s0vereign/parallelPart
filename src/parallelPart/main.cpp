@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include <openmpi/mpi.h>
+
 #include "Init.h"
 #include "Destruct.h"
 #include "Compute.h"
@@ -10,14 +12,14 @@ int main(int argc, char** argv) {
 
     MPI_Init(&argc, argv);
     
-    int id, p;
+    int id, processors;
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
-    MPI_Comm_size(MPI_COMM_WORLD, &p);
+    MPI_Comm_size(MPI_COMM_WORLD, &processors);
 
 //initialize the particles
     int len = 10;
     long double t_start, t_end, dt;
-    particle p = init_1(len, id, p);
+    particle p = init_1(len, id, processors);
     init_params(&t_start, &t_end, &dt);
     //~ truncateFile();
 
@@ -26,7 +28,7 @@ int main(int argc, char** argv) {
         p.x,p.y,p.z,
         p.px,p.py,p.pz,
         p.m,p.q, len,
-        id, p);
+        id, processors);
 
     destruct(p);
     

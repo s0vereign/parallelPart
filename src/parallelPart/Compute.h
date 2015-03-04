@@ -5,9 +5,15 @@
 #include <stdio.h>
 
 #include <omp.h>
+#include <mpi.h>
 
 #include "Params.h"
 #include "Prints.h"
+
+#define MIN(a,b) \
+   ({ __typeof__ (a) _a = (a); \
+       __typeof__ (b) _b = (b); \
+     _a < _b ? _a : _b; })
 
 long double computeGamma(long double px, long double py, long double pz, long double m) {
     return sqrt(1 + (px*px + py*py + pz*pz) / (m*m));
@@ -104,7 +110,7 @@ void compute(
     long double t;
     int i,
         lowerBound = ceil(len / p) * id,
-        upperBound = min(ceil(len / p) * (id + 1), len);
+        upperBound = MIN(ceil(len / p) * (id + 1), len);
 
     for( t = t_start; t < t_end - dt; t += dt) {
         

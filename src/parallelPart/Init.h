@@ -6,6 +6,11 @@
 #include <random>
 #include <chrono>
 
+#define MAX(a,b) \
+   ({ __typeof__ (a) _a = (a); \
+       __typeof__ (b) _b = (b); \
+     _a > _b ? _a : _b; })
+
 typedef struct part{
 
   long double *x,*y,*z,
@@ -15,7 +20,7 @@ typedef struct part{
 
 } particle;
 
-particle init_1(int length, int id, int p){
+particle init_1(int length, int id, int processors){
 
         //generatur set up
        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -30,9 +35,9 @@ particle init_1(int length, int id, int p){
        particle  p;
        int i;
        
-       int  len = * max ( ceil(length / p) * ((int) p -1 != id), floor(length / p) * ((int) p - 1 == id),
-            lowerBound = ceil(len / p) * id,
-            upperBound = min(ceil(len / p) * (id + 1), len);
+       int  len = MAX ( ceil(length / processors) * ((int) processors -1 != id), floor(length / processors) * ((int) processors - 1 == id)),
+            lowerBound = ceil(len / processors) * id,
+            upperBound = min(ceil(len / processors) * (id + 1), len);
 
         //Initialize the Positions
         p.x = (long double*)malloc(sizeof(long double)*len );
@@ -44,7 +49,7 @@ particle init_1(int length, int id, int p){
         p.py = (long double*)malloc(sizeof(long double)*len);
         p.pz = (long double*)malloc(sizeof(long double)*len);
 
-        for(i=lowerBound; i < upperBound; i++) {
+        for(i = lowerBound; i < upperBound; i++) {
 
             if(i < 5){
 
