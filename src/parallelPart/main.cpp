@@ -5,11 +5,11 @@
 #include "Compute.h"
 #include "Params.h"
 #include "Prints.h"
-#include "Parsearg.h"
+//#include "Parsearg.h"
 
 int main(int argc, char** argv) {
 
-    MPI_Init(&argc, argv);
+    MPI_Init(&argc, &argv);
 
     int id, processors;
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
@@ -19,7 +19,6 @@ int main(int argc, char** argv) {
     int len = 10;
     int cores = 1;
   //  getConfiguration(argc,argv);
-    parse
     long double t_start, t_end, dt;
     particle p = init_1(len, id, processors);
     init_params(&t_start, &t_end, &dt);

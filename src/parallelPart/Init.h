@@ -6,10 +6,19 @@
 #include <random>
 #include <chrono>
 
+#ifndef MAX
 #define MAX(a,b) \
    ({ __typeof__ (a) _a = (a); \
        __typeof__ (b) _b = (b); \
      _a > _b ? _a : _b; })
+#endif
+     
+#ifndef MIN
+#define MIN(a,b) \
+   ({ __typeof__ (a) _a = (a); \
+       __typeof__ (b) _b = (b); \
+     _a < _b ? _a : _b; })
+#endif
 
 typedef struct part{
 
@@ -37,7 +46,7 @@ particle init_1(int length, int id, int processors){
 
        int  len = MAX ( ceil(length / processors) * ((int) processors -1 != id), floor(length / processors) * ((int) processors - 1 == id)),
             lowerBound = ceil(len / processors) * id,
-            upperBound = min(ceil(len / processors) * (id + 1), len);
+            upperBound = MIN(ceil(len / processors) * (id + 1), len);
 
         //Initialize the Positions
         p.x = (long double*)malloc(sizeof(long double)*len );
