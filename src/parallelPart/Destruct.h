@@ -4,9 +4,6 @@
 #include <stdlib.h>
 #include "Init.h"
 
-
-
-
 void destruct(particle p){
 
   free(p.x);
@@ -17,11 +14,6 @@ void destruct(particle p){
   free(p.pz);
   free(p.q);
   free(p.m);
-
-
-
-
-
 
 }
 #endif
