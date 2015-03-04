@@ -12,7 +12,7 @@
        __typeof__ (b) _b = (b); \
      _a > _b ? _a : _b; })
 #endif
-     
+
 #ifndef MIN
 #define MIN(a,b) \
    ({ __typeof__ (a) _a = (a); \
@@ -43,22 +43,24 @@ particle init_1(int length, int id, int processors){
 
        particle  p;
        int i;
-
+       /*
        int  len = MAX ( ceil(length / processors) * ((int) processors -1 != id), floor(length / processors) * ((int) processors - 1 == id)),
             lowerBound = ceil(len / processors) * id,
             upperBound = MIN(ceil(len / processors) * (id + 1), len);
+        */
+
 
         //Initialize the Positions
-        p.x = (long double*)malloc(sizeof(long double)*len );
-        p.y = (long double*)malloc(sizeof(long double)*len);
-        p.z = (long double*)malloc(sizeof(long double)*len);
+        p.x = (long double*)malloc(sizeof(long double)*length );
+        p.y = (long double*)malloc(sizeof(long double)*length);
+        p.z = (long double*)malloc(sizeof(long double)*length);
 
         //Initialize the Momentum
-        p.px = (long double*)malloc(sizeof(long double)*len);
-        p.py = (long double*)malloc(sizeof(long double)*len);
-        p.pz = (long double*)malloc(sizeof(long double)*len);
+        p.px = (long double*)malloc(sizeof(long double)*length);
+        p.py = (long double*)malloc(sizeof(long double)*length);
+        p.pz = (long double*)malloc(sizeof(long double)*length);
 
-        for(i = lowerBound; i < upperBound; i++) {
+        for(i = id; i < length; i+= processors) {
 
             if(i < 5){
 
@@ -82,15 +84,15 @@ particle init_1(int length, int id, int processors){
 
         //Initialize the Mass & Charge
 
-        p.q = (long double*)malloc(sizeof(long double)*len);
+        p.q = (long double*)malloc(sizeof(long double)*length);
 
-        for(i = lowerBound; i < upperBound; i++) {
+        for(i = id; i < length; i+= processors) {
             p.q[i] = -1;
         }
 
-        p.m = (long double*)malloc(sizeof(long double)*len);
+        p.m = (long double*)malloc(sizeof(long double)*length);
 
-        for(i=lowerBound; i < upperBound; i++) {
+        for(i = id; i < length; i+= processors) {
             p.m[i] = 0.5e6;
         }
 

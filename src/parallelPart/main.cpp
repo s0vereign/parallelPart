@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 
 //initialize the particles
     int len = 10;
-    int cores = 1;
+    processors = 4;
   //  getConfiguration(argc,argv);
     long double t_start, t_end, dt;
     particle p = init_1(len, id, processors);
@@ -30,6 +30,9 @@ int main(int argc, char** argv) {
         p.px,p.py,p.pz,
         p.m,p.q, len,
         id, processors);
+
+
+
 
     destruct(p);
 
