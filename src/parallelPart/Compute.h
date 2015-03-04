@@ -10,10 +10,12 @@
 #include "Params.h"
 #include "Prints.h"
 
+#ifndef MIN
 #define MIN(a,b) \
    ({ __typeof__ (a) _a = (a); \
        __typeof__ (b) _b = (b); \
      _a < _b ? _a : _b; })
+#endif
 
 long double computeGamma(long double px, long double py, long double pz, long double m) {
     return sqrt(1 + (px*px + py*py + pz*pz) / (m*m));
