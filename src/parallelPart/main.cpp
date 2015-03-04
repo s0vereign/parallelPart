@@ -6,10 +6,14 @@
 #include "Params.h"
 #include "Prints.h"
 
+
+
+
+
 int main() {
 
 //initialize the particles
-  int len = 10;
+  int len = 10000;
   long double t_start, t_end, dt;
   particle p = init_1(len);
   init_params(&t_start, &t_end, &dt);

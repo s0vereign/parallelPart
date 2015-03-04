@@ -1,6 +1,8 @@
 #ifndef INIT_H
 #define INIT_H
 
+
+#include <chrono>
 #include <stdlib.h>
 #include <stdio.h>
 #include <random>
@@ -18,7 +20,8 @@ typedef struct part{
 particle init_1(int length){
 
       //get the first standard distribution
-       std::default_random_engine generator;
+       unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+       std::default_random_engine generator (seed);
        std::normal_distribution<long double> distribution1(0, 55);
 
        //get the second standard distribution
@@ -45,7 +48,7 @@ particle init_1(int length){
 
 
         for(i=0; i < length; i++) {
-            
+
             if(i < 5){
 
               p.px[i] = distribution1(generator);
@@ -57,12 +60,12 @@ particle init_1(int length){
 
 
               p.px[i] = distribution2(generator);
-
+              printf("%Lf \n",p.px[i]);
 
 
 
             }
-           
+
             p.py[i] = 0;
             p.pz[i] = 0.5;
             p.x[i]  = 0;

@@ -3,7 +3,6 @@
 
 #include <math.h>
 #include <stdio.h>
-#include <omp.h>
 #include "Params.h"
 #include "Prints.h"
 
@@ -74,7 +73,7 @@ void computeNewImpulse(
     *px = *px + 3e8 * Fx * dt;
     *py = *py + 3e8 * Fy * dt;
     *pz = *pz + 3e8 * Fz * dt;
-    
+
 
     /*
     *px = px2 / sqrt(px2*px2 + py2*py2 + pz2*pz2) * sqrt(px1*px1 + py1*py1 + pz1*pz1); //resulting impulse
@@ -107,7 +106,9 @@ void compute(
 
     long double t;
     int i;
-    #pragma omp parallel for 
+
+
+
     for( t = t_start; t < t_end - dt; t += dt) {
 
         for(i = 0; i < len; i++) {

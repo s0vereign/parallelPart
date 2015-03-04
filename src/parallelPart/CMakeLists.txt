@@ -30,12 +30,9 @@ include_directories(MPI_INCLUDE_PATH)
 # Build & Links
 #################
 
-file(GLOB_RECURSE SRC_FILES "*.cpp")
+file(GLOB_RECURSE SRCFILES "*.cpp")
+
 
 add_executable(parallelparts ${SRC_FILES})
 
 target_link_libraries(parallelparts ${OpenMP_CXX_FLAGS} ${MPI_LIBRARIES} )
-
-if(UNIX)
-	target_link_libraries(parallelparts m)
-endif()
