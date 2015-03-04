@@ -1,6 +1,8 @@
 #include <stdio.h>
 
 #include <mpi.h>
+#include <omp.h>
+#include <stdio.h>
 
 #include "Init.h"
 #include "Destruct.h"
@@ -10,11 +12,14 @@
 
 int main(int argc, char** argv) {
 
+    omp_set_num_threads(1);
     MPI_Init(&argc, &argv);
     
     int id, processors;
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
     MPI_Comm_size(MPI_COMM_WORLD, &processors);
+
+   printf("Id: %i", id);
 
 //initialize the particles
     int len = 10;

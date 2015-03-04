@@ -100,7 +100,7 @@ particle init_1(int length, int id, int processors){
 void init_params(long double* t_start, long double* t_end, long double* dt){
 
    *t_start = 0;
-   *t_end   = 8e-6;
-   *dt      = 1e-11;
+   *t_end   = 1e-9;
+   *dt      = 1e-12;
 }
 #endif
