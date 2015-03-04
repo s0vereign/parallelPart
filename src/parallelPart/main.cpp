@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include <openmpi/mpi.h>
+#include <mpi.h>
 
 #include "Init.h"
 #include "Destruct.h"
