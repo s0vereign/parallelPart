@@ -111,7 +111,7 @@ void init_params(long double* t_start, long double* t_end, long double* dt){
 
    *t_start = 0;
 
-   *t_end   = 8e-6;
+   *t_end   = 1e-6;
    *dt      = 1e-11;
 
 }
@@ -121,8 +121,8 @@ void init_vel_res(int length, long double t_start,
                   long double t_end, long double dt,
                   long double*** vel_res){
 
-   int s =(int) (t_end-t_start)/dt;
-
+   int s =(int) ((t_end-t_start)/dt);
+   s+=1;
    (*vel_res) =(long double**) malloc(sizeof(long double)*s*length);
 
 

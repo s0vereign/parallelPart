@@ -106,14 +106,14 @@ void compute(
     int len,long double ***vel_res
 ) {
 
-    long double t;
+
     int i,j;
 
-    long double gamma,vx,vy,vz,Fx,Fy,Fz;
-
+    long double gamma,vx,vy,vz,Fx,Fy,Fz,t;
+    //long double *vx_zw= malloc(sizeof(long double)*len);
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
 
-#pragma omp parallel for
+
         for(i = 0; i < len; i++) {
 
                   gamma = computeGamma(px[i], py[i], pz[i], m[i]);
@@ -128,8 +128,7 @@ void compute(
 
             computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
             computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
-            *vel_res[j][i] = vx;
-
+          //  vx_zw[i]=vx;
         }
 
 
