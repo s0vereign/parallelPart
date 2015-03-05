@@ -21,8 +21,6 @@ typedef struct part{
 
 particle init_1(int length){
 
-    printf("starting p\n");
-
       //get the first standard distribution
        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
        std::default_random_engine generator (seed);
@@ -104,8 +102,6 @@ particle init_1(int length){
         }
         */
         
-        printf("finished p\n");
-        
         return p;
 
  }
@@ -116,7 +112,7 @@ void init_params(long double* t_start, long double* t_end, long double* dt){
 
    *t_start = 0;
 
-   *t_end   = 8e-6;
+   *t_end   = 1e-6;
    *dt      = 1e-11;
 
 }
@@ -125,12 +121,11 @@ void init_params(long double* t_start, long double* t_end, long double* dt){
 void init_vel_res(int length, long double t_start,
                   long double t_end, long double dt,
                   long double*** vel_res
-) {
+){
 
-   int  s =(int) ((t_end-t_start)/dt),
+   int s =(int) ((t_end-t_start)/dt),
         i;
-
-   (*vel_res) = (long double**) malloc(sizeof(long double) * s);
+   (*vel_res) =(long double**) malloc(sizeof(long double) * s);
 
     for( i = 0; i < s; i++) {
         

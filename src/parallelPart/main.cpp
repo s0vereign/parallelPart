@@ -8,9 +8,6 @@
 
 int main(int argc, char** argv) {
 
-
-    printf("hello\n");
-
 //initialize the particles
     int len = 3;
   //  getConfiguration(argc,argv);

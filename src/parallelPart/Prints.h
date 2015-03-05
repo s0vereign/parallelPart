@@ -67,4 +67,30 @@ void print_array(   long double t_start, long double t_end, long double dt,
 }
 
 
+
+void print_2(int length,long double *vx){
+
+
+      FILE *f = fopen("results.txt","a+");
+      int i;
+      char buf[BUF];
+      char *buffer = (char*) malloc(sizeof(char)*length*BUF);
+      strcpy(buffer,"");
+      for(int i = 0; i<length; i++){
+
+      snprintf(buf,100,"%014.10Lf",vx[i]);
+      strcat(buffer,buf);
+
+
+      }
+
+      free(buffer);
+      fclose(f);
+
+
+
+
+
+}
+
 #endif
