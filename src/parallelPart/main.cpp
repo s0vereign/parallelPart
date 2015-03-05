@@ -9,7 +9,7 @@
 int main(int argc, char** argv) {
 
 
-
+    printf("hello\n");
 
 //initialize the particles
     int len = 3;
@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     long double **vel_res;
     particle p = init_1(len);
     init_params(&t_start, &t_end, &dt);
-    init_vel_res(len,t_start,t_end,dt,&vel_res);
+    init_vel_res(len,t_start,t_end,dt, &vel_res);
     truncateFile();
 
 //start the computation with p

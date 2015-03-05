@@ -116,10 +116,10 @@ void compute(
 #pragma omp parallel for
         for(i = 0; i < len; i++) {
 
-                  gamma = computeGamma(px[i], py[i], pz[i], m[i]);
-                  vx = computeVi(px[i], gamma, m[i]);
-                  vy = computeVi(py[i], gamma, m[i]);
-                  vz = computeVi(pz[i], gamma, m[i]);
+            gamma = computeGamma(px[i], py[i], pz[i], m[i]);
+            vx = computeVi(px[i], gamma, m[i]);
+            vy = computeVi(py[i], gamma, m[i]);
+            vz = computeVi(pz[i], gamma, m[i]);
 
             computeFb(vx, vy, vz, x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
             computeLorentz(q[i], x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
@@ -128,7 +128,8 @@ void compute(
 
             computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
             computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
-            *vel_res[j][i] = vx;
+            
+            (*vel_res)[j][i] = vx;
 
         }
 
