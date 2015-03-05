@@ -3,7 +3,10 @@
 
 long double Ex(long double x,long double y,long double z,long double t){
 
-  return 0;
+  long double k = 100;
+
+
+  return k*x;
 
 }
 
@@ -27,7 +30,10 @@ long double Bx(long double x,long double y,long double z,long double t){
 
 long double By(long double x,long double y,long double z,long double t){
 
-  return 0.2;
+
+
+  return 0;
+
 
 }
 
