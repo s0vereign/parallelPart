@@ -30,7 +30,6 @@ particle init_1(int length){
 
        std::normal_distribution<long double> distribution2(10, 55);
 
-
        particle  p;
        int i;
 
@@ -116,4 +115,25 @@ void init_params(long double* t_start, long double* t_end, long double* dt){
    *dt      = 1e-11;
 
 }
+
+
+void init_vel_res(int length, long double t_start,
+                  long double t_end, long double dt,
+                  long double*** vel_res){
+
+   int s =(int) (t_end-t_start)/dt;
+
+   (*vel_res) = malloc(sizeof(long double)*s*length);
+
+
+
+
+}
+
+
+
+
+
+
+
 #endif
