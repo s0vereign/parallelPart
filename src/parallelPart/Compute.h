@@ -130,7 +130,7 @@ void compute(
 
         }
 
-        for(int j = 0; j < ((int)(t_start-t_end)/dt),j++){
+        for(int j = 0; j < ((int)(t_start-t_end)/dt);j++){
 
           for(int k = 0; k < len ;k++){
 

@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <mpi.h>
 #include "Init.h"
 #include "Destruct.h"
 #include "Compute.h"
@@ -10,7 +9,7 @@
 int main(int argc, char** argv) {
 
 
-    int id, processors;
+
 
 //initialize the particles
     int len = 3;
@@ -26,8 +25,7 @@ int main(int argc, char** argv) {
     compute(t_start, t_end, dt,
         p.x,p.y,p.z,
         p.px,p.py,p.pz,
-        p.m,p.q, len,
-        id, processors);
+        p.m,p.q, len,&vel_res);
 
 
 

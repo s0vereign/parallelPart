@@ -123,7 +123,7 @@ void init_vel_res(int length, long double t_start,
 
    int s =(int) (t_end-t_start)/dt;
 
-   (*vel_res) = malloc(sizeof(long double)*s*length);
+   (*vel_res) =(long double**) malloc(sizeof(long double)*s*length);
 
 
 
