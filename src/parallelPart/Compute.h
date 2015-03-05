@@ -107,11 +107,12 @@ void compute(
 ) {
 
     long double t;
-    int i;
+    int i,j;
 
     long double gamma,vx,vy,vz,Fx,Fy,Fz;
 
-    for( t = t_start; t < t_end - dt; t += dt) {
+    for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
+
 #pragma omp parallel for
         for(i = 0; i < len; i++) {
 
@@ -127,22 +128,13 @@ void compute(
 
             computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
             computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
+            *vel_res[j][i] = vx;
 
         }
 
-        for(int j = 0; j < ((int)(t_start-t_end)/dt);j++){
-
-          for(int k = 0; k < len ;k++){
-
-
-             *vel_res[j][k]=vx;
-
-
-          }
 
 
 
-        }
     }
 }
 #endif

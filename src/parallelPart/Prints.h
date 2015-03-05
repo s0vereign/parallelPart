@@ -34,9 +34,37 @@ void print(long double t,
     fclose(f);
 }
 
+void print_array(   long double t_start, long double t_end, long double dt,
+                    int length,
+                    long double **result
+) {
 
+    FILE *f = fopen("result.txt", "a+");
 
+    int i,j;
+    long double t;
+    char buf[BUF];
+    char *buffer = (char*) malloc(sizeof(char) * length * BUF);
 
+    for( t = t_start,j = 0; t < t_end - dt; t += dt, j++)  {
+
+        strcpy(buffer, "");
+
+        for(i = 0; i < length; i++) {
+
+            snprintf(buf, 100, "%014.10Lf ", result[j][i]);
+            strcat(buffer, buf);
+
+        }
+
+        strcat(buffer, "\n");
+        fwrite( buffer, sizeof(char), strlen(buffer), f);
+    }
+
+    free(buffer);
+    fclose(f);
+
+}
 
 
 #endif
