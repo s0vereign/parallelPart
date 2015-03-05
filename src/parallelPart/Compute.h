@@ -5,17 +5,18 @@
 #include <stdio.h>
 
 #include <mpi.h>
-
+#include <sys/time.h>
 #include "Params.h"
 #include "Prints.h"
-
+#include <boost/format.hpp>
+/*
 #ifndef MIN
 #define MIN(a,b) \
    ({ __typeof__ (a) _a = (a); \
        __typeof__ (b) _b = (b); \
      _a < _b ? _a : _b; })
 #endif
-
+*/
 long double computeGamma(long double px, long double py, long double pz, long double m) {
     return sqrt(1 + (px*px + py*py + pz*pz) / (m*m));
 }
@@ -108,15 +109,20 @@ void compute(
     int id, int p
 ) {
 
-    long double t;
-    int i,
-        lowerBound = ceil(len / p) * id,
-        upperBound = MIN(ceil(len / p) * (id + 1), len);
+
+    double t;
+    timespec start,end;
+    clock_gettime(CLOCK_REALTIME, &start);
+    MPI_Init(NULL,NULL);
+    int i,pid,rank;
+    MPI_Comm_rank(MPI_COMM_WORLD,&pid);
+    MPI_Comm_size(MPI_COMM_WORLD,&rank);
+    MPI_Barrier(MPI_COMM_WORLD);
 
     for( t = t_start; t < t_end - dt; t += dt) {
 
 
-        for(i = lowerBound; i < upperBound; i++) {
+        for(i = pid ; i < len; i+=rank) {
 
             long double  gamma = computeGamma(px[i], py[i], pz[i], m[i]),
 
@@ -138,5 +144,16 @@ void compute(
 
         //~ print(t, x, y, z, px, py, pz, len);
     }
+
+
+    MPI_Finalize();
+    clock_gettime(CLOCK_REALTIME, &end);
+    if(pid == 0){
+    std::cout << boost::format("%i.%i") % (end.tv_sec - start.tv_sec) % (end.tv_nsec - start.tv_nsec) << std::endl;
+    }
+
+
+
+
 }
 #endif

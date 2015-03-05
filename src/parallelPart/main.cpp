@@ -9,18 +9,14 @@
 
 int main(int argc, char** argv) {
 
-    MPI_Init(&argc, &argv);
 
     int id, processors;
-    MPI_Comm_rank(MPI_COMM_WORLD, &id);
-    MPI_Comm_size(MPI_COMM_WORLD, &processors);
 
 //initialize the particles
-    int len = 10;
-    processors = 4;
+    int len = 10000;
   //  getConfiguration(argc,argv);
     long double t_start, t_end, dt;
-    particle p = init_1(len, id, processors);
+    particle p = init_1(len);
     init_params(&t_start, &t_end, &dt);
     //~ truncateFile();
 
@@ -36,7 +32,7 @@ int main(int argc, char** argv) {
 
     destruct(p);
 
-    MPI_Finalize();
+
 
     return EXIT_SUCCESS;
 }

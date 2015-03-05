@@ -29,7 +29,7 @@ typedef struct part{
 
 } particle;
 
-particle init_1(int length, int id, int processors){
+particle init_1(int length){
 
         //generatur set up
        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -60,18 +60,18 @@ particle init_1(int length, int id, int processors){
         p.py = (long double*)malloc(sizeof(long double)*length);
         p.pz = (long double*)malloc(sizeof(long double)*length);
 
-        for(i = id; i < length; i+= processors) {
+        for(int i = 0; i < length; i++) {
 
             if(i < 5){
 
               p.px[i] = distribution1(generator);
-              printf("%Lf \n",p.px[i]);
+            
 
             }
             else{
 
               p.px[i] = distribution2(generator);
-              printf("%Lf \n",p.px[i]);
+
 
             }
 
@@ -86,13 +86,13 @@ particle init_1(int length, int id, int processors){
 
         p.q = (long double*)malloc(sizeof(long double)*length);
 
-        for(i = id; i < length; i+= processors) {
+        for(int i = 0; i < length; i++) {
             p.q[i] = -1;
         }
 
         p.m = (long double*)malloc(sizeof(long double)*length);
 
-        for(i = id; i < length; i+= processors) {
+        for(int i = 0; i < length; i++) {
             p.m[i] = 0.5e6;
         }
 
