@@ -32,7 +32,6 @@ void computeFb(
     *Fz = vx * By(x, y, z, t) - vy * Bx(x, y, z, t);
 }
 
-
 void computeLorentz(
     long double q,
     long double x, long double y, long double z,
@@ -104,7 +103,7 @@ void compute(
     long double x[], long double y[], long double z[],
     long double px[], long double py[], long double pz[],
     long double m[], long double q[],
-    int len
+    int len,long double ***vel_res
 ) {
 
     long double t;
@@ -131,7 +130,19 @@ void compute(
 
         }
 
-        print(t, x, y, z, px, py, pz, len);
+        for(int j = 0; j < ((int)(t_start-t_end)/dt),j++){
+
+          for(int k = 0; k < len ;k++){
+
+
+             *vel_res[j][k]=vx;
+
+
+          }
+
+
+
+        }
     }
 }
 #endif
