@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 2.8.12)
 #################
 
 project(parallelParts)
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++11")
+set(CMAKE_CXX_FLAGS  "-std=c++11")
 
 
 
@@ -52,7 +52,7 @@ endif()
 #Find OpenMPI
 ##########
 find_package(MPI)
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}  ${MPI_COMPILE_FLAGS})
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  ${MPI_COMPILE_FLAGS}")
 include_directories(${MPI_INCLUDE_PATH})
 
 
