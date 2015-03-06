@@ -30,7 +30,7 @@ void init(long double* t_start, long double *t_end, long double *dt,
     *printEveryNthTimeStep = 100; //to compute more accurate, but avoid too large files
     
     *t_start = 0;//in seconds
-    *t_end   = 1e-5;//in seconds
+    *t_end   = 1e-8;//in seconds
     *dt      = 1e-12;//in seconds
 
     //generator: generates random numbers, initialising using a seed (unix time)

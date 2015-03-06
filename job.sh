@@ -10,6 +10,6 @@ source module_setup
 
 echo "Start..."
 
-/build/parallelparts
+build/parallelparts
 
 echo "End..."
