@@ -3,10 +3,7 @@
 
 long double Ex(long double x,long double y,long double z,long double t){
 
-  long double k = 100;
-
-
-  return k*x;
+    return 100*x;
 
 }
 

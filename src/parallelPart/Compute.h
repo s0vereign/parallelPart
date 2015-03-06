@@ -6,6 +6,8 @@
 
 #include <omp.h>
 
+#include <sys/time.h>
+
 #include "Params.h"
 #include "Prints.h"
 
@@ -112,8 +114,11 @@ void compute(
 
     long double gamma,vx,vy,vz,Fx,Fy,Fz;
 
+     timespec start, end;
+    clock_gettime(CLOCK_REALTIME, &start);
+
     for( t = t_start; t < t_end - dt; t += dt) {
-#pragma omp parallel for
+#pragma omp parallel for default(none) private(gamma, vx, vy, vz, Fx, Fy, Fz, i) shared(t, px, py, pz, x, y, z, q, m, len, dt)
         for(i = 0; i < len; i++) {
 
                   gamma = computeGamma(px[i], py[i], pz[i], m[i]);
@@ -124,14 +129,17 @@ void compute(
             computeFb(vx, vy, vz, x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
             computeLorentz(q[i], x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
 
-            //printf("Forces Fx: %Lf, Position x: %Lf \n",Fx,x[i]);
-
             computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
             computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
 
         }
 
-        print(t, x, y, z, px, py, pz, len);
+        //~ print(t, x, y, z, px, py, pz, len);
     }
+    
+    
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("%li.%li\n", (end.tv_sec - start.tv_sec), (end.tv_nsec - start.tv_nsec));
+    
 }
 #endif

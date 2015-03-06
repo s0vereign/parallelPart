@@ -18,10 +18,5 @@ void destruct(particle p){
   free(p.q);
   free(p.m);
 
-
-
-
-
-
 }
 #endif

@@ -21,20 +21,16 @@ typedef struct part{
 
 particle init_1(int length){
 
-      //get the first standard distribution
        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
        std::default_random_engine generator (seed);
+      //get the first standard distribution
        std::normal_distribution<long double> distribution1(0, 55);
 
        //get the second standard distribution
-
        std::normal_distribution<long double> distribution2(10, 55);
-
 
        particle  p;
        int i;
-
-
 
         //Initialize the Positions
         p.x = (long double*)malloc(sizeof(long double)*length);
@@ -46,26 +42,18 @@ particle init_1(int length){
         p.py = (long double*)malloc(sizeof(long double)*length);
         p.pz = (long double*)malloc(sizeof(long double)*length);
 
-
-
-
-
         for(i=0; i < length; i++) {
 
             if(i < 5){
 
               p.px[i] = distribution1(generator);
-              printf("%Lf \n",p.px[i]);
-
+              //~ printf("%Lf \n",p.px[i]);
 
             }
             else{
 
-
               p.px[i] = distribution2(generator);
-              printf("%Lf \n",p.px[i]);
-
-
+              //~ printf("%Lf \n",p.px[i]);
 
             }
 
@@ -90,23 +78,9 @@ particle init_1(int length){
             p.m[i] = 0.51e6;
         }
 
-        /*
-        for(i=0; i < length; i++) {
-
-            p.px[i] = sqrt((20e6+p.m[i])*(20e6+p.m[i]) + p.m[i] * p.m[i]);
-            p.py[i] = 0;
-            p.pz[i] = 0;
-
-            p.x[i] = 0;
-            p.y[i] = 0;
-            p.z[i] = 0;
-        }
-        */
         return p;
 
  }
-
-
 
 void init_params(long double* t_start, long double* t_end, long double* dt){
 
