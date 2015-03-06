@@ -44,7 +44,7 @@ int main(int argc, char** argv){
     printf("Printing...\n");
     print_array(t_start, t_end, dt, count,res, &vel_res);
 
-    destruct(p);
+    destruct(len, t_start, t_end, dt, printEveryNthTimeStep, p, &vel_res);
 
 
 
