@@ -48,7 +48,7 @@ void computeNewImpulse(
     long double *px, long double *py, long double *pz,
     long double Fx, long double Fy, long double Fz
 ) {
-    //energy-saving!
+    //energy-conservation!
                 long double valueP = sqrt( (*px) * (*px) + (*py) * (*py) + (*pz) * (*pz)),
 
                 ePx = *px / valueP, //unit vector in impulse direction
@@ -68,10 +68,11 @@ void computeNewImpulse(
                 py1 = *py + 3e8 * fPy * dt,
                 pz1 = *pz + 3e8 * fPz * dt,
 
-                px2 = px1 + 3e8 * fSx * dt, //impulse part 2: whole impulse without energy saving
+                px2 = px1 + 3e8 * fSx * dt, //impulse part 2: whole impulse without energy conservation
                 py2 = py1 + 3e8 * fSy * dt,
                 pz2 = pz1 + 3e8 * fSz * dt;
 /*
+    //old computation of new momentum: no energy conservation (magnetic field also accelerates)
     *px = *px + 3e8 * Fx * dt;
     *py = *py + 3e8 * Fy * dt;
     *pz = *pz + 3e8 * Fz * dt;
@@ -103,17 +104,15 @@ void compute(
     long double x[], long double y[], long double z[],
     long double px[], long double py[], long double pz[],
     long double m[], long double q[],
-    int len,long double ***vel_res,int res
+    int len, int printEveryNthTimeStep, long double ***vel_res
 ) {
-
 
     int i,j;
 
     long double gamma,vx,vy,vz,Fx,Fy,Fz,t;
-    //long double *vx_zw= malloc(sizeof(long double)*len);
-    for( t = t_start, j = 0; t < t_end - dt; t += dt, j++) {
+    for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
 
-#pragma omp parallel default(none) private(i, gamma, vx, vy, vz, Fx, Fy, Fz) shared(px, py, pz, m, q, x, y, z, t, dt, res, j, vel_res, len)
+#pragma omp parallel for default(none) private(i, gamma, vx, vy, vz, Fx, Fy, Fz) shared(vel_res, t, j, x, y, z, px, py, pz, m, q, printEveryNthTimeStep, len, dt)
         for(i = 0; i < len; i++) {
 
             gamma = computeGamma(px[i], py[i], pz[i], m[i]);
@@ -124,23 +123,19 @@ void compute(
             computeFb(vx, vy, vz, x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
             computeLorentz(q[i], x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
 
-            //printf("Forces Fx: %Lf, Position x: %Lf \n",Fx,x[i]);
-
             computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
             computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
             
-            if( j % res == 0 ) {
+            if( j % printEveryNthTimeStep == 0) {
                 
-                (*vel_res)[j/res][i] = vx;
-
+                (*vel_res)[j / printEveryNthTimeStep][i] = vx;
+                
             }
-            
         }
 
 
 
 
     }
-
 }
 #endif

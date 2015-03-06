@@ -6,35 +6,35 @@
 #include "Compute.h"
 #include "Params.h"
 #include "Prints.h"
-//#include "Parsearg.h"
 
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
 
-    printf("Initialising...\n");
     printf("Using %i Threads\n", omp_get_num_procs());
-
-    int count; //Number of Particles
-
-    int res; //Resolution of Data-Output: Every res-th timestep will be written
+    printf("Initialising...\n");
+       
     long double t_start, t_end, dt;
-    long double **vel_res;//Velocity results
+    long double **vel_res;
+    int len, printEveryNthTimeStep;
     particle p;
-
-    init( &count, &res, &t_start, &t_end, &dt, &vel_res, &p);
-
+    
+    init(&t_start, &t_end, &dt, &len, &printEveryNthTimeStep, &vel_res, &p);
+    
     truncateFile();
 
     printf("Computing...\n");
     compute(t_start, t_end, dt,
         p.x,p.y,p.z,
         p.px,p.py,p.pz,
-        p.m,p.q,
-        count, &vel_res,res);
+        p.m,p.q, len,
+        printEveryNthTimeStep, &vel_res);
+
 
     printf("Printing...\n");
-    print_array(t_start, t_end, dt, count,res, &vel_res);
+    print_array(t_start, t_end, dt, len, printEveryNthTimeStep, &vel_res);
 
-    destruct(count, t_start, t_end, dt, res, p, &vel_res);
+    destruct(len, t_start, t_end, dt, printEveryNthTimeStep, p, &vel_res);
+
+
 
     return EXIT_SUCCESS;
 }

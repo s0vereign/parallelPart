@@ -12,6 +12,7 @@ void truncateFile() {
     fclose(f);
 }
 
+//not used
 void print(long double t,
     long double x[], long double y[], long double z[],
     long double px[], long double py[], long double pz[],
