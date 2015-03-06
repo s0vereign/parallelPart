@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
     int id, processors;
 
 //initialize the particles
-    int len = 10000;
+    int len = 30000;
   //  getConfiguration(argc,argv);
     long double t_start, t_end, dt;
     particle p = init_1(len);
