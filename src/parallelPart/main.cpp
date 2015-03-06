@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
     printf("Initialising...\n");
     printf("Using %i Threads\n", omp_get_num_procs());
 //initialize the particles
-    int len = 30,
+    int len = 3,
         printEveryNthTimeStep = 100;
   //  getConfiguration(argc,argv);
     long double t_start, t_end, dt;
@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
     printf("Printing...\n");
     print_array(t_start, t_end, dt, len, printEveryNthTimeStep, &vel_res);
 
-    destruct(p);
+    destruct(len, t_start, t_end, dt, printEveryNthTimeStep, p, &vel_res);
 
 
 
