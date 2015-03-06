@@ -112,7 +112,7 @@ void compute(
     long double gamma,vx,vy,vz,Fx,Fy,Fz,t;
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
 
-#pragma omp parallel for private(gamma, vx, vy, vz, Fx, Fy, Fz)
+#pragma omp parallel for default(none) private(i, gamma, vx, vy, vz, Fx, Fy, Fz) shared(vel_res, t, j, x, y, z, px, py, pz, m, q, printEveryNthTimeStep, len, dt)
         for(i = 0; i < len; i++) {
 
             gamma = computeGamma(px[i], py[i], pz[i], m[i]);
