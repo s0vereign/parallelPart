@@ -20,9 +20,9 @@ find_package(OpenMP)
 ##########
 #Find OpenMPI
 ##########
-find_package(MPI)
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}  ${MPI_COMPILE_FLAGS})
-include_directories(MPI_INCLUDE_PATH)
+#find_package(MPI)
+#set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}  ${MPI_COMPILE_FLAGS})
+#include_directories(MPI_INCLUDE_PATH)
 
 
 
@@ -34,7 +34,7 @@ file(GLOB_RECURSE SRC_FILES "*.cpp")
 
 add_executable(parallelparts ${SRC_FILES})
 
-target_link_libraries(parallelparts ${OpenMP_CXX_FLAGS} ${MPI_LIBRARIES} )
+target_link_libraries(parallelparts ${OpenMP_CXX_FLAGS}) #${MPI_Libraries}
 
 if(UNIX)
 	target_link_libraries(parallelparts m)
