@@ -111,10 +111,9 @@ void compute(
 
     long double gamma,vx,vy,vz,Fx,Fy,Fz,t;
     //long double *vx_zw= malloc(sizeof(long double)*len);
-    for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
+    for( t = t_start, j = 0; t < t_end - dt; t += dt, j++) {
 
-#pragma omp parallel
-
+#pragma omp parallel default(none) private(i, gamma, vx, vy, vz, Fx, Fy, Fz) shared(px, py, pz, m, q, x, y, z, t, dt, res, j, vel_res, len)
         for(i = 0; i < len; i++) {
 
             gamma = computeGamma(px[i], py[i], pz[i], m[i]);
@@ -129,10 +128,13 @@ void compute(
 
             computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
             computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
-            if(j%res==0){
-            (*vel_res)[j/res][i] = vx;
+            
+            if( j % res == 0 ) {
+                
+                (*vel_res)[j/res][i] = vx;
 
-          }
+            }
+            
         }
 
 

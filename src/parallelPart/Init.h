@@ -24,8 +24,6 @@ void init(int *count, int *resolution,
           long double *t_start, long double *t_end,long double *dt,
           long double ***vel_res,particle *p){
 
-
-
             /*
               At first we'll have to initialize:
               - count: The number of particles
@@ -42,19 +40,14 @@ void init(int *count, int *resolution,
               - vel_res: Saves the velocity of each particle at each
                          choosen timestep (given by resolution).
               - p: This will initialize all relevant particle properties!
-
             */
 
-            *count  = 100;
+            *count      = 10;
             *resolution = 100;
 
-            *t_start = 0;
-            *t_end = 1e-8;
-            *dt  = 1e-11;
-
-
-
-
+            *t_start    = 0;
+            *t_end      = 1e-6;
+            *dt         = 1e-13;
 
             /*
             This loop will initialize the initial conditions
@@ -67,51 +60,42 @@ void init(int *count, int *resolution,
             - px: The impuse in x direction, which will be distributed
                   by a Gaussian
             - x,y,z: Coordiantes of the Particles!
-
-
-
             */
 
-
             //Initialize the mean value and the width of the Gaussians!
+            long double mean1   = 100;
+            long double mean2   = 100;
+            long double width1  = 100;
+            long double width2  = 100;
 
-            long double mean1=100;
-            long double mean2=100;
-            long double width1=100;
-            long double width2=100;
-
-            //get the first standard distribution
+            //Initialise generator for generating it random numbers
              unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
              std::default_random_engine generator (seed);
+             
+            //get the first standard distribution
              std::normal_distribution<long double> distribution1(mean1, width2);
 
              //get the second standard distribution
-
              std::normal_distribution<long double> distribution2(mean2, width2);
 
-
              //Allocate Memory for position!
-             p->x = (long double*)malloc(sizeof(long double)* *count);
-             p->y = (long double*)malloc(sizeof(long double)* *count);
-             p->z = (long double*)malloc(sizeof(long double)* *count);
+             p->x = (long double*) malloc(sizeof(long double) * (*count));
+             p->y = (long double*) malloc(sizeof(long double) * (*count));
+             p->z = (long double*) malloc(sizeof(long double) * (*count));
 
              //Allocate Memory for the Momentum,Charge,Mass
-             p->px = (long double*)malloc(sizeof(long double)* *count);
-             p->py = (long double*)malloc(sizeof(long double)* *count);
-             p->pz = (long double*)malloc(sizeof(long double)* *count);
-             p->q = (long double*)malloc(sizeof(long double)* *count);
-             p->m = (long double*)malloc(sizeof(long double)* *count);
+             p->px = (long double*) malloc(sizeof(long double) * (*count));
+             p->py = (long double*) malloc(sizeof(long double) * (*count));
+             p->pz = (long double*) malloc(sizeof(long double) * (*count));
+             p->q  = (long double*) malloc(sizeof(long double) * (*count));
+             p->m  = (long double*) malloc(sizeof(long double) * (*count));
 
-
-            for(int i = 0 ; i < *count ; i++){
-
-
+            for(int i = 0 ; i < (*count) ; i++){
               /*
                  Loop to initialize the all the location
 
               */
-
-              if(i < *count/2){
+              if(i < (*count) / 2){
 
                 p->px[i] = distribution1(generator);
 
@@ -122,41 +106,27 @@ void init(int *count, int *resolution,
 
               }
 
-              p->pz[i] = 0;
-              p->py[i] = 0;
-              p->x[i]  = 0;
-              p->y[i]  = 0;
-              p->m[i] =  11;
-              p->z[i]  = 0;
-              p->q[i] =  1;
-
-
-
-
+              p->pz[i]  = 0;
+              p->py[i]  = 0;
+              p->x[i]   = 0;
+              p->y[i]   = 0;
+              p->m[i]   = .5e6;
+              p->z[i]   = 0;
+              p->q[i]   =  -1;
+              
             }
 
-
-
-
             //Initialize the Velocity result Memory!
-            int s =(int) ((t_end-t_start)/(*dt *(*resolution))),
+            int s = (int) ((*t_end - *t_start) / (*dt) / (*resolution) + 1),
                  i;
 
             (*vel_res) =(long double**) malloc(sizeof(long double) * s);
 
              for( i = 0; i < s; i++) {
 
-                 (*vel_res)[i] = (long double*) malloc(sizeof(long double) *  *count);
+                 (*vel_res)[i] = (long double*) malloc(sizeof(long double) *  (*count));
 
              }
-
-
-
-
-
-
-
-
 
 }
 

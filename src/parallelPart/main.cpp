@@ -10,13 +10,8 @@
 
 int main(int argc, char** argv){
 
-
-
-
     printf("Initialising...\n");
     printf("Using %i Threads\n", omp_get_num_procs());
-
-//initialize the particles
 
     int count; //Number of Particles
 
@@ -25,28 +20,21 @@ int main(int argc, char** argv){
     long double **vel_res;//Velocity results
     particle p;
 
-
-
-    init(&count,&res,&t_start,&t_end,&dt, &vel_res,&p);
-
+    init( &count, &res, &t_start, &t_end, &dt, &vel_res, &p);
 
     truncateFile();
 
     printf("Computing...\n");
-//start the computation with p
     compute(t_start, t_end, dt,
         p.x,p.y,p.z,
         p.px,p.py,p.pz,
         p.m,p.q,
         count, &vel_res,res);
 
-
     printf("Printing...\n");
     print_array(t_start, t_end, dt, count,res, &vel_res);
 
-    destruct(len, t_start, t_end, dt, printEveryNthTimeStep, p, &vel_res);
-
-
+    destruct(count, t_start, t_end, dt, res, p, &vel_res);
 
     return EXIT_SUCCESS;
 }
