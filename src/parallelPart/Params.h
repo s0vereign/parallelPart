@@ -2,8 +2,13 @@
 #define PARAMS_H
 
 long double Ex(long double x,long double y,long double z,long double t){
-    
-    return 100*x;
+
+  long double k = 10000;
+
+
+
+  return k*x;
+
 
 }
 

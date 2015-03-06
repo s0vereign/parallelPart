@@ -103,16 +103,18 @@ void compute(
     long double x[], long double y[], long double z[],
     long double px[], long double py[], long double pz[],
     long double m[], long double q[],
-    int len, int printEveryNthTimeStep, long double ***vel_res
+    int len,long double ***vel_res,int res
 ) {
 
 
     int i,j;
 
     long double gamma,vx,vy,vz,Fx,Fy,Fz,t;
+    //long double *vx_zw= malloc(sizeof(long double)*len);
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
 
-#pragma omp parallel for default(none) private(i, gamma, vx, vy, vz, Fx, Fy, Fz) shared(vel_res, t, j, x, y, z, px, py, pz, m, q, printEveryNthTimeStep, len, dt)
+#pragma omp parallel
+
         for(i = 0; i < len; i++) {
 
             gamma = computeGamma(px[i], py[i], pz[i], m[i]);
@@ -127,15 +129,16 @@ void compute(
 
             computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
             computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
-            
-            if( j % printEveryNthTimeStep == 0) {
-                (*vel_res)[j / printEveryNthTimeStep][i] = vx;
-            }
+            if(j%res==0){
+            (*vel_res)[j/res][i] = vx;
+
+          }
         }
 
 
 
 
     }
+
 }
 #endif
