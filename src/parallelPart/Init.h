@@ -65,7 +65,7 @@ particle init_1(int length){
             if(i < 5){
 
               p.px[i] = distribution1(generator);
-            
+
 
             }
             else{
