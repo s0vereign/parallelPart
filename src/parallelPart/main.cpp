@@ -11,14 +11,14 @@ int main(int argc, char** argv) {
 
     printf("Using %i Threads\n", omp_get_num_procs());
     printf("Initialising...\n");
-       
+
     long double t_start, t_end, dt;
     long double **vel_res;
     int len, printEveryNthTimeStep;
     particle p;
-    
+
     init(&t_start, &t_end, &dt, &len, &printEveryNthTimeStep, &vel_res, &p);
-    
+
     truncateFile();
 
     printf("Computing...\n");
