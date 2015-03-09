@@ -14,6 +14,7 @@ int main(int argc, char** argv) {
 
 //initialize the particles
     int len = 1000;
+
   //  getConfiguration(argc,argv);
     long double t_start, t_end, dt;
     particle p = init_1(len);
