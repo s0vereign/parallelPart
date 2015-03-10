@@ -59,21 +59,31 @@ include_directories(${MPI_INCLUDE_PATH})
 ##############
 #Find Adios Lib
 ##############
-find_package(ADIOS 1.6.0)
+#find_package(ADIOS 1.6.0)
+#
+#	if(ADIOS_FOUND)
+#	    add_definitions(-DENABLE_ADIOS=1)
+#	    if(NOT (ADIOS_VERSION VERSION_LESS 1.7.0))
+#	        message(STATUS "Enable ADIOS data transforms")
+#	        add_definitions(-DADIOS_TRANSFORMS=1)
+#	    endif(NOT (ADIOS_VERSION VERSION_LESS 1.7.0))
+#
+#	    include_directories(SYSTEM ${ADIOS_INCLUDE_DIRS})
+#	    set(LIBS ${LIBS} ${ADIOS_LIBRARIES})
+#	endif(ADIOS_FOUND)
 
-	if(ADIOS_FOUND)
-	    add_definitions(-DENABLE_ADIOS=1)
-	    if(NOT (ADIOS_VERSION VERSION_LESS 1.7.0))
-	        message(STATUS "Enable ADIOS data transforms")
-	        add_definitions(-DADIOS_TRANSFORMS=1)
-	    endif(NOT (ADIOS_VERSION VERSION_LESS 1.7.0))
 
-	    include_directories(SYSTEM ${ADIOS_INCLUDE_DIRS})
-	    set(LIBS ${LIBS} ${ADIOS_LIBRARIES})
-	endif(ADIOS_FOUND)
+###################
+#Load HDF5
+###################
+FIND_PACKAGE (HDF5)
+INCLUDE_DIRECTORIES(${HDF5_LIBRARIES})
+set(LINK_LIBS ${LINK_LIBS} ${HDF5_LIBRARIES})
 
 
 
+
+set(LINK_LIBS ${LINK_LIBS} ${OpenMP_CXX_FLAGS}  ${MPI_LIBRARIES})
 
 
 #################
@@ -86,7 +96,7 @@ message(${SRC_FILES})
 
 add_executable(parallelparts ${SRC_FILES})
 
-target_link_libraries(parallelparts ${OpenMP_CXX_FLAGS} ${MPI_LIBRARIES} )
+target_link_libraries(parallelparts ${LINK_LIBS})
 
 if(UNIX)
 	target_link_libraries(parallelparts m)
