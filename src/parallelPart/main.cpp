@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include <omp.h>
+
 #include "Init.h"
 #include "Destruct.h"
 #include "Compute.h"
@@ -12,6 +14,7 @@
 
 int main(int argc, char** argv) {
 
+	printf("Using %i cores\n", omp_get_max_threads());
     //initialize the particles
       int len;
       
