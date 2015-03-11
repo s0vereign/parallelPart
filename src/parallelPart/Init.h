@@ -6,24 +6,13 @@
 #include <random>
 #include <chrono>
 #include <hdf5.h>
-#ifndef MAX
-#define MAX(a,b) \
-   ({ __typeof__ (a) _a = (a); \
-       __typeof__ (b) _b = (b); \
-     _a > _b ? _a : _b; })
-#endif
+#include "Globals.h"
 
-#ifndef MIN
-#define MIN(a,b) \
-   ({ __typeof__ (a) _a = (a); \
-       __typeof__ (b) _b = (b); \
-     _a < _b ? _a : _b; })
-#endif
 
-#ifndef FILENAME
-#define FILENAME "data.h5"
 
-#endif
+
+
+
 
 
 
@@ -114,7 +103,7 @@ particle init_1(int length){
 void init_params(long double* t_start, long double* t_end, long double* dt){
 
    *t_start = 0;
-   *t_end   = 8e-7;
+   *t_end   = 1e-6;
    *dt      = 1e-11;
 }
 
@@ -132,17 +121,23 @@ void init_file(long double *t_start, long double *t_end,long double *dt, int *le
 
 
       */
-      hsize_t dims[2];
+
+     int k =(int) ((*t_end-*t_start)/ *dt + 1);
+
+
+
+      hsize_t dims[3];
       hid_t file,dataset,dataspace;
       herr_t status;
 
 
 
       file = H5Fcreate(FILENAME, H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
-      dims[0]=10;
-      dims[1]=10;
-      dataspace = H5Screate_simple(2,dims,NULL);
-      dataset = H5Dcreate2(file,"/out",H5T_NATIVE_INT,dataspace,H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT);
+      dims[0]=k;
+      dims[1]=*length;
+      dims[2]=3;
+      dataspace = H5Screate_simple(3,dims,NULL);
+      dataset = H5Dcreate2(file,GROUPNAME,H5T_NATIVE_DOUBLE,dataspace,H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT);
 
       status = H5Dclose(dataset);
       status = H5Sclose(dataspace);
@@ -153,6 +148,43 @@ void init_file(long double *t_start, long double *t_end,long double *dt, int *le
 
 
 }
+
+
+void initMem(int k, int len, double ****t1){
+
+
+
+    (*t1) =(double***) malloc(sizeof(double)*k);
+    for(int i = 0;i < k ; i++){
+
+        (*t1)[i]=(double**) malloc(sizeof(double)*len);
+
+
+    }
+
+
+    for(int i = 0; i < k ; i++){
+
+
+        for(int j = 0; j < len ; j++){
+
+
+            (*t1)[i][j]=(double*) malloc(sizeof(double)*3);
+
+
+        }
+
+
+    }
+
+
+
+
+
+}
+
+
+
 
 
 

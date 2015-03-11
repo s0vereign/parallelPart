@@ -5,6 +5,7 @@
 #include "Compute.h"
 #include "Params.h"
 #include "Prints.h"
+#include "Globals.h"
 //#include "Parsearg.h"
 
 int main(int argc, char** argv) {
@@ -13,15 +14,11 @@ int main(int argc, char** argv) {
 
 
 
- 
-    int id, processors;
+
+
 
 //Initilize OpenMPI
 
-    MPI_Init(&argc,&argv);
-    MPI_Comm comm = MPI_COMM_WORLD;
-    MPI_Comm_rank (comm,&id);
-    MPI_Comm_size(comm,&processors);
 
 
 
@@ -41,10 +38,9 @@ int main(int argc, char** argv) {
     compute(t_start, t_end, dt,
         p.x,p.y,p.z,
         p.px,p.py,p.pz,
-        p.m,p.q, len,
-        id, processors);
+        p.m,p.q, len);
 
-    destruct();
+
 
 
     destruct(p);

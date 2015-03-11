@@ -4,11 +4,12 @@
 #include <math.h>
 #include <stdio.h>
 
-#include <mpi.h>
+
 #include <sys/time.h>
 #include "Params.h"
 #include "Prints.h"
 #include <boost/format.hpp>
+#include "Save.h"
 /*
 #ifndef MIN
 #define MIN(a,b) \
@@ -105,21 +106,27 @@ void compute(
     long double x[], long double y[], long double z[],
     long double px[], long double py[], long double pz[],
     long double m[], long double q[],
-    int len,
-    int id, int p
-) {
+    int len) {
 
 
     double t;
     timespec start,end;
     clock_gettime(CLOCK_REALTIME, &start);
-    int i,pid=id,rank=p;
-   
 
+
+
+    int k = (int)((t_start-t_end)/dt + 1);
+    double ***pos;
+    initMem(k,len,&pos);
+
+
+
+
+    int c=0;
     for( t = t_start; t < t_end - dt; t += dt) {
 
-
-        for(i = pid ; i < len; i+=rank) {
+#pragma omp parallel for
+        for(int i = 0 ; i < len; i++) {
 
             long double  gamma = computeGamma(px[i], py[i], pz[i], m[i]),
 
@@ -137,17 +144,24 @@ void compute(
             computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
             computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
 
+            printf("Here1 \n");
+
+            pos[c][i][0]= (double)x[i];
+            pos[c][i][1]= (double)y[i];
+            pos[c][i][2]= (double)z[i];
+
         }
 
-        //~ print(t, x, y, z, px, py, pz, len);
+        c++;
     }
 
 
-    MPI_Finalize();
+    printf("Here2 \n");
+    save(&pos);
+
+
     clock_gettime(CLOCK_REALTIME, &end);
-    if(pid == 0){
-    std::cout << boost::format("%i.%i") % (end.tv_sec - start.tv_sec) % (end.tv_nsec - start.tv_nsec) << std::endl;
-    }
+
 
 
 
