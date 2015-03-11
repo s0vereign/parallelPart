@@ -113,11 +113,8 @@ void compute(
     double t;
     timespec start,end;
     clock_gettime(CLOCK_REALTIME, &start);
-    MPI_Init(NULL,NULL);
-    int i,pid,rank;
-    MPI_Comm_rank(MPI_COMM_WORLD,&pid);
-    MPI_Comm_size(MPI_COMM_WORLD,&rank);
-    MPI_Barrier(MPI_COMM_WORLD);
+    int i,pid=id,rank=p;
+   
 
     for( t = t_start; t < t_end - dt; t += dt) {
 

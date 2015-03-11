@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <random>
 #include <chrono>
-
+#include <hdf5.h>
 #ifndef MAX
 #define MAX(a,b) \
    ({ __typeof__ (a) _a = (a); \
@@ -20,6 +20,13 @@
      _a < _b ? _a : _b; })
 #endif
 
+#ifndef FILENAME
+#define FILENAME "data.h5"
+
+#endif
+
+
+
 typedef struct part{
 
   long double *x,*y,*z,
@@ -28,6 +35,10 @@ typedef struct part{
 
 
 } particle;
+
+
+
+
 
 particle init_1(int length){
 
@@ -106,4 +117,43 @@ void init_params(long double* t_start, long double* t_end, long double* dt){
    *t_end   = 8e-7;
    *dt      = 1e-11;
 }
+
+
+
+
+void init_file(long double *t_start, long double *t_end,long double *dt, int *length){
+
+
+
+      /*
+
+      Init routine to initialize a HDF5 file!
+
+
+
+      */
+      hsize_t dims[2];
+      hid_t file,dataset,dataspace;
+      herr_t status;
+
+
+
+      file = H5Fcreate(FILENAME, H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
+      dims[0]=10;
+      dims[1]=10;
+      dataspace = H5Screate_simple(2,dims,NULL);
+      dataset = H5Dcreate2(file,"/out",H5T_NATIVE_INT,dataspace,H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT);
+
+      status = H5Dclose(dataset);
+      status = H5Sclose(dataspace);
+      status = H5Fclose(file);
+      printf("File Created!\n");
+
+
+
+
+}
+
+
+
 #endif

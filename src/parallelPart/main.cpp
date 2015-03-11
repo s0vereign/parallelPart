@@ -10,7 +10,22 @@
 int main(int argc, char** argv) {
 
 
+
+
+
+ 
     int id, processors;
+
+//Initilize OpenMPI
+
+    MPI_Init(&argc,&argv);
+    MPI_Comm comm = MPI_COMM_WORLD;
+    MPI_Comm_rank (comm,&id);
+    MPI_Comm_size(comm,&processors);
+
+
+
+
 
 //initialize the particles
     int len = 1000;
@@ -19,6 +34,7 @@ int main(int argc, char** argv) {
     long double t_start, t_end, dt;
     particle p = init_1(len);
     init_params(&t_start, &t_end, &dt);
+    init_file(&t_start,&t_end,&dt,&len);
     //~ truncateFile();
 
 //start the computation with p
@@ -28,7 +44,7 @@ int main(int argc, char** argv) {
         p.m,p.q, len,
         id, processors);
 
-
+    destruct();
 
 
     destruct(p);
