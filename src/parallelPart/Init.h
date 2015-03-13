@@ -34,7 +34,7 @@ void init(long double* t_start, long double *t_end, long double *dt,
     *length = 10;
     
     *t_start = 0;//in seconds
-    *t_end   = 1e-8;//in seconds
+    *t_end   = 1e-6;//in seconds
     *dt      = 1e-12;//in seconds
     
     *beamspeed = 0.47 * SOL;

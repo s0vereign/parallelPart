@@ -139,7 +139,7 @@ void compute(
     long double t;
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
 
-#pragma omp parallel for default(none) private(i) shared(vel_res, t, j, x, y, z, px, py, pz, m, q, printEveryNthTimeStep, len, dt)
+#pragma omp parallel for default(none) private(i) shared(times, t, j, x, y, z, px, py, pz, m, q, len, dt, k)
         for(i = 0; i < len; i++) {
 
             updateParticle(
