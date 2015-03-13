@@ -35,7 +35,7 @@ file(GLOB_RECURSE SRC_FILES "*.cpp")
 
 add_executable(parallelparts ${SRC_FILES})
 
-target_link_libraries(parallelparts) #${MPI_Libraries}
+target_link_libraries(parallelparts ${OpenMP_CXX_FLAGS}) #${MPI_Libraries}
 
 if(UNIX)
 	target_link_libraries(parallelparts m)
