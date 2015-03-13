@@ -93,7 +93,7 @@ void print_signal(long double ***sign, int length, int k){
             strcat(buffer,buf);
 
         }
-        strcat(bufer, "\n");
+        strcat(buffer, "\n");
 
     }
     fwrite(buffer, sizeof(char),strlen(buffer),f);

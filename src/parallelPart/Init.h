@@ -24,7 +24,7 @@ typedef struct part{
 
 void init(long double* t_start, long double *t_end, long double *dt,
             long double *beamspeed, long double *circumference,
-            int *length, int *printEveryNthTimeStep, 
+            int *length, 
             long double ***times, particle *p
 ) {
     //loop-variable for later use
@@ -32,14 +32,13 @@ void init(long double* t_start, long double *t_end, long double *dt,
     
     //initialise length (from array length): number of particles
     *length = 10;
-    *printEveryNthTimeStep = 100; //to compute more accurate, but avoid too large files
     
     *t_start = 0;//in seconds
-    *t_end   = 1e-6;//in seconds
+    *t_end   = 1e-8;//in seconds
     *dt      = 1e-12;//in seconds
     
     *beamspeed = 0.47 * SOL;
-    *circumference = 100;
+    *circumference = 100.0;
 
     //generator: generates random numbers, initialising using a seed (unix time)
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -109,7 +108,7 @@ void init(long double* t_start, long double *t_end, long double *dt,
      * Calculate the first dimension: number of timestep, where the
      * velocities are saved
     */
-    int s =(int) (((*t_end) - (*t_start)) * (*beamspeed) / (*circumference) + 1);
+    int s =(int) ceil(((*t_end) - (*t_start)) * (*beamspeed) / (*circumference) + 3);
    
    //allocate memory for first dimension
     (*times) =(long double**) malloc(sizeof(long double) * s);

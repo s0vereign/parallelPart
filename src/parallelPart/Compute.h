@@ -129,11 +129,12 @@ void compute(
     long double x[], long double y[], long double z[],
     long double px[], long double py[], long double pz[],
     long double m[], long double q[],
-    int len, int printEveryNthTimeStep, long double ***times,
+    int len, int *k, long double ***times,
     long double beamspeed, long double circumference
 ) {
 
-    int i,j,k = 0;
+    int i,j;
+    *k = 0;
 
     long double t;
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
@@ -151,10 +152,10 @@ void compute(
         }
 
         getSignals(
-            t, &k, len,
+            t, k, len,
             x,
             beamspeed, circumference,
-            (*times)[k]
+            (*times)[*k]
         );
 
 

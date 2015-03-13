@@ -7,8 +7,8 @@
 void destruct(
     int len,
     long double t_start, long double t_end, long double dt,
-    int printEveryNthTimeStep,
-    particle p, long double ***vel_res
+    long double beamspeed, long double circumference,
+    particle p, long double ***times
 ) {
 
     free(p.x);
@@ -20,16 +20,16 @@ void destruct(
     free(p.q);
     free(p.m);
 
-    int s =(int) ((t_end-t_start)/dt / printEveryNthTimeStep),
+    int s =(int) ceil(((t_end) - (t_start)) * (beamspeed) / (circumference) + 3),
         i;
 
     for( i = 0; i < s; i++) {
         
-        free((*vel_res)[i]);
+        free((*times)[i]);
         
     }
     
-    free(*vel_res);
+    free(*times);
 
 }
 #endif
