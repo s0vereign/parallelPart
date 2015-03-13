@@ -10,24 +10,10 @@
 
 int main(int argc, char** argv) {
 
-
-
-
-
-
-
-
-//Initilize OpenMPI
-
-
-
-
-
-
 //initialize the particles
-    int len = 1000;
+    int len = 10;
 
-  //  getConfiguration(argc,argv);
+//  getConfiguration(argc,argv);
     long double t_start, t_end, dt;
     particle p = init_1(len);
     init_params(&t_start, &t_end, &dt);

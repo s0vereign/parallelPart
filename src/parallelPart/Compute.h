@@ -115,26 +115,27 @@ void compute(
 
 
 
-    int k = (int)((t_start-t_end)/dt + 1);
-    double ***pos;
-    initMem(k,len,&pos);
+    int k = (int)((t_end-t_start)/dt);
+    double *pos;
+    initMem(k,len,pos);
 
+    long double  gamma,vx,vy,vz,Fx,Fy,Fz;
 
 
 
     int c=0;
     for( t = t_start; t < t_end - dt; t += dt) {
 
-#pragma omp parallel for
+//#pragma omp parallel for default(none) private(gamma, vx, vy, vz, Fx, Fy, Fz) shared(t, px, py, pz, x, y, z, q, m, len, dt,pos,c)
         for(int i = 0 ; i < len; i++) {
 
-            long double  gamma = computeGamma(px[i], py[i], pz[i], m[i]),
+                    gamma = computeGamma(px[i], py[i], pz[i], m[i]);
 
-                    vx = computeVi(px[i], gamma, m[i]),
-                    vy = computeVi(py[i], gamma, m[i]),
-                    vz = computeVi(pz[i], gamma, m[i]),
+                    vx = computeVi(px[i], gamma, m[i]);
+                    vy = computeVi(py[i], gamma, m[i]);
+                    vz = computeVi(pz[i], gamma, m[i]);
 
-                    Fx, Fy, Fz;
+
 
             computeFb(vx, vy, vz, x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
             computeLorentz(q[i], x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
@@ -144,20 +145,22 @@ void compute(
             computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
             computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
 
-            printf("Here1 \n");
+            pos[c*len+i+1] = x[i];
+            pos[c*len+i+2] = y[i];
+            pos[c*len+i+3] = z[i];
 
-            pos[c][i][0]= (double)x[i];
-            pos[c][i][1]= (double)y[i];
-            pos[c][i][2]= (double)z[i];
+
+
+
+
+
 
         }
-
+        printf("\n %Lf %Lf %Lf \n",x[c],y[c],z[c]);
         c++;
     }
 
-
-    printf("Here2 \n");
-    save(&pos);
+    save(&pos,k,len);
 
 
     clock_gettime(CLOCK_REALTIME, &end);

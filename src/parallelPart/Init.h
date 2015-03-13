@@ -7,7 +7,7 @@
 #include <chrono>
 #include <hdf5.h>
 #include "Globals.h"
-
+#include "hdf5_hl.h"
 
 
 
@@ -76,10 +76,10 @@ particle init_1(int length){
             }
 
             p.py[i] = 0;
-            p.pz[i] = 0.5;
-            p.x[i]  = 0;
-            p.y[i]  = 0;
-            p.z[i]  = 0;
+            p.pz[i] = 1e5;
+            p.x[i]  = 10;
+            p.y[i]  = 10;
+            p.z[i]  = 10;
         }
 
         //Initialize the Mass & Charge
@@ -103,7 +103,7 @@ particle init_1(int length){
 void init_params(long double* t_start, long double* t_end, long double* dt){
 
    *t_start = 0;
-   *t_end   = 1e-6;
+   *t_end   = 1e-10;
    *dt      = 1e-11;
 }
 
@@ -119,64 +119,32 @@ void init_file(long double *t_start, long double *t_end,long double *dt, int *le
       Init routine to initialize a HDF5 file!
 
 
-
       */
 
-     int k =(int) ((*t_end-*t_start)/ *dt + 1);
+      int k =(int) ((*t_end-*t_start)/ *dt + 1);
 
 
-
-      hsize_t dims[3];
+      hsize_t dims[1];
       hid_t file,dataset,dataspace;
       herr_t status;
 
 
 
       file = H5Fcreate(FILENAME, H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
-      dims[0]=k;
-      dims[1]=*length;
-      dims[2]=3;
-      dataspace = H5Screate_simple(3,dims,NULL);
+      dims[0] = 3*(*length)*k;
+      dataspace = H5Screate_simple(1,dims,NULL);
       dataset = H5Dcreate2(file,GROUPNAME,H5T_NATIVE_DOUBLE,dataspace,H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT);
-
       status = H5Dclose(dataset);
       status = H5Sclose(dataspace);
       status = H5Fclose(file);
       printf("File Created!\n");
 
-
-
-
 }
 
 
-void initMem(int k, int len, double ****t1){
+void initMem(int k, int len, double *t1){
 
-
-
-    (*t1) =(double***) malloc(sizeof(double)*k);
-    for(int i = 0;i < k ; i++){
-
-        (*t1)[i]=(double**) malloc(sizeof(double)*len);
-
-
-    }
-
-
-    for(int i = 0; i < k ; i++){
-
-
-        for(int j = 0; j < len ; j++){
-
-
-            (*t1)[i][j]=(double*) malloc(sizeof(double)*3);
-
-
-        }
-
-
-    }
-
+      t1 = (double*) malloc(sizeof(double)*3*k*len);
 
 
 
