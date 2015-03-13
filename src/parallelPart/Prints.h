@@ -83,9 +83,9 @@ void print_signal(long double ***sign, int length, int k){
     FILE *f = fopen("signals.txt", "a+");
     char buf[BUF];
     char *buffer = (char*) malloc(sizeof(char) * length * BUF);
-    strcpy(buffer, "");
 
     for(int j = 0 ; j < k ; j++){
+        strcpy(buffer, ""); 
 
         for(int i = 0 ; i < length; i++){
 
@@ -95,8 +95,8 @@ void print_signal(long double ***sign, int length, int k){
         }
         strcat(buffer, "\n");
 
+        fwrite(buffer, sizeof(char),strlen(buffer),f);
     }
-    fwrite(buffer, sizeof(char),strlen(buffer),f);
 
     free(buffer);
     fclose(f);
