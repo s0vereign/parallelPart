@@ -15,22 +15,16 @@ int main(int argc, char** argv) {
     long double t_start, t_end, dt;
     long double beamspeed, circumference;
     long double **times;
-    int len, printEveryNthTimeStep;
+    int len, k;
     particle p;
-<<<<<<< HEAD
-
-    init(&t_start, &t_end, &dt, &len, &printEveryNthTimeStep, &vel_res, &p);
-
-=======
     
     init(&t_start, &t_end, &dt, 
         &beamspeed, &circumference,
-        &len, &printEveryNthTimeStep,
+        &len,
         &times,
         &p
     );
     
->>>>>>> 16b3736c1397217a08e73ece5dec8f37665adee5
     truncateFile();
 
     printf("Computing...\n");
@@ -38,14 +32,15 @@ int main(int argc, char** argv) {
         p.x,p.y,p.z,
         p.px,p.py,p.pz,
         p.m,p.q, len,
-        printEveryNthTimeStep, &times,
+        &k, &times,
         beamspeed, circumference
     );
 
 
     printf("Printing...\n");
+    
 
-    destruct(len, t_start, t_end, dt, printEveryNthTimeStep, p, &times);
+    destruct(len, t_start, t_end, dt, beamspeed, circumference, p, &times);
 
 
 
