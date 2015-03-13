@@ -69,28 +69,33 @@ void print_array(   long double t_start, long double t_end, long double dt,
 
 void truncate_signals(){
 
-    FILE *f = fopen("results.txt", "w+");
+    FILE *f = fopen("signal.txt", "w+");
+    printf("signal.tx created \n");
     fclose(f);
 
 }
 
 
 
-void print_signal(long double **sign, int k){
+void print_signal(long double ***sign, int length, int k){
 
 
     FILE *f = fopen("signals.txt", "a+");
     char buf[BUF];
-    char *buffer = (char*) malloc(sizeof(char) * k * BUF);
+    char *buffer = (char*) malloc(sizeof(char) * length * BUF);
     strcpy(buffer, "");
 
-    for(int i = 0 ; i < k ; i++){
+    for(int j = 0 ; j < k ; j++){
 
-        snprintf(buf, 100, "%014.10Lf \n", (*sign)[i]);
-        strcat(buffer,buf);
+        for(int i = 0 ; i < length; i++){
+
+            snprintf(buf, 100, "%014.10Lf", (*sign)[j][i]);
+            strcat(buffer,buf);
+
+        }
+        strcat(buffer, "\n");
 
     }
-
     fwrite(buffer, sizeof(char),strlen(buffer),f);
 
     free(buffer);

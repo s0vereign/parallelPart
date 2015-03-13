@@ -17,28 +17,32 @@ int main(int argc, char** argv) {
     long double **times;
     int len, k;
     particle p;
-    
-    init(&t_start, &t_end, &dt, 
+
+
+    init(&t_start, &t_end, &dt,
+
         &beamspeed, &circumference,
         &len,
         &times,
         &p
     );
-    
-    truncateFile();
 
+
+
+    truncateFile();
+    truncate_signals();
     printf("Computing...\n");
     compute(t_start, t_end, dt,
         p.x,p.y,p.z,
         p.px,p.py,p.pz,
         p.m,p.q, len,
         &k, &times,
-        beamspeed, circumference
-    );
+        beamspeed, circumference);
 
 
     printf("Printing...\n");
-    
+    print_signal(&times,len,k);
+
 
     destruct(len, t_start, t_end, dt, beamspeed, circumference, p, &times);
 

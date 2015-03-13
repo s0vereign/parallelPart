@@ -7,13 +7,13 @@
 
 
 bool check(long double t, int k, long double circumference, long double beamspeed) {
-    
+
     if( t * beamspeed >= k * circumference) {
         return true;
     }
-    
+
     return false;
-    
+
 }
 
 void getSignals(
@@ -22,20 +22,20 @@ void getSignals(
     long double beamspeed, long double circumference,
     long double times[]
 )  {
-    
+
     if(check(t, *k, circumference, beamspeed)) {
-        
+
         int i;
         *k = *k + 1;
-        
+
         for(i = 0; i < len; i++) {
-            
+
             times[i] = x[i] / beamspeed + t;
-            
+
         }
-        
+
     }
-    
+
 }
 
 #endif
