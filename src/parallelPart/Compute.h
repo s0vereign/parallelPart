@@ -8,8 +8,11 @@
 
 #include "Params.h"
 #include "Prints.h"
+#include "Signal.h"
 
+#ifndef SOL
 #define SOL 299792458
+#endif
 
 long double computeGamma(long double px, long double py, long double pz, long double m) {
     return sqrt(1 + (px*px + py*py + pz*pz) / (m*m));
@@ -103,8 +106,7 @@ void updateParticle(
     long double t, long double dt,
     long double *x, long double *y, long double *z,
     long double *px, long double *py, long double *pz,
-    long double q, long double m,
-    long double *vel_res, int printEveryNthTimeStep, int j
+    long double q, long double m
 ) {
     
     long double gamma,vx,vy,vz,Fx,Fy,Fz;
@@ -120,12 +122,6 @@ void updateParticle(
     computeNewPosition(dt, x, y, z, *px, *py, *pz, Fx, Fy, Fz, gamma, m);
     computeNewImpulse(dt, px, py, pz, Fx, Fy, Fz);
     
-    if( j % printEveryNthTimeStep == 0) {
-        
-        *vel_res = vx;
-        
-    }
-    
 }
 
 void compute(
@@ -133,10 +129,11 @@ void compute(
     long double x[], long double y[], long double z[],
     long double px[], long double py[], long double pz[],
     long double m[], long double q[],
-    int len, int printEveryNthTimeStep, long double ***vel_res
+    int len, int printEveryNthTimeStep, long double ***times,
+    long double beamspeed, long double circumference
 ) {
 
-    int i,j;
+    int i,j,k = 0;
 
     long double t;
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
@@ -148,13 +145,17 @@ void compute(
                 t, dt,
                 &x[i], &y[i], &z[i],
                 &px[i], &py[i], &pz[i],
-                q[i], m[i],
-                &((*vel_res)[j / printEveryNthTimeStep][i]), printEveryNthTimeStep, j
+                q[i], m[i]
             );
 
         }
 
-
+        getSignals(
+            t, k, len,
+            x,
+            beamspeed, circumference,
+            (*times)[k]
+        );
 
 
     }
