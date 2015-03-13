@@ -89,11 +89,12 @@ void print_signal(long double ***sign, int length, int k){
 
         for(int i = 0 ; i < length; i++){
 
-            snprintf(buf, 100, "%014.10Lf", (*sign)[j][i]);
-            strcat(buffer,buf);
+            snprintf(buf, 100, "%025.20Lf ", (*sign)[j][i]);
+            strcat(buf, "\n");
+            fwrite(buf, sizeof(char),strlen(buf),f);
+            //~ strcat(buffer,buf);
 
         }
-        strcat(buffer, "\n");
 
         fwrite(buffer, sizeof(char),strlen(buffer),f);
     }
