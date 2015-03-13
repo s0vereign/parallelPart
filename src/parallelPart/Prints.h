@@ -85,17 +85,17 @@ void print_signal(long double ***sign, int length, int k){
     char *buffer = (char*) malloc(sizeof(char) * length * BUF);
 
     for(int j = 0 ; j < k ; j++){
-        strcpy(buffer, ""); 
 
         for(int i = 0 ; i < length; i++){
 
-            snprintf(buf, 100, " %014.10Lf", (*sign)[j][i]);
-            strcat(buffer,buf);
+            strcpy(buffer, "");
+            snprintf(buf, 100, "%025.20Lf ", (*sign)[j][i]);
+            strcat(buf, "\n");
+            fwrite(buf, sizeof(char),strlen(buf),f);
+            //~ strcat(buffer,buf);
 
         }
-        strcat(buffer, "\n");
 
-        fwrite(buffer, sizeof(char),strlen(buffer),f);
     }
 
     free(buffer);
