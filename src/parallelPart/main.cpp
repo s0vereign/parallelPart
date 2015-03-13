@@ -41,6 +41,7 @@ int main(int argc, char** argv) {
 
 
     printf("Printing...\n");
+    printf("%i Umrundungen\n", k);
     print_signal(&times,len,k);
 
 
