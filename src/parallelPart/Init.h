@@ -33,16 +33,10 @@ void init(long double* t_start, long double *t_end, long double *dt,
     //initialise length (from array length): number of particles
     *length = 10;
 
-    *t_start = 0;//in seconds
-<<<<<<< HEAD
-    *t_end   = 1e-6;//in seconds
-    *dt      = 1e-12;//in seconds
-
-=======
+    *t_start = 0;
     *t_end   = 1e-8;//in seconds
     *dt      = 1e-14;//in seconds
-    
->>>>>>> fa0705f05a32385649064669c05c0829d478864e
+
     *beamspeed = 0.47 * SOL;
     *circumference = 10.0;
 
@@ -112,7 +106,7 @@ void init(long double* t_start, long double *t_end, long double *dt,
         p->q[i] = -1;//in number of the elementary charge
         p->m[i] = 0.51e6;//in eV
 =======
-        
+
 >>>>>>> fa0705f05a32385649064669c05c0829d478864e
     }
 
