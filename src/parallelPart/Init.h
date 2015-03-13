@@ -9,6 +9,10 @@
 
 #include <math.h>
 
+#ifndef SOL
+#define SOL 299792458
+#endif
+
 typedef struct part{
 
   long double *x,*y,*z,
@@ -19,8 +23,9 @@ typedef struct part{
 } particle;
 
 void init(long double* t_start, long double *t_end, long double *dt,
+            long double *beamspeed, long double *circumference,
             int *length, int *printEveryNthTimeStep, 
-            long double ***vel_res, particle *p
+            long double ***times, particle *p
 ) {
     //loop-variable for later use
     int i;
@@ -30,8 +35,11 @@ void init(long double* t_start, long double *t_end, long double *dt,
     *printEveryNthTimeStep = 100; //to compute more accurate, but avoid too large files
     
     *t_start = 0;//in seconds
-    *t_end   = 1e-8;//in seconds
+    *t_end   = 1e-6;//in seconds
     *dt      = 1e-12;//in seconds
+    
+    *beamspeed = 0.47 * SOL;
+    *circumference = 100;
 
     //generator: generates random numbers, initialising using a seed (unix time)
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -101,15 +109,15 @@ void init(long double* t_start, long double *t_end, long double *dt,
      * Calculate the first dimension: number of timestep, where the
      * velocities are saved
     */
-    int s =(int) (((*t_end) - (*t_start)) / (*dt) / (*printEveryNthTimeStep));
+    int s =(int) (((*t_end) - (*t_start)) * (*beamspeed) / (*circumference) + 1);
    
    //allocate memory for first dimension
-    (*vel_res) =(long double**) malloc(sizeof(long double) * s);
+    (*times) =(long double**) malloc(sizeof(long double) * s);
 
     //allocate memory for the other dimesion
     for( i = 0; i < s; i++) {
         
-        (*vel_res)[i] = (long double*) malloc(sizeof(long double) * (*length));
+        (*times)[i] = (long double*) malloc(sizeof(long double) * (*length));
         
     }
 }
