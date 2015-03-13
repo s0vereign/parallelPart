@@ -99,6 +99,35 @@ long double computeNewPosition(
     *z += SOL * pz / ( gamma * m ) * dt + 1.0 / 2.0 * dt*dt * Fz * SOL * SOL / ( gamma * m );
 }
 
+void updateParticle(
+    long double t, long double dt,
+    long double *x, long double *y, long double *z,
+    long double *px, long double *py, long double *pz,
+    long double q, long double m,
+    long double *vel_res, int printEveryNthTimeStep, int j
+) {
+    
+    long double gamma,vx,vy,vz,Fx,Fy,Fz;
+    
+    gamma = computeGamma(*px, *py, *pz, m);
+    vx = computeVi(*px, gamma, m);
+    vy = computeVi(*py, gamma, m);
+    vz = computeVi(*pz, gamma, m);
+
+    computeFb(vx, vy, vz, *x, *y, *z, &Fx, &Fy, &Fz, t);
+    computeLorentz(q, *x, *y, *z, &Fx, &Fy, &Fz, t);
+
+    computeNewPosition(dt, x, y, z, *px, *py, *pz, Fx, Fy, Fz, gamma, m);
+    computeNewImpulse(dt, px, py, pz, Fx, Fy, Fz);
+    
+    if( j % printEveryNthTimeStep == 0) {
+        
+        *vel_res = vx;
+        
+    }
+    
+}
+
 void compute(
     long double t_start, long double t_end, long double dt,
     long double x[], long double y[], long double z[],
@@ -109,28 +138,20 @@ void compute(
 
     int i,j;
 
-    long double gamma,vx,vy,vz,Fx,Fy,Fz,t;
+    long double t;
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
 
-#pragma omp parallel for default(none) private(i, gamma, vx, vy, vz, Fx, Fy, Fz) shared(vel_res, t, j, x, y, z, px, py, pz, m, q, printEveryNthTimeStep, len, dt)
+//~ #pragma omp parallel for default(none) private(i, gamma, vx, vy, vz, Fx, Fy, Fz) shared(vel_res, t, j, x, y, z, px, py, pz, m, q, printEveryNthTimeStep, len, dt)
         for(i = 0; i < len; i++) {
 
-            gamma = computeGamma(px[i], py[i], pz[i], m[i]);
-            vx = computeVi(px[i], gamma, m[i]);
-            vy = computeVi(py[i], gamma, m[i]);
-            vz = computeVi(pz[i], gamma, m[i]);
+            updateParticle(
+                t, dt,
+                &x[i], &y[i], &z[i],
+                &px[i], &py[i], &pz[i],
+                q[i], m[i],
+                &((*vel_res)[j / printEveryNthTimeStep][i]), printEveryNthTimeStep, j
+            );
 
-            computeFb(vx, vy, vz, x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
-            computeLorentz(q[i], x[i], y[i], z[i], &Fx, &Fy, &Fz, t);
-
-            computeNewPosition(dt, &x[i], &y[i], &z[i], px[i], py[i], pz[i], Fx, Fy, Fz, gamma, m[i]);
-            computeNewImpulse(dt, &px[i], &py[i], &pz[i], Fx, Fy, Fz);
-            
-            if( j % printEveryNthTimeStep == 0) {
-                
-                (*vel_res)[j / printEveryNthTimeStep][i] = vx;
-                
-            }
         }
 
 
