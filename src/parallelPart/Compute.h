@@ -108,9 +108,9 @@ void updateParticle(
     long double *px, long double *py, long double *pz,
     long double q, long double m
 ) {
-    
+
     long double gamma,vx,vy,vz,Fx,Fy,Fz;
-    
+
     gamma = computeGamma(*px, *py, *pz, m);
     vx = computeVi(*px, gamma, m);
     vy = computeVi(*py, gamma, m);
@@ -121,7 +121,7 @@ void updateParticle(
 
     computeNewPosition(dt, x, y, z, *px, *py, *pz, Fx, Fy, Fz, gamma, m);
     computeNewImpulse(dt, px, py, pz, Fx, Fy, Fz);
-    
+
 }
 
 void compute(
@@ -151,7 +151,7 @@ void compute(
         }
 
         getSignals(
-            t, k, len,
+            t, &k, len,
             x,
             beamspeed, circumference,
             (*times)[k]
