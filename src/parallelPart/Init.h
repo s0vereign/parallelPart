@@ -70,22 +70,22 @@ void init(long double* t_start, long double *t_end, long double *dt,
 
         //first (here 5) particle's velocity in x-direction is distributed by the first distribution
         //[px] = eV
-        if(i < 5){
+        if(i < (*length)/2){
 
-          p->px[i] = distribution1(generator);
+          p->x[i] = distribution1(generator);
 
         }
         //every else are distributed by the 2nd distribution
         else{
 
-          p->px[i] = distribution2(generator);
+          p->x[i] = distribution2(generator);
 
         }
 
         //initialise everything else
+        p->px[i] = 0;
         p->py[i] = 0; //in eV
-        p->pz[i] = 2000;// in eV
-        p->x[i]  = 0;//in m
+        p->pz[i] = 0;// in eV
         p->y[i]  = 0;//in m
         p->z[i]  = 0;//in m
         p->q[i] = -1;//in number of the elementary charge
