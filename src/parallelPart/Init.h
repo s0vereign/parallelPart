@@ -31,21 +31,21 @@ void init(long double* t_start, long double *t_end, long double *dt,
     int i;
     
     //initialise length (from array length): number of particles
-    *length = 10;
+    *length = 10000;
     
     *t_start = 0;//in seconds
-    *t_end   = 1e-6;//in seconds
-    *dt      = 1e-11;//in seconds
+    *t_end   = 6e-4;//in seconds
+    *dt      = 1e-12;//in seconds
     
-    *beamspeed = 0.47 * SOL;
-    *circumference = 10.0;//m
+    *beamspeed = 0.467 * SOL;
+    *circumference = 108.5;//m
 
     //generator: generates random numbers, initialising using a seed (unix time)
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator (seed);
     //get the first standard distribution: mean, standart deviation
     //as the momentum is expected in eV: both quantities also in eV
-    std::normal_distribution<long double> distribution1(10e9, 1e9);
+    std::normal_distribution<long double> distribution1(1464e6, 0.014640000000000002e6);
 
     //get the second standard distribution
     //see above
@@ -71,7 +71,7 @@ void init(long double* t_start, long double *t_end, long double *dt,
         //initialise everything else
         p->px[i] = 0;
         p->py[i] = 0; //in eV
-        p->pz[i] = 2000;// in eV
+        p->pz[i] = 0;// in eV
         p->x[i]  = 0;//in m
         p->y[i]  = 0;//in m
         p->z[i]  = 0;//in m
@@ -80,17 +80,17 @@ void init(long double* t_start, long double *t_end, long double *dt,
 
         //first (here 5) particle's velocity in x-direction is distributed by the first distribution
         //[px] = eV
-        if(i < (*length) / 2){
+        //~ if(i < (*length) / 2){
 
             p->x[i] = sqrt(2*distribution1(generator) / (- p->q[i] * 100));
 
-        }
+        //~ }
         //every else are distributed by the 2nd distribution
-        else{
-
-          p->x[i] = sqrt(2*distribution2(generator) / (- p->q[i] * 100));
-
-        }
+        //~ else{
+//~ 
+          //~ p->x[i] = sqrt(2*distribution2(generator) / (- p->q[i] * 100));
+//~ 
+        //~ }
 
         
     }
