@@ -67,4 +67,43 @@ void print_array(   long double t_start, long double t_end, long double dt,
 
 }
 
+void truncate_signals(){
+
+    FILE *f = fopen("results.txt", "w+");
+    fclose(f);
+
+}
+
+
+
+void print_signal(long double **sign, int k){
+
+
+    FILE *f = fopen("signals.txt", "a+");
+    char buf[BUF];
+    char *buffer = (char*) malloc(sizeof(char) * k * BUF);
+    strcpy(buffer, "");
+
+    for(int i = 0 ; i < k ; i++){
+
+        snprintf(buf, 100, "%014.10Lf \n", (*sign)[i]);
+        strcat(buffer,buf);
+
+    }
+
+    fwrite(buffer, sizeof(char),strlen(buffer),f);
+
+    free(buffer);
+    fclose(f);
+
+
+
+}
+
+
+
+
+
+
+
 #endif
