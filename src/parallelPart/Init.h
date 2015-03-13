@@ -24,12 +24,12 @@ typedef struct part{
 
 void init(long double* t_start, long double *t_end, long double *dt,
             long double *beamspeed, long double *circumference,
-            int *length, 
+            int *length,
             long double ***times, particle *p
 ) {
     //loop-variable for later use
     int i;
-    
+
     //initialise length (from array length): number of particles
     *length = 10000;
     
@@ -60,11 +60,11 @@ void init(long double* t_start, long double *t_end, long double *dt,
     p->px = (long double*) malloc(sizeof(long double) * (*length));
     p->py = (long double*) malloc(sizeof(long double) * (*length));
     p->pz = (long double*) malloc(sizeof(long double) * (*length));
-    
+
     //allocate memory for mass and charge
     p->q = (long double*) malloc(sizeof(long double) * (*length));
     p->m = (long double*) malloc(sizeof(long double) * (*length));
-    
+
     //initialise each parameter for each particle
     for(i=0; i < (*length); i++) {
 
@@ -91,36 +91,34 @@ void init(long double* t_start, long double *t_end, long double *dt,
           //~ p->x[i] = sqrt(2*distribution2(generator) / (- p->q[i] * 100));
 //~ 
         //~ }
-
-        
     }
-    
+
     /*
      * For parallel computation, there is no output during computation.
      * Instead, all results are saved in an array, which is large enough
      * to contain all velocities for all particles for all timestep,
      * which are saved (depend on printEveryNthTimeStep).
-     * 
+     *
      * The array is 2-dimensional, so each dimension needs to get memory
      * allocated seperately. (*vel_res) is a pointer to an array, where
-     * each entry is a pointer to another array, therefore it's two 
+     * each entry is a pointer to another array, therefore it's two
      * dimensional.
      * So allocate in a first step memory for the first dimension, and
      * allocate then memory for the other dimension.
-     * 
+     *
      * Calculate the first dimension: number of timestep, where the
      * velocities are saved
     */
     int s =(int) ceil(((*t_end) - (*t_start)) * (*beamspeed) / (*circumference) + 3);
-   
+
    //allocate memory for first dimension
     (*times) =(long double**) malloc(sizeof(long double) * s);
 
     //allocate memory for the other dimesion
     for( i = 0; i < s; i++) {
-        
+
         (*times)[i] = (long double*) malloc(sizeof(long double) * (*length));
-        
+
     }
 }
 
