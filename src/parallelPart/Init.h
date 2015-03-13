@@ -34,22 +34,22 @@ void init(long double* t_start, long double *t_end, long double *dt,
     *length = 10;
     
     *t_start = 0;//in seconds
-    *t_end   = 1e-8;//in seconds
-    *dt      = 1e-14;//in seconds
+    *t_end   = 1e-6;//in seconds
+    *dt      = 1e-11;//in seconds
     
     *beamspeed = 0.47 * SOL;
-    *circumference = 10.0;
+    *circumference = 10.0;//m
 
     //generator: generates random numbers, initialising using a seed (unix time)
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator (seed);
     //get the first standard distribution: mean, standart deviation
     //as the momentum is expected in eV: both quantities also in eV
-    std::normal_distribution<long double> distribution1(0, 55);
+    std::normal_distribution<long double> distribution1(10e9, 1e9);
 
     //get the second standard distribution
     //see above
-    std::normal_distribution<long double> distribution2(10, 55);
+    std::normal_distribution<long double> distribution2(1e9, 1e8);
     
     //allocate memory for each component of position
     p->x = (long double*) malloc(sizeof(long double) * (*length));
@@ -80,15 +80,15 @@ void init(long double* t_start, long double *t_end, long double *dt,
 
         //first (here 5) particle's velocity in x-direction is distributed by the first distribution
         //[px] = eV
-        if(i < 5){
+        if(i < (*length) / 2){
 
-          p->px[i] = sqrt(2*distribution1(generator) / (- p->q[i] * 100));
+            p->x[i] = sqrt(2*distribution1(generator) / (- p->q[i] * 100));
 
         }
         //every else are distributed by the 2nd distribution
         else{
 
-          p->px[i] = distribution2(generator);
+          p->x[i] = sqrt(2*distribution2(generator) / (- p->q[i] * 100));
 
         }
 
