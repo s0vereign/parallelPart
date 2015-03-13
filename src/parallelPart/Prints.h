@@ -82,24 +82,21 @@ void print_signal(long double ***sign, int length, int k){
 
     FILE *f = fopen("signals.txt", "a+");
     char buf[BUF];
-    char *buffer = (char*) malloc(sizeof(char) * length * BUF);
+    //~ char *buffer = (char*) malloc(sizeof(char) * length * BUF);
 
     for(int j = 0 ; j < k ; j++){
-        strcpy(buffer, ""); 
 
         for(int i = 0 ; i < length; i++){
-
+            
+            strcpy(buf, ""); 
             snprintf(buf, 100, "%025.20Lf ", (*sign)[j][i]);
             strcat(buf, "\n");
+            
             fwrite(buf, sizeof(char),strlen(buf),f);
-            //~ strcat(buffer,buf);
 
         }
-
-        fwrite(buffer, sizeof(char),strlen(buffer),f);
     }
 
-    free(buffer);
     fclose(f);
 
 
