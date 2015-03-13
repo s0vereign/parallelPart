@@ -34,11 +34,11 @@ void init(long double* t_start, long double *t_end, long double *dt,
     *length = 10;
     
     *t_start = 0;//in seconds
-    *t_end   = 1e-6;//in seconds
-    *dt      = 1e-12;//in seconds
+    *t_end   = 1e-8;//in seconds
+    *dt      = 1e-14;//in seconds
     
     *beamspeed = 0.47 * SOL;
-    *circumference = 100.0;
+    *circumference = 10.0;
 
     //generator: generates random numbers, initialising using a seed (unix time)
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -68,11 +68,21 @@ void init(long double* t_start, long double *t_end, long double *dt,
     //initialise each parameter for each particle
     for(i=0; i < (*length); i++) {
 
+        //initialise everything else
+        p->px[i] = 0;
+        p->py[i] = 0; //in eV
+        p->pz[i] = 2000;// in eV
+        p->x[i]  = 0;//in m
+        p->y[i]  = 0;//in m
+        p->z[i]  = 0;//in m
+        p->q[i] = -1;//in number of the elementary charge
+        p->m[i] = 0.51e6;//in eV
+
         //first (here 5) particle's velocity in x-direction is distributed by the first distribution
         //[px] = eV
         if(i < 5){
 
-          p->px[i] = distribution1(generator);
+          p->px[i] = sqrt(2*distribution1(generator) / (- p->q[i] * 100));
 
         }
         //every else are distributed by the 2nd distribution
@@ -82,14 +92,7 @@ void init(long double* t_start, long double *t_end, long double *dt,
 
         }
 
-        //initialise everything else
-        p->py[i] = 0; //in eV
-        p->pz[i] = 2000;// in eV
-        p->x[i]  = 0;//in m
-        p->y[i]  = 0;//in m
-        p->z[i]  = 0;//in m
-        p->q[i] = -1;//in number of the elementary charge
-        p->m[i] = 0.51e6;//in eV
+        
     }
     
     /*
