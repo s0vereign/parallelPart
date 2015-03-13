@@ -82,11 +82,7 @@ void init(long double* t_start, long double *t_end, long double *dt,
         //[px] = eV
         if(i < (*length)/2){
 
-<<<<<<< HEAD
-          p->x[i] = distribution1(generator);
-=======
           p->px[i] = sqrt(2*distribution1(generator) / (- p->q[i] * 100));
->>>>>>> fa0705f05a32385649064669c05c0829d478864e
 
         }
         //every else are distributed by the 2nd distribution
