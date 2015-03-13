@@ -69,8 +69,8 @@ void print_array(   long double t_start, long double t_end, long double dt,
 
 void truncate_signals(){
 
-    FILE *f = fopen("signal.txt", "w+");
-    printf("signal.tx created \n");
+    FILE *f = fopen("signals.txt", "w+");
+    printf("signals.txt created \n");
     fclose(f);
 
 }
@@ -89,7 +89,7 @@ void print_signal(long double ***sign, int length, int k){
 
         for(int i = 0 ; i < length; i++){
 
-            snprintf(buf, 100, "%014.10Lf", (*sign)[j][i]);
+            snprintf(buf, 100, " %014.10Lf", (*sign)[j][i]);
             strcat(buffer,buf);
 
         }
