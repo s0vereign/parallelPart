@@ -12,6 +12,9 @@
 #ifndef SOL
 #define SOL 299792458
 #endif
+#ifndef ELEMENTARY_CHARGE
+#define ELEMENTARY_CHARGE (1.602176565e-19)
+#endif
 
 typedef struct part{
 
@@ -31,10 +34,10 @@ void init(long double* t_start, long double *t_end, long double *dt,
     int i;
 
     //initialise length (from array length): number of particles
-    *length = 10000;
+    *length = 1e4;
     
     *t_start = 0;//in seconds
-    *t_end   = 6e-4;//in seconds
+    *t_end   = 5e-6;//in seconds
     *dt      = 1e-12;//in seconds
     
     *beamspeed = 0.467 * SOL;
@@ -75,14 +78,14 @@ void init(long double* t_start, long double *t_end, long double *dt,
         p->x[i]  = 0;//in m
         p->y[i]  = 0;//in m
         p->z[i]  = 0;//in m
-        p->q[i] = -1;//in number of the elementary charge
-        p->m[i] = 0.51e6;//in eV
+        p->q[i] = 3;//in number of the elementary charge
+        p->m[i] = 11177.928732e6;//in eV
 
         //first (here 5) particle's velocity in x-direction is distributed by the first distribution
         //[px] = eV
         //~ if(i < (*length) / 2){
 
-            p->x[i] = sqrt(2*distribution1(generator) / (- p->q[i] * 100));
+        p->x[i] = sqrt(2*distribution1(generator) / ( abs( p->q[i] ) * 100));
 
         //~ }
         //every else are distributed by the 2nd distribution
