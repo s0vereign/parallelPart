@@ -1,7 +1,8 @@
 #ifndef COMPUTE_H
 #define COMPUTE_H
 
-#include <math.h>
+//~ #include <math.h>
+#include <cmath>
 #include <stdio.h>
 
 #include <omp.h>
@@ -15,7 +16,7 @@
 #endif
 
 long double computeGamma(long double px, long double py, long double pz, long double m) {
-    return sqrt(1 + (px*px + py*py + pz*pz) / (m*m));
+    return std::sqrt(1 + (px*px + py*py + pz*pz) / (m*m));
 }
 
 long double computeVi(long double pi, long double gamma, long double m) {
@@ -41,9 +42,9 @@ void computeLorentz(
     long double *Fx, long double *Fy, long double *Fz,
     long double t
 ) {
-    *Fx = q * ( Ex(x, y, z, t) + *Fx);
-    *Fy = q * ( Ey(x, y, z, t) + *Fy);
-    *Fz = q * ( Ez(x, y, z, t) + *Fz);
+    *Fx = abs(q) *  Ex(x, y, z, t) + q * (*Fx);
+    *Fy = abs(q) *  Ey(x, y, z, t) + q * (*Fy);
+    *Fz = abs(q) *  Ez(x, y, z, t) + q * (*Fz);
 }
 
 void computeNewImpulse(
@@ -51,10 +52,20 @@ void computeNewImpulse(
     long double *px, long double *py, long double *pz,
     long double Fx, long double Fy, long double Fz
 ) {
+    
     //energy-conservation!
-                long double valueP = sqrt( (*px) * (*px) + (*py) * (*py) + (*pz) * (*pz)),
+    long double valueP = std::sqrt( (*px) * (*px) + (*py) * (*py) + (*pz) * (*pz));
+    
+    if( valueP == 0) {
+        //no impulse -> there CANNOT be a magnetic force, so old computation:
+        *px = *px + 3e8 * Fx * dt;
+        *py = *py + 3e8 * Fy * dt;
+        *pz = *pz + 3e8 * Fz * dt;
+        
+        return;
+    }
 
-                ePx = *px / valueP, //unit vector in impulse direction
+    long double ePx = *px / valueP, //unit vector in impulse direction
                 ePy = *py / valueP,
                 ePz = *pz / valueP,
 
@@ -82,11 +93,9 @@ void computeNewImpulse(
 
 */
 
-    *px = px2 / sqrt(px2*px2 + py2*py2 + pz2*pz2) * sqrt(px1*px1 + py1*py1 + pz1*pz1); //resulting impulse
-    *py = py2 / sqrt(px2*px2 + py2*py2 + pz2*pz2) * sqrt(px1*px1 + py1*py1 + pz1*pz1);
-    *pz = pz2 / sqrt(px2*px2 + py2*py2 + pz2*pz2) * sqrt(px1*px1 + py1*py1 + pz1*pz1);
-
-
+    *px = px2 / std::sqrt(px2*px2 + py2*py2 + pz2*pz2) * std::sqrt(px1*px1 + py1*py1 + pz1*pz1); //resulting impulse
+    *py = py2 / std::sqrt(px2*px2 + py2*py2 + pz2*pz2) * std::sqrt(px1*px1 + py1*py1 + pz1*pz1);
+    *pz = pz2 / std::sqrt(px2*px2 + py2*py2 + pz2*pz2) * std::sqrt(px1*px1 + py1*py1 + pz1*pz1);
 
 }
 
