@@ -23,7 +23,11 @@ one = np.ones(data.size)
 
 
 for i in range(0, int(upperBound)):
-    ax.plot(data[:,i] if not singleCol else data, one, 'ro')
+    if singleCol:
+        ax.plot(data[:,i] if not singleCol else data, one , 'ro')
+    else:
+        ax.plot(data[:,i] if not singleCol else data, 'ro')
+    #~ ax.plot(data[:i] if not singleCol else data, 'ro')
     ax.set_xlabel("$\mathbf{n \cdot dt}$")
 
 plt.show()
