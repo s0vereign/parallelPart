@@ -37,8 +37,8 @@ void init(long double* t_start, long double *t_end, long double *dt,
     *length = 1e4;
     
     *t_start = 0;//in seconds
-    *t_end   = 5e-6;//in seconds
-    *dt      = 1e-12;//in seconds
+    *t_end   = 7.7e-05;//in seconds
+    *dt      = 1e-8;//in seconds
     
     *beamspeed = 0.467 * SOL;
     *circumference = 108.5;//m
@@ -48,11 +48,14 @@ void init(long double* t_start, long double *t_end, long double *dt,
     std::default_random_engine generator (seed);
     //get the first standard distribution: mean, standart deviation
     //as the momentum is expected in eV: both quantities also in eV
-    std::normal_distribution<long double> distribution1(1464e6, 0.014640000000000002e6);
-
-    //get the second standard distribution
-    //see above
-    std::normal_distribution<long double> distribution2(1e9, 1e8);
+    /*
+     * Gaussian: E_total = E_beam + E_bucket. E_bucket = 0 for the syn-
+     * cronous particle. as the energie in the bucket here is distributed,
+     * the mean is 0 and the standard deviation is equal to the deviation
+     * of the energie, whereas delta E / E = beta**2 * delta p / p with
+     * delta p / p = 1e-5. E = 122 MeV/u, 12C3+ are considered
+     */
+    std::normal_distribution<long double> distribution(0, 0.00319282296e6);
     
     //allocate memory for each component of position
     p->x = (long double*) malloc(sizeof(long double) * (*length));
@@ -80,20 +83,10 @@ void init(long double* t_start, long double *t_end, long double *dt,
         p->z[i]  = 0;//in m
         p->q[i] = 3;//in number of the elementary charge
         p->m[i] = 11177.928732e6;//in eV
-
-        //first (here 5) particle's velocity in x-direction is distributed by the first distribution
-        //[px] = eV
-        //~ if(i < (*length) / 2){
-
-        p->x[i] = sqrt(2*distribution1(generator) / ( abs( p->q[i] ) * 100));
-
-        //~ }
-        //every else are distributed by the 2nd distribution
-        //~ else{
-//~ 
-          //~ p->x[i] = sqrt(2*distribution2(generator) / (- p->q[i] * 100));
-//~ 
-        //~ }
+        
+        long double dist = distribution(generator);
+        p->x[i] = sqrt(2 * abs( dist ) / ( abs( p->q[i] ) * 0.000637444)) * ( dist > 0 ? 1 : -1);
+        
     }
 
     /*
