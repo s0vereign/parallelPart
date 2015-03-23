@@ -3,7 +3,7 @@
 
 long double Ex(long double x,long double y,long double z,long double t){
     
-    return - 0.000637444*x;
+    return - 0.025165280916119262*x;
 
 }
 

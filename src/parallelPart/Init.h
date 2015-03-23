@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <random>
 
-#include <math.h>
+#include <cmath>
 
 #ifndef SOL
 #define SOL 299792458
@@ -34,11 +34,11 @@ void init(long double* t_start, long double *t_end, long double *dt,
     int i;
 
     //initialise length (from array length): number of particles
-    *length = 1e4;
+    *length = 8;
     
     *t_start = 0;//in seconds
-    *t_end   = 7.7e-05;//in seconds
-    *dt      = 1e-8;//in seconds
+    *t_end   = 7.7e-03;//in seconds
+    *dt      = 1e-9;//in seconds
     
     *beamspeed = 0.467 * SOL;
     *circumference = 108.5;//m
@@ -55,7 +55,7 @@ void init(long double* t_start, long double *t_end, long double *dt,
      * of the energie, whereas delta E / E = beta**2 * delta p / p with
      * delta p / p = 1e-5. E = 122 MeV/u, 12C3+ are considered
      */
-    std::normal_distribution<long double> distribution(0, 0.00319282296e6);
+    std::normal_distribution<long double> distribution(0, 0.000003192822960000000e6);
     
     //allocate memory for each component of position
     p->x = (long double*) malloc(sizeof(long double) * (*length));
@@ -85,7 +85,8 @@ void init(long double* t_start, long double *t_end, long double *dt,
         p->m[i] = 11177.928732e6;//in eV
         
         long double dist = distribution(generator);
-        p->x[i] = sqrt(2 * abs( dist ) / ( abs( p->q[i] ) * 0.000637444)) * ( dist > 0 ? 1 : -1);
+        p->x[i] = std::sqrt(2 * std::abs( dist ) / ( std::abs( p->q[i] ) * 0.025165280916119262)) * ( dist > 0 ? 1 : -1);
+        printf("x = %Le\n", p->x[i]);
         
     }
 
