@@ -138,7 +138,7 @@ void compute(
     long double x[], long double y[], long double z[],
     long double px[], long double py[], long double pz[],
     long double m[], long double q[],
-    int len, int *k, long double ***times,
+    int len, int *k, long double **times,
     long double beamspeed, long double circumference
 ) {
 
@@ -164,7 +164,7 @@ void compute(
             t, k, len,
             x,
             beamspeed, circumference,
-            (*times)[*k]
+            &((*times)[(*k) * len])
         );
 
 

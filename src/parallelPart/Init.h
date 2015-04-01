@@ -28,7 +28,7 @@ typedef struct part{
 void init(long double* t_start, long double *t_end, long double *dt,
             long double *beamspeed, long double *circumference,
             int *length,
-            long double ***times, particle *p
+            long double **times, particle *p
 ) {
     //loop-variable for later use
     int i;
@@ -37,7 +37,7 @@ void init(long double* t_start, long double *t_end, long double *dt,
     *length = 8;
     
     *t_start = 0;//in seconds
-    *t_end   = 7.7e-03;//in seconds
+    *t_end   = 7.7e-04;//in seconds
     *dt      = 1e-9;//in seconds
     
     *beamspeed = 0.467 * SOL;
@@ -90,33 +90,9 @@ void init(long double* t_start, long double *t_end, long double *dt,
         
     }
 
-    /*
-     * For parallel computation, there is no output during computation.
-     * Instead, all results are saved in an array, which is large enough
-     * to contain all velocities for all particles for all timestep,
-     * which are saved (depend on printEveryNthTimeStep).
-     *
-     * The array is 2-dimensional, so each dimension needs to get memory
-     * allocated seperately. (*vel_res) is a pointer to an array, where
-     * each entry is a pointer to another array, therefore it's two
-     * dimensional.
-     * So allocate in a first step memory for the first dimension, and
-     * allocate then memory for the other dimension.
-     *
-     * Calculate the first dimension: number of timestep, where the
-     * velocities are saved
-    */
-    int s =(int) ceil(((*t_end) - (*t_start)) * (*beamspeed) / (*circumference) + 3);
+    int s =(int) ceil(((*t_end) - (*t_start)) * (*beamspeed) / (*circumference) + 3) * (*length);
 
-   //allocate memory for first dimension
-    (*times) =(long double**) malloc(sizeof(long double) * s);
-
-    //allocate memory for the other dimesion
-    for( i = 0; i < s; i++) {
-
-        (*times)[i] = (long double*) malloc(sizeof(long double) * (*length));
-
-    }
+    (*times) =(long double*) malloc(sizeof(long double) * s);
 }
 
 
