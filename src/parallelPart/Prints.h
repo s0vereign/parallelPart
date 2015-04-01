@@ -79,7 +79,13 @@ void truncate_signals(){
 
 void print_signal(long double **sign, int length, int k){
 
-    FILE *f = fopen("signals.txt", "a+");
+    FILE *f = fopen("signals.txt", "w+");
+    
+    printf("%i lines\n", length * k);
+    
+    unsigned int tmp = length * k;
+    fwrite(&tmp, sizeof(unsigned int), 1, f);
+    
     fwrite(*sign, sizeof(long double),length * k,f);
     fclose(f);
 
