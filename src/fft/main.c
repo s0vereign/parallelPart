@@ -61,20 +61,20 @@ int main(int argc, char** argv) {
     printf("Done\nConverting... ");
 
     //fft done here. as a measure of the intensity: add the components sqared (i.e. Im^2 + Re^2). no root as very time consuming. Re-use input-array
-    for(i = 0; i < lines; i++) {
-
-        array[i] = out[i][0] * out[i][0] + out[i][1] * out[i][1];
-        
-    }
+    //~ for(i = 0; i < lines; i++) {
+//~ 
+        //~ array[i] = out[i][0] * out[i][0] + out[i][1] * out[i][1];
+        //~ 
+    //~ }
 
     printf("Done\nPrinting... ");
     fflush(stdout);
 
     //printing...
     f = fopen("fftw.txt", "w+");
-    for(i = 0; i < lines; i++) {
+    for(i = 0; i < floor(lines / 2 + 1); i++) {
 
-        fprintf(f, "%f %f\n", 1.0 * i / lines / DT ,array[i]);//frequency, measure of intensity
+        fprintf(f, "%f %f\n", floor(out[i][0]   +.5), floor(out[i][1]  +.5));//frequency, measure of intensity
         
     }
 
