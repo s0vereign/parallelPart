@@ -21,14 +21,11 @@ int main(int argc, char** argv) {
 
     //first: let count lines
     unsigned int lines = 0;
+    FILE *f = fopen(argv[1], "r");
+    fread(&lines, sizeof(int), 1, f);
+    
+    
     int i;
-    char buf[250], ret[50];
-    snprintf(buf, 250, "wc -l %s", argv[1]);
-    FILE *pipe = popen(buf, "r");
-    fgets(ret, 50, pipe);
-    sscanf(ret, "%i", &lines);
-    pclose(pipe);
-
     printf("%u\nInitialising FFT... ", lines);
     fflush(stdout);
 
@@ -37,35 +34,30 @@ int main(int argc, char** argv) {
     fftw_complex *out;
     fftw_plan p;
 
-    
+    long double* tmp = (long double*) malloc(sizeof(long double) * lines);
     array = (double*) fftw_malloc(sizeof(double) * lines);
+
+    fread(tmp, sizeof(long double), lines, f);
+    fclose(f);
+    
+#pragma omp parallel for default(none) shared(array, tmp, lines) private(i)
+    for(i = 0; i < lines; i++) {
+        
+        array[i] = (double) tmp[i];
+        
+    }
+        
+    free(tmp);
+    
     out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * floor(lines / 2 + 1));
 
     p = fftw_plan_dft_r2c_1d(lines, array, out, FFTW_MEASURE);
 
 
-    //read file
-    FILE *f = fopen(argv[1], "r");
-    for(i = 0; i < lines; i++) {
-
-        fscanf(f, "%lf\n", &array[i]);
-        
-    }
-    fclose(f);
-
     printf("Done\nStarting FFT... ");
     fflush(stdout);
     
     fftw_execute(p); //do the ffw
-    
-    printf("Done\nConverting... ");
-
-    //fft done here. as a measure of the intensity: add the components sqared (i.e. Im^2 + Re^2). no root as very time consuming. Re-use input-array
-    //~ for(i = 0; i < lines; i++) {
-//~ 
-        //~ array[i] = out[i][0] * out[i][0] + out[i][1] * out[i][1];
-        //~ 
-    //~ }
 
     printf("Done\nPrinting... ");
     fflush(stdout);
