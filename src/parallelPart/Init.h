@@ -55,7 +55,8 @@ void init(long double* t_start, long double *t_end, long double *dt,
      * of the energie, whereas delta E / E = beta**2 * delta p / p with
      * delta p / p = 1e-5. E = 122 MeV/u, 12C3+ are considered
      */
-    std::normal_distribution<long double> distribution(0, 0.000003192822960000000e6);
+    std::normal_distribution<long double> angle(M_PI, M_PI);
+    std::normal_distribution<long double> anglevelocity(M_PI * 2 / 1e6, 1e2);
     
     //allocate memory for each component of position
     p->x = (long double*) malloc(sizeof(long double) * (*length));
@@ -75,22 +76,26 @@ void init(long double* t_start, long double *t_end, long double *dt,
     for(i=0; i < (*length); i++) {
 
         //initialise everything else
-        p->px[i] = 0;
+        p->px[i] = anglevelocity(generator);
         p->py[i] = 0; //in eV
         p->pz[i] = 0;// in eV
-        p->x[i]  = 0;//in m
+
+	long double dist = angle(generator);
+	if (dist > 0) {
+		dist = fmod(dist, 2* M_PI);
+	}
+	else {
+		dist = 2 * M_PI - fmod(fabs(dist), 2* M_PI);
+	}
+        p->x[i]  = dist;//in m
         p->y[i]  = 0;//in m
         p->z[i]  = 0;//in m
         p->q[i] = 3;//in number of the elementary charge
         p->m[i] = 11177.928732e6;//in eV
         
-        long double dist = distribution(generator);
-        p->x[i] = std::sqrt(2 * std::abs( dist ) / ( std::abs( p->q[i] ) * 0.025165280916119262)) * ( dist > 0 ? 1 : -1);
-        printf("x = %Le\n", p->x[i]);
-        
     }
 
-    int s =(int) ceil(((*t_end) - (*t_start)) * (*beamspeed) / (*circumference) + 3) * (*length);
+    int s =(int) ceil(((*t_end) - (*t_start)) * (*dt)  + 3) * 2;
 
     (*times) =(long double*) malloc(sizeof(long double) * s);
 }

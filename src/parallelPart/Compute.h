@@ -148,7 +148,7 @@ void compute(
     long double beamspeed, long double circumference
 ) {
 
-    int i,j, m;
+    int i,j, l;
 
     long double t, I;
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
@@ -156,20 +156,20 @@ void compute(
 
 //#pragma omp parallel for default(none) private(i) shared(times, t, j, x, y, z, px, py, pz, m, q, len, dt, k)
 
-        for(i = 0; i < length) {
+        for(i = 0; i < len; i++) {
 	    x[i] += px[i] * dt;
 	    if( x[i] >= 2 * M_PI)
 		x[i] -= 2* M_PI;
 
     	    I += q[i] * px[i];	
 
-	    for(m = 1; m <= 1; m++) {	
-                I += 2 * q[i] * px[i] / (2 * M_PI) * cos( x[i] );
+	    for(l = 1; l <= 1; l++) {	
+                I += 2 * q[i] * px[i] / (2 * M_PI) * cos( l *x[i] );
 	    }
         }
 
-	times[2*j] = t;
-	times[2*j + 1] = I;
+	(*times)[2*j] = t;
+	(*times)[2*j + 1] = I;
 
     }
 
