@@ -142,32 +142,31 @@ void compute(
     long double beamspeed, long double circumference
 ) {
 
-    int i,j;
-    *k = 0;
+    int i,j, m;
 
-    long double t;
+    long double t, I;
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
+	I = 0.0;
 
-#pragma omp parallel for default(none) private(i) shared(times, t, j, x, y, z, px, py, pz, m, q, len, dt, k)
-        for(i = 0; i < len; i++) {
+//#pragma omp parallel for default(none) private(i) shared(times, t, j, x, y, z, px, py, pz, m, q, len, dt, k)
 
-            updateParticle(
-                t, dt,
-                &x[i], &y[i], &z[i],
-                &px[i], &py[i], &pz[i],
-                q[i], m[i]
-            );
+        for(i = 0; i < length) {
+	    x[i] += px[i] * dt;
+	    if( x[i] >= 2 * M_PI)
+		x[i] -= 2* M_PI;
 
+    	    I += q[i] * px[i];	
+
+	    for(m = 1; m <= 1; m++) {	
+                I += 2 * q[i] * px[i] / (2 * M_PI) * cos( x[i] );
+	    }
         }
 
-        getSignals(
-            t, k, len,
-            x,
-            beamspeed, circumference,
-            &((*times)[(*k) * len])
-        );
-
+	times[2*j] = t;
+	times[2*j + 1] = I;
 
     }
+
+    *k = j;
 }
 #endif
