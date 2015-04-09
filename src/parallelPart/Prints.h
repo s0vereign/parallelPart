@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <hdf5.h>
+#include <hdf5_hl.h>
 #define BUF 100
 
 void truncateFile() {
@@ -77,17 +78,35 @@ void truncate_signals(){
 
 
 
+
+
 void print_signal(long double **sign, int length, int k){
 
-    FILE *f = fopen("signals.txt", "w+");
-    
-    printf("%i lines\n", length * k);
-    
-    unsigned int tmp = length * k;
-    fwrite(&tmp, sizeof(unsigned int), 1, f);
-    
-    fwrite(*sign, sizeof(long double),length * k,f);
-    fclose(f);
+
+	double* conv_sign =(double*) malloc(sizeof(double)*k*length);
+
+
+	for(int i = 0; i < length*k; i++){
+
+
+		conv_sign[i]=(double) (*sign)[i];
+
+
+	}
+
+
+	hid_t file_id;
+	hsize_t dims[1];
+	herr_t status;
+	dims[0] = length*k;
+	file_id = H5Fcreate("signal.h5",H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
+	status = H5LTmake_dataset(file_id,"/signal",1,dims,H5T_NATIVE_DOUBLE,conv_sign);
+	status = H5Fclose(file_id);
+
+	free(conv_sign);
+
+
+
 
 }
 

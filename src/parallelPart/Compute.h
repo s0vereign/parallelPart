@@ -5,7 +5,7 @@
 #include <cmath>
 #include <stdio.h>
 
-#include <omp.h>
+//#include <omp.h>
 
 #include "Params.h"
 #include "Prints.h"
