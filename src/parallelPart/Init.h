@@ -90,13 +90,14 @@ void init(long double* t_start, long double *t_end, long double *dt,
         p->x[i]  = dist;//in m
         p->y[i]  = 0;//in m
         p->z[i]  = 0;//in m
-        p->q[i] = 3;//in number of the elementary charge
+        p->q[i] = 1;//in number of the elementary charge
         p->m[i] = 11177.928732e6;//in eV
         
     }
 
-    int s =(int) ceil(((*t_end) - (*t_start)) * (*dt)  + 3) * 2;
+    int s =(int) ceil(((*t_end) - (*t_start)) / (*dt)  + 3) * 2;
 
+    printf("s = %i", s);
     (*times) =(long double*) malloc(sizeof(long double) * s);
 }
 
