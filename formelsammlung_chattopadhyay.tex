@@ -412,22 +412,22 @@ P_D(\Omega) &= \frac{q^2N}{4(2\pi)} \langle A^2 \rangle \sum_{n=-\infty}^{\infty
 \subsection{Konventionen}
 \begin{itemize}
 	\item $j$: j-te Partikel im Bunch/Beam
-	\item Größe welche mit P gekennzeichnet ist($I^P,\rho^P$): steht für eine Größe die an einer 
-	PU gemessen wird und daher immer den Winkel $\theta_p$ enthalten ist, welcher angibt, 
-	bei welchem Winkel im Ring sich die PU befindet! 
+	\item Größe welche mit P gekennzeichnet ist($I^P,\rho^P$): steht für an einer PU gemessenen Größe und enthält daher immer den Winkel $\theta_p$, welche in Bogenmaß angibt wo sich die PU befindet.
 	
-	\item Q: Betatron Tune mit n' als ganzzahligen Tune und $Q_f$ als gebrochenen Tune! 
+	\item Q: Betatron Tune mit $n'$ als ganzzahligen Tune und $Q_f$ als gebrochenen Tune! 
 		
 	\item Für folgende Summen: $\sum_{j=1}^{N}F(a_j)$ wird oftmals $N\int_{0}^{\infty}\; da \Psi_0(a) \; F(a)$ genutzt, wobei $\Psi(a)$ eine Verteilungsfunktion ist und $\int_{\mathbb{R}} \mathrm{d}a \, \Psi(a) = 1$ genügt.
 	
 	\item $\theta_j(t) = \omega_0 t + a_j \sin( \omega_s(a_j)t + \psi_j^0)$ ist die Phase von Teilchen $j$ in Abhängigkeit von der Zeit, wobei $\omega_0$ die (mittlere) Umlauffrequenz, $a_j$ die Synchrotonampiltude, $\omega_s$ die Synchrotonfrequenz und $\psi_j^0$ die Anfangsphase ist.
+	
+	\item $g(\theta,\dot{\theta})d\theta d\dot{\theta}=\Psi_0(a,\psi)\,da \,d\psi$
 	
 \end{itemize}
 
 \subsection{longitudinal} 
 
 \begin{itemize}
-\item Schottky Signal der Ladungsdichte in einem Bunch
+\item Schottky Signal der Ladungsdichte in einem Bunch int $[ \frac{C}{rad}]$
 \begin{subequations}
 \begin{align}
  	\label{eq:rho_p_bunched}
@@ -453,10 +453,10 @@ P_D(\Omega) &= \frac{q^2N}{4(2\pi)} \langle A^2 \rangle \sum_{n=-\infty}^{\infty
 \end{itemize}
 
 \begin{itemize}
-	\item Longitudinale Stromsignal im "`bunched Beam''
+	\item Longitudinale Stromsignal im "`bunched Beam'' in $[A]$
 	
 	\begin{align}
-		I^P(t) = T(\theta_p;t) = q \sum_{j = 1}^{N} \sum_{m=-\infty}^{+\infty} \omega_j \delta(\theta_j(t)- \theta_p - 2\pi m)
+		I^P(t) = I(\theta_p;t) = q \sum_{j = 1}^{N} \sum_{m=-\infty}^{+\infty} \omega_j \delta(\theta_j(t)- \theta_p - 2\pi m)
 	\end{align}
 \begin{itemize}
 	\item Größen sind analog zu \eqref{eq:rho_p_bunched} 
@@ -474,7 +474,7 @@ P_D(\Omega) &= \frac{q^2N}{4(2\pi)} \langle A^2 \rangle \sum_{n=-\infty}^{\infty
 
 
 \begin{itemize}
-	\item Dichtefluktuation zerlegt als Welle:
+	\item Dichtefluktuation zerlegt als Welle $[C]$:
 	
 		\begin{align}
 		\rho_j(\theta,t) = \frac{q}{2\pi} \sum_{\substack{m = -\infty \\ \neq 0}}^{+\infty} \sum_{\substack{\mu = -\infty\\ \neq 0}}^{+\infty} J_{\mu}(ma_j)e^{i\mu \psi_j^0}e^{-[\Omega_{m,\mu}(j)t-m\theta]}
@@ -484,12 +484,23 @@ P_D(\Omega) &= \frac{q^2N}{4(2\pi)} \langle A^2 \rangle \sum_{n=-\infty}^{\infty
 	\item  Hierbei ist die Größe nicht als Messgröße zu interpretieren sondern als Modellgröße. Daher ist es ohne ein P versehen!
 	
 	
+	 \begin{itemize}
+	 	\item Fourier-Transformierte Ladungsdichte des Schottky Signals: 
+	 	\begin{align}
+	 	\label{eq: ft_rho_bunched}
+	 	\tilde{\rho}^P(\Omega) =\tilde{\rho}(\theta_p;\Omega) = q \sum_{j=1}^{N}\sum_{m = - \infty}^{+\infty} J_\mu(ma_j)e^{-i\mu\psi_0}e^{+im\theta_p}\delta(\Omega-m\omega_0-\mu\omega_s(aj))
+	 	\end{align}
+	 	\begin{itemize}
+	 		\item \eqref{eq:rho_p_bunched} erklärt die hier vorhandenen Größen!  
+	 	\end{itemize}
+	 \end{itemize}
+	
 	\end{itemize} 
 \end{itemize}
 
 
 \begin{itemize}
-	\item Hinweis: S. 34 wurde nicht mit berücksichtigt da die eingeführten Größen alle auf der Seite beschrieben wurden! Da sich auch in keiner weiteren Größe vorkamen wurden sie nicht berücksichtigt!
+
 	
 	\item Synchrotronfrequenzbreite: 
 	\begin{align}
@@ -500,29 +511,19 @@ P_D(\Omega) &= \frac{q^2N}{4(2\pi)} \langle A^2 \rangle \sum_{n=-\infty}^{\infty
 		\item $\omega_s$: Breite der Synchrotonfrequenzen
 	\end{itemize}
 	
-	\item Da $J_{\mu}(ma)$ nur für $\mu \leq ma $ einen Beitrag liefer und sonst sehr schnell Abfällt muss dies nicht immer in Betracht gezogen werden! 
+	\item Da $J_{\mu}(ma)$ nur für $\mu \leq ma $ einen Beitrag liefert und sonst sehr schnell abfällt muss dies nicht immer in Betracht gezogen werden! 
 \end{itemize}
 
-\begin{itemize}
-	\item Fourier-Transformierte Ladungsdichte des Schottky Signals: 
-	\begin{align}
-		\label{eq: ft_rho_bunched}
-		\tilde{\rho}^P(\Omega) =\tilde{\rho}(\theta_p;\Omega) = q \sum_{j=1}^{N}\sum_{m = - \infty}^{+\infty} J_\mu(ma_j)e^{-i\mu\psi_0}e^{+im\theta_p}\delta(\Omega-m\omega_0-\mu\omega_s(aj))
-		\end{align}
-	\begin{itemize}
-		\item Hier sollte für die Erklärung aller Größen auf Gleichung \eqref{eq:rho_p_bunched} zuhilfe genommen werden
-	\end{itemize}
-\end{itemize}
+
 
 \begin{itemize}
-	\item Das Makroskopische Ladungsdichtesignal ist durch 
+	\item Das makroskopische Ladungsdichtesignal ist durch 
 	\begin{align}
 		\langle  \tilde{\rho}^P_n \rangle = \frac{q}{2 \pi} \sum_{j=1}^{N} J_0(\frac{\Omega}{\omega_0})a_je^{+i(\Omega/\omega_0)^\theta_p} \\
 		= \frac{qN}{2\pi}\int_{0}^{\infty} da \Psi_0(a)J_0(na)e^{+in\theta_p}
 	\end{align}
 	\begin{itemize}
 		\item $\Psi_0$ ist hierbei eine normalisierte Distribution
-		\item $q$ ist die Ladungszahl in Coulomb
 		\item$a$ ist die Amplitude der Synchrotronschwingungen(Index bei Distribution ausgelassen!)
 		\item $J_0$: Besselfunktion
 		\item $\theta_p$: Ort der PU 
@@ -532,18 +533,18 @@ P_D(\Omega) &= \frac{q^2N}{4(2\pi)} \langle A^2 \rangle \sum_{n=-\infty}^{\infty
 \end{itemize}
 
 \begin{itemize}
-	\item $g(\theta,\dot{\theta})d\theta d\dot{\theta}=\Psi_0(a,\psi)\,da \,d\psi$
-	 \item Der Makroskopische Strom im Bunch ergibt sich aus: 
+	 \item Der makroskopische Strom im Bunch ergibt sich aus: 
 	 \begin{align}
 	 	\label{eq:makr_strom_bunch}
 	 	\langle I(\theta_p;t) \rangle= \frac{1}{2}C_0+\sum_{n=1}^{\infty}C_n cos[2\pi f_0 t + \phi_n]= \\ \sum_{n=-\infty}^{+\infty} \langle  I_n(t)\rangle e^{+in\theta_p}
 	 \end{align}
-	 
+	 \item Wobei:
 	 \begin{itemize}
 	 	\item $\langle I_n(t)\rangle =  qNf_0 \int_{0}^{\infty}da\; \Psi_0(a)J_0(na)\, e^{-in\omega_0t}$\\
 	 	\item Die Größen sind hierbei $\eqref{eq: ft_rho_bunched}$ zu entnehmen
 		\item $C_0 = qNf_0$ Produkt aus Ladung,Anzahl und Frequenz
 		\item $C_n = 2(qNf_0)\int_{0}^{\infty}da \; \Psi_0(a)\, J_0(na)$ mit $\phi_n = +n\theta_p$
+		\item $a$: Betatron Amplitude
 		
 	 \end{itemize}
 \end{itemize}
