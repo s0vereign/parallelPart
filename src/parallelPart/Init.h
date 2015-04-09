@@ -34,11 +34,11 @@ void init(long double* t_start, long double *t_end, long double *dt,
     int i;
 
     //initialise length (from array length): number of particles
-    *length = 8;
+    *length = 1000;
     
     *t_start = 0;//in seconds
-    *t_end   = 7.7e-04;//in seconds
-    *dt      = 1e-9;//in seconds
+    *t_end   = 1e-06;//in seconds
+    *dt      = 1e-10;//in seconds
     
     *beamspeed = 0.467 * SOL;
     *circumference = 108.5;//m
@@ -56,7 +56,7 @@ void init(long double* t_start, long double *t_end, long double *dt,
      * delta p / p = 1e-5. E = 122 MeV/u, 12C3+ are considered
      */
     std::normal_distribution<long double> angle(M_PI, M_PI);
-    std::normal_distribution<long double> anglevelocity(M_PI * 2 / 1e6, 1e2);
+    std::normal_distribution<long double> anglevelocity(M_PI * 2 / 1e6, 2 * M_PI / 1e8);
     
     //allocate memory for each component of position
     p->x = (long double*) malloc(sizeof(long double) * (*length));

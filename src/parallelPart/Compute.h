@@ -161,12 +161,13 @@ void compute(
 	    if( x[i] >= 2 * M_PI)
 		x[i] -= 2* M_PI;
 
-    	    I += q[i] * px[i];	
+    	    I += q[i] * px[i] / (2 * M_PI);	
 
-	    for(l = 1; l <= 1; l++) {	
+	    for(l = 1; l <= 1000; l++) {	
                 I += 2 * q[i] * px[i] / (2 * M_PI) * cos( l *x[i] );
 	    }
         }
+
 
 	(*times)[2*j] = t;
 	(*times)[2*j + 1] = I;
