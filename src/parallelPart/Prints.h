@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <hdf5.h>
+#include <hdf5_hl.h>
 #define BUF 100
 
 void truncateFile() {
@@ -77,27 +78,33 @@ void truncate_signals(){
 
 
 
-void print_signal(long double ***sign, int length, int k){
 
 
-    FILE *f = fopen("signals.txt", "a+");
-    char buf[BUF];
-    //~ char *buffer = (char*) malloc(sizeof(char) * length * BUF);
+void print_signal(long double **sign, int length, int k){
 
-    for(int j = 0 ; j < k ; j++){
 
-        for(int i = 0 ; i < length; i++){
-            
-            strcpy(buf, ""); 
-            snprintf(buf, 100, "%025.20Lf ", (*sign)[j][i]);
-            strcat(buf, "\n");
-            
-            fwrite(buf, sizeof(char),strlen(buf),f);
+	double* conv_sign =(double*) malloc(sizeof(double)*k*length);
 
-        }
-    }
 
-    fclose(f);
+	for(int i = 0; i < length*k; i++){
+
+
+		conv_sign[i]=(double) (*sign)[i];
+
+
+	}
+
+
+	hid_t file_id;
+	hsize_t dims[1];
+	herr_t status;
+	dims[0] = length*k;
+	file_id = H5Fcreate("signal.h5",H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
+	status = H5LTmake_dataset(file_id,"/signal",1,dims,H5T_NATIVE_DOUBLE,conv_sign);
+	status = H5Fclose(file_id);
+
+	free(conv_sign);
+
 
 
 

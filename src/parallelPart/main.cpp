@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <omp.h>
+//#include <omp.h>
 
 #include "Init.h"
 #include "Destruct.h"
@@ -9,18 +9,17 @@
 
 int main(int argc, char** argv) {
 
-    printf("Using %i Threads\n", omp_get_num_procs());
+//    printf("Using %i Threads\n", omp_get_num_procs());
     printf("Initialising...\n");
 
     long double t_start, t_end, dt;
     long double beamspeed, circumference;
-    long double **times;
+    long double *times;
     int len, k;
     particle p;
 
 
     init(&t_start, &t_end, &dt,
-
         &beamspeed, &circumference,
         &len,
         &times,
@@ -45,7 +44,7 @@ int main(int argc, char** argv) {
     print_signal(&times,len,k);
 
 
-    destruct(len, t_start, t_end, dt, beamspeed, circumference, p, &times);
+    destruct(p, &times);
 
 
 
