@@ -1,0 +1,621 @@
+\documentclass[12pt]{article}%
+\usepackage[german,ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{breqn}
+\usepackage{amssymb}
+\usepackage[a4paper, left=2cm, top=1.5cm, right=1.5cm, bottom=1.5cm]{geometry}
+\usepackage{hyperref}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+
+\newcommand{\itemf}{\item[$\circ$]}
+
+\urlstyle{same}
+\hypersetup{%
+	colorlinks=true,
+	urlcolor=blue,
+	linkcolor=blue
+}
+
+\begin{document}
+
+\section{Abkürzungen}
+
+\begin{itemize}
+
+\item $\theta_j(t)$ (Orbit)
+\begin{align}
+\label{eq:theta_j}\theta_j(t) = \omega_j t + \theta_j^0
+\end{align}
+
+	\begin{itemize}
+	
+	\item $\omega_j$: Umlauffrequenz
+	\item $\theta_j^0$: Anfangsphase von Teilchen $j$
+	
+	\end{itemize}
+
+\item $\Delta \phi_m^i$ (Anfangsphasen)
+\begin{align}
+\label{delta_phi}\Delta \phi_m^i = m (\theta_j^0 - \theta_P)
+\end{align}
+	\begin{itemize}
+	
+	\item \emph{$\theta_j^0$}: Anfangsphase von Teilchen $j$
+	\item \emph{$\theta_P$}: Position PU
+	
+	\end{itemize}
+
+\item $x_j(t)$ (Betatronschwingung)
+\begin{align} \label{eq:betatron_x}
+	x_j(t) = A_j \cdot \cos (Q \omega_j t + \phi_j^0)
+\end{align}
+
+	\begin{itemize}
+	
+	\item $A_j$: Amplitude
+	\item $\omega_j$: Umlaufkreisfrequenz
+	\item $Q$: Oft aufgespalten in $Q = n' + Q_f$, wobei $n'$ die ganzzahligen Schwingungen und $Q_f < 1$ den Bruchteil der angefangenen Schwingung beschreibt.
+	
+	\end{itemize}
+
+\item $[P_\rho(\Omega)]_n$ (Durchschnittsintensität der longitudinalen Ladungsdichteschwankung)
+\begin{align} \label{eq:average_power_longitudinal_charge_density_fluktuation}
+	[P_\rho(\Omega)]_n = \frac{q^2N}{2\pi |n|} \psi\left(\frac{\Omega}{n}\right)
+\end{align}
+
+\end{itemize}
+
+\section{Allgemein}	
+
+\begin{itemize}
+
+\item Dichtefeld: $\mathfrak{F}(\vec{r}, \vec{v}, t) = \sum_{i=1}^{N} \delta(\vec{r} - \vec{r_i}(t)) \delta(\vec{v} - \vec{v_i}(t))$
+
+	\begin{itemize}
+		
+		\item $\vec{r}$: gewählter (betrachteter) Ort im Phasenraum
+		\item $\vec{v}$: gewählte (betrachtete) Geschwindigkeit im Phasenraum
+		\item $\vec{r_i}$: Ort von Teilchen $i$
+		\item $\vec{v_i}$: Geschwindigkeit von Teilchen $i$
+		
+	\end{itemize}
+	\begin{itemize}
+		
+		\itemf gemittelt: \[ f(\vec{r}, \vec{v}, t) = \int_{V(\vec{r}, \vec{v}} \mathrm{d}\vec{r} \mathrm{d}\vec{v} \;  \mathfrak{F}(\vec{r}, \vec{v}, t) = \langle \mathfrak{F}(\vec{r}, \vec{v}, t) \rangle \]
+	\end{itemize}
+
+\item Offenergyfunktion $\eta$ 
+\begin{equation}\label{eq:offsetenergy}
+\frac{\Delta \omega}{\omega_0} = - \eta \frac{\Delta p}{p_0}
+\end{equation}
+
+	\begin{itemize}
+	
+		\item $\Delta \omega$: Frequenzunschärfe
+		\item $\omega_0$: Umlauffrequenz
+		\item $\Delta p$: Impulsunschärfe (Impulsverteilung)
+		\item $p_0$: Sollimpuls / mittlerer Impuls
+	
+	\end{itemize}
+
+\item Chromaticity $\xi$
+\begin{align} \label{eq:chromaticity}
+\frac{\Delta Q}{Q_0} = \xi \frac{\Delta p}{p_0} = - \frac{\xi}{\eta} \frac{\Delta \omega}{\omega_0}
+\end{align}
+
+	\begin{itemize}
+	
+		\item $\Delta Q$: Abweichung des Tunes vom Durchschnitt
+		\item $Q_0$: Tune
+		\item $\eta$: Offenergyfunktion
+		\item $\Delta \omega$: Frequenzabweichung
+		\item $\omega_0$: Umlauffrequenz
+	
+	\end{itemize}
+
+\end{itemize}
+
+\section{kontinuierlicher Strahl}
+
+\subsection{longitudinal}
+
+\begin{itemize}
+
+\item Strom $I_j^P(t)$: [$A$]
+\begin{subequations}
+\begin{align} \label{eq:i_coasting_longitudinal_1}
+I_j^P(t) &= q \omega_j \sum_{m = - \infty}^{\infty} \delta(\theta_j(t) - \theta_P - 2 \pi m) \\
+\label{eq:i_coasting_longitudinal_2}
+&= q \cdot f_j \sum_{m' = -\infty}^{\infty} e^{-i m' ( \theta_j(t) - \theta_P)} \\
+\label{eq:i_coasting_longitudinal_3}
+I^P(t) &= q \sum_{j=1}^N f_j + 2 q \sum_{j=1}^{N}\sum_{m=1}^{\infty} f_j \cos (m \omega_j t + \Delta \phi_m^j)
+\end{align}
+
+	\begin{itemize}
+	
+	\item $q$: Ladung
+	\item $\omega_j$, $j_j$: (Kreis-)Frequenz von Teilchen $j$
+	\item $\theta_j(t)$: Position des Teilchens $j$ zur Zeit $t$ als Winkel, $\theta[t] = [0, 2\pi)$ - \eqref{eq:theta_j}
+	\item $\theta_P$: Position der PU als Winkel
+	\item $\Delta \phi_m^j$: Anfangsphasen zusammengefasst - \eqref{delta_phi}
+	\item $N$: Teilchenanzahl
+	\item $m$: In \eqref{eq:i_coasting_longitudinal_1}: Periodizität, in \eqref{eq:i_coasting_longitudinal_2}, \eqref{eq:i_coasting_longitudinal_3}: Fourierreihenindex zur Darstellung der Deltadistribution
+	
+	\end{itemize}
+
+\end{subequations}
+
+	\begin{itemize}
+	
+	\itemf makroskopisch:
+	\begin{align}
+		\langle I^P(t) \rangle = q \sum_{j=1}^{N} f_j	
+	\end{align}
+	
+	\itemf Schottky-Schwankung
+	\begin{subequations}
+	\begin{align}
+		\delta I^P(t) &= I^P(t) - \langle I^P(t) \rangle \\
+		&= 2 q \sum_{j=1}^{N}\sum_{m=1}^{\infty} f_j \cos(m \omega_j t + \Delta \phi_m^j)
+	\end{align}
+	\end{subequations}
+	
+	\itemf Fouriertransformiert
+	\begin{align}
+		\widetilde{\delta I}^P(\Omega) = q \cdot \sum_{j=1}^{N}\sum_{m=-\infty}^{\infty} \omega_j e^{-i \Delta \phi_m^j} \delta(\Omega - m \omega_j)
+	\end{align}
+	
+	\end{itemize}
+
+\item Ladungsdichte $\rho^P(t)$: [$C / \textrm{rad}$]
+\begin{subequations}
+\begin{align} \label{eq:chargedensity_coasting_longitudinal}
+\rho^P(t) &= \frac{q}{2\pi}\sum_{j=1}^{N}\sum_{m=-\infty}^{\infty}e^{-im(\omega_jt - \theta_P) - i m \theta_j^0} \\
+&= \frac{qN}{2\pi} + \frac{q}{\pi}\sum_{j=1}^{N}\sum_{m=1}^{\infty}\cos(m\omega_j t + \Delta \phi^j_m)
+\end{align}
+\end{subequations}
+
+	\begin{itemize}
+	
+		\item $q$: Ladung
+		\item $\omega_j$: Umlauffrequenz
+		\item $\theta_P$: Position der PU als Winkel
+		\item $\theta_j^0$: Anfangsphase des Teilchens
+		\item $\Delta \phi_m^j$: Anfangsphasen - \eqref{delta_phi}
+		\item $N$: Teilchenanzahl
+		\item $m$: Fourierreihenindex zur Darstellung der Deltadistribution
+	
+	\end{itemize}
+	
+	\begin{itemize}
+		\itemf makroskopisch
+		\begin{align}
+			\langle \rho^P(t) \rangle = \frac{qN}{2\pi}
+		\end{align}
+	
+		\itemf Schottky-Schwankung
+		\begin{align}
+			\delta \rho^P(t) = \rho^P(t) - \langle \rho^P(t)\rangle = \frac{q}{\pi}\sum_{j=1}^{N}\sum_{m=1}^{\infty}\cos(m\omega_j t + \Delta \phi_m^j)
+		\end{align}
+	
+	\end{itemize}
+
+\item Frequenzbreite $|\Delta \omega_n|$: [$Hz$]
+\begin{align}
+	|\Delta \omega_n| = | n \Delta \omega| = |n \eta \omega_0 \left(\frac{\Delta p}{p_0}\right)|
+\end{align}
+\begin{itemize}
+	\item $n$: n-te Umdrehung (?)
+	\item $\eta$: siehe \eqref{eq:chromaticity}
+	\item $\omega_0$: Umlauffrequenz
+	\item $\Delta p$: Impulsbreite
+	\item $p_0$: mittlerer Impuls
+\end{itemize}
+\begin{itemize}
+\itemf Überlagerungsbedingung \[ |n\Delta \omega| = \Delta \omega_n| \gtrsim \omega_0 \]
+\end{itemize}
+
+\end{itemize}
+
+\subsection{transversal}
+
+\begin{itemize}
+
+\item Ladungsdichte $d^P(t)$: [$Am$]
+\begin{subequations}
+\begin{align}
+d^P(t) &= \sum_{j=1}^{N} d_j^P(t) = \sum_{j=1}^{N} x_j(t) I_j^P(t) \\
+ &= \sum_{j=1}^{N} q f_j A_j \sum_{m=-\infty}^{\infty} \cos((m+Q)\omega_j t + \Delta \phi_m^j + \phi_j^0)
+\end{align}
+\end{subequations}
+
+	\begin{itemize}
+	
+		\item $N$: Teilchenanzahl
+		\item $d_j^P(t)$: Dipolmoment von Teilchen $j$
+		\item $x_j(t)$: Auslenkung der Betatronschwingung in x-Richtung - \eqref{eq:betatron_x}
+		\item $I^P_j(t)$: Longitudinalstrom - \eqref{eq:i_coasting_longitudinal_2}
+		\item $q$: Ladung
+		\item $f_j$: Umlauffrequenz von Teilchen $j$
+		\item $A_j$: Amplitude der Betatronschwingung
+		\item $Q$: Tune (Anzahl Betatronschwingung pro Umdrehung. $Q = n' + Q_f$, wobei $n' \in \mathbb{N}$ die kompletten Umläufe, und $Q_f \in \mathbb{Q} \cap [0,1)$ die "`Restschwingung'')
+		\item $\omega_j$: Umlaufkreisfrequenz
+		\item $\Delta \phi_m^i$: Anfangsphasen - \eqref{delta_phi}
+		\item $\phi_j^0$: Anfangsphase der Betatronschwingung
+	
+	\end{itemize}
+
+	\begin{itemize}
+	
+		\itemf makroskopisch:
+		\begin{align}
+			\langle d^P(t) \rangle = 0
+		\end{align}
+		
+		\itemf Schottky-Schwankung
+		\begin{align}
+			\delta d^P(t) = d^P(t) - \rangle d^P(t) \langle = d^P(t)
+		\end{align}
+	
+		\itemf Fouriertransformiert
+		\begin{dmath}
+			\widetilde{\delta d}^P(\Omega) = \widetilde{d}^P(\Omega) = q \cdot  \sum_{j=1}^{N} \sum_{m=-\infty}^{\infty} \frac{\omega_j A_j}{2} e^{-i \Delta \phi^j_m} \cdot \\
+			\left\lbrace \delta(\Omega - (m + Q) \omega_j) e^{-i \phi_j^0} + \delta(\Omega - (m - Q)\omega_j)e^{+i\phi_j^0} \right\rbrace
+		\end{dmath}
+	
+	\end{itemize}
+
+\item Frequenzbreite $\Delta \omega_n^\pm$:
+\begin{align}
+	|\Delta \omega_n^\pm| = | n \eta \mp (Q_0 \xi + n' \eta)| \omega_0 \left| \frac{\Delta p}{p_0} \right|
+\end{align}
+\begin{itemize}
+	\item $n$: n-te Umdrehung (?)
+	\item $\eta$: siehe \eqref{eq:chromaticity}
+	\item $Q_0$: mittlerer Tune
+	\item $\xi$: siehe \eqref{eq:offsetenergy}
+	\item $n'$: $\lfloor Q \rfloor$, also ganzzahliger Anteil von $Q$ und damit die Anzahl der vollständigen Betatronschwingungen innerhalb eines Umlaufes
+	\item $\omega_0$: Umlauffrequenz
+	\item $\Delta p$: Impulsbreite
+	\item $p_0$: mittlerer Impuls
+	\item $Q_0^f$: mittlerer $Q_f = Q - \lfloor Q \rfloor < 1$ und damit der Anteil vom Tune, der nicht mehr eine vollständige Schwingung umfasst.
+\end{itemize}
+\begin{itemize}
+	\itemf Überlappbedingung
+	\begin{subequations}
+	\begin{align}
+	\frac{1}{2} \left( | \Delta \omega_n^+| + | \Delta \omega_n^-| \right) &\ge 2 Q_0^f \omega_0  \qquad \text{oder} \\
+	\frac{1}{2} \left(|\Delta \omega_n^+| + |\Delta \omega_{n+1}^-| \right) &\ge (1 - 2 Q_0^f)\omega_0
+	\end{align}
+	\end{subequations}
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Spektren}
+
+\begin{itemize}
+\item Intensitätsspektrum $C_I(t, t')$: [$A^2$]
+\begin{align}  \label{eq:power_spectrum}
+C_I(t, t') = \langle \delta I^P(t) \delta {I^P}^*(t)^ \rangle
+\end{align}
+
+	\begin{itemize}
+		\item $I^P(t)$: Longitudinalstrom - \eqref{eq:i_coasting_longitudinal_3}
+	\end{itemize}
+
+\item Einzelfrequenzintensitätsspektrum $P_I(\Omega)$: [$A^2$]
+\begin{align}
+P_I(\Omega) = \int_{-\infty}^{\infty} \mathrm{d}\tau C_I(\tau) e^{i\Omega \tau}
+\end{align}
+
+	\begin{itemize}
+		\item $C_I(\tau)$: Intensitätsspektrum - \eqref{eq:power_spectrum}, wobei $C_I(t, t') = C_I(t - t') \overset{\tau := t - t'}{=} C(\tau)$
+	\end{itemize}
+
+\item Intensitätsspektrum der longitudinalen Ladungsdichtenschwankung $P_\rho^{PK}(\Omega)$: [$C^2$]
+\begin{subequations}
+\begin{align}
+	P_\rho^{PK}(\Omega) &= \frac{q^2N}{2\pi}\sum_{m=-\infty}^{\infty} \int \mathrm{d} \omega \psi_0(\omega) \delta(\Omega - m \omega) \\
+	&= \frac{q^2N}{2\pi}\sum_{\substack{m=-\infty \\ \neq 0}}^{\infty} \frac{1}{|m|} \psi_0\left( \frac{\Omega}{m} \right)
+\end{align}
+\end{subequations}
+
+	\begin{itemize}
+	\item $q$: Ladung
+	\item $N$: Anzahl Teilchen
+	\item $\psi(\omega)$: Verteilungsfunktion mit $\int_{\mathbb{R}} \mathrm{d} \omega \, \psi(\omega) = 1$
+	\item $\omega$: Umlauffrequenzen (eigentlich der Teilchen, aber $\sum_{i=1}^{N} F(\omega_j)$ wird mit \\ $N \int \mathrm{d}\omega \, F(\omega) \, \psi_0(\omega)$ ersetzt)
+	\item $m$: Fourierreihenindex zur Darstellung der Deltadistribution  - \eqref{eq:chargedensity_coasting_longitudinal}
+
+	\end{itemize}
+
+\item Intensitätsspektrumsdichte (gekreuzt)
+\begin{align}
+P_\rho^{PK}(\Omega) = \sum_{n = -\infty}^{\infty} (P_\rho)_n(\Omega) e^{in(\theta_p - \theta_k)}
+\end{align}
+wobei \[
+\left( P_\rho \right)_n (\Omega) = \begin{cases}
+	\frac{q^2N}{2\pi |n|} \psi_0\left(\frac{\Omega}{n} \right) & \textrm{für } n \neq 0\\
+	0 & \text{für } n = 0
+	
+\end{cases}
+\]
+
+	\begin{itemize}
+	\item $\theta_P$: Phase der PU $P$
+	\item $\theta_K$: Phase der PU $K$
+	\item $n$: Fourierreihenindex zur Darstellung der Deltadistribution
+	\item $q$: Ladung
+	\item $N$: Teilcheanzahl
+	\item $\psi_0(\Omega / m)$: Verteilungsfunktion mit $\int_{\mathbb{R}}\mathrm{d}\omega \, \psi_0(\omega) = 1$
+	\end{itemize}
+
+\item Kreuzkorrelation des Intensitätsspektrum der Betatrondipolmomentstromschwankung $P^{PK}_d(\Omega)$:
+\begin{subequations}
+\begin{align}
+P_d^{PK}(\Omega) &= \sum_{n=-\infty}^{\infty} [P_d(\Omega)]_n e^{in(\theta_p - \theta_K)} \\
+&= \frac{q^2}{2\pi} \sum_{j=1}^{N}\sum_{n=-\infty}^{\infty}\sum_{\pm} \frac{1}{4} \omega_j^2 A_j^2 \delta(\Omega - (n \pm \Omega) \omega_j) e^{in(\theta_P - \theta_K)}
+\end{align}
+\end{subequations}
+
+	\begin{itemize}
+	\item $[P_d(\Omega)]_n$: siehe \eqref{eq:average_power_longitudinal_charge_density_fluktuation}
+	\item $\theta_P$: Phase der PU $P$
+	\item $\theta_K$: Phase der PU $K$
+	\item $n$: Fourierreihenindex zur Darstellung einer Deltadistribution
+	\item $q$: Ladung
+	\item $\omega_j$: Umlauffrequenz von Teilchen $j$
+	\item $A_j$: Betatronamplitude von Teilchen $j$
+	\end{itemize}
+	
+\item Intensitätsspektrumdichte $P_d(\Omega)$:
+\begin{align}
+	P_d(\Omega) =\frac{q^2N}{4(2\pi)}\sum_{n=-\infty}^{\infty}\sum_{\pm} \int \mathrm{d}\omega \int \mathrm{d}A \, \psi(\omega, A) \omega^2 A^2 \delta(\Omega - (n \pm Q)\omega)
+\end{align}
+
+	\begin{itemize}
+		\item $q$: Ladung
+		\item $N$: Teilchenanzahl
+		\item $n$: Fourierreihenindex zur Darstellung der Deltadistribution
+		\item $\omega$: Umlauffrequenzen der Teilchen
+		\item $A$: Betatronamplituden der Teilchen
+		\item $\psi(\omega, A)$: Verteilungsfunktion
+		\item $Q$: Tune
+	\end{itemize}
+
+\item Dipolmomentladungsdichte $P_D(\Omega)$: [$A^2m^2$]
+\begin{align}
+P_D(\Omega) &= \frac{q^2N}{4(2\pi)} \langle A^2 \rangle \sum_{n=-\infty}^{\infty} \sum_{\pm} \int \mathrm{d}\omega \, \psi_0(\omega) \delta(\Omega - ( n \pm  \Omega) \omega)
+\end{align}
+
+	\begin{itemize}
+	\item $q$: Ladung
+	\item $N$: Anzahl Teilchen
+	\item $A$: Betatronamplitude der Teilchen, $\langle A^2 \rangle = \int \mathrm{d}A \, A^2 \Phi_0(A)$
+	\item $\infty$: Unendlich
+	\item $\omega$: Umlauffrequenzen der Teilchen
+	\item $\psi_0(\omega)$: normierte Verteilungsfunktion
+	\item $n$: Fourierreihenindex zur Darstellung der Deltadistribution
+	\end{itemize}
+
+\end{itemize}
+
+\section{"`\,gebunchter\,'' Strahl}
+
+\subsection{Konventionen}
+\begin{itemize}
+	\item $j$: j-te Partikel im Bunch/Beam
+	\item Größe welche mit P gekennzeichnet ist($I^P,\rho^P$): steht für eine Größe die an einer 
+	PU gemessen wird und daher immer den Winkel $\theta_p$ enthalten ist, welcher angibt, 
+	bei welchem Winkel im Ring sich die PU befindet! 
+	
+	\item Q: Betatron Tune mit n' als ganzzahligen Tune und $Q_f$ als gebrochenen Tune! 
+		
+	\item Für folgende Summen: $\sum_{j=1}^{N}F(a_j)$ wird oftmals $N\int_{0}^{\infty}\; da \Psi_0(a) \; F(a)$ genutzt, wobei $\Psi(a)$ eine Verteilungsfunktion ist und $\int_{\mathbb{R}} \mathrm{d}a \, \Psi(a) = 1$ genügt.
+	
+	\item $\theta_j(t) = \omega_0 t + a_j \sin( \omega_s(a_j)t + \psi_j^0)$ ist die Phase von Teilchen $j$ in Abhängigkeit von der Zeit, wobei $\omega_0$ die (mittlere) Umlauffrequenz, $a_j$ die Synchrotonampiltude, $\omega_s$ die Synchrotonfrequenz und $\psi_j^0$ die Anfangsphase ist.
+	
+\end{itemize}
+
+\subsection{longitudinal} 
+
+\begin{itemize}
+\item Schottky Signal der Ladungsdichte in einem Bunch
+\begin{subequations}
+\begin{align}
+ 	\label{eq:rho_p_bunched}
+ 	\rho^P(t) &= \sum_{j=1}^{N} \rho_j(\theta_p, t) \\ \rho_j(\theta_p;t)&=q\sum_{j=1}^{N}\sum_{m=-\infty}^{+\infty}  \delta(\theta_j(t) - \theta_p - 2m\pi) \\
+ 	&= \sum_{j=1}^{N}\sum_{m=-\infty}^{+\infty}\sum_{\mu = - \infty}^{+\infty} r_{m,\mu}(j) e^{i \alpha_{m,\mu}(j)}e^{-i\Omega_{m,\mu}(j)t} \\
+\intertext{wobei}
+\nonumber r_{m,\mu}(j) &= \frac{q}{2\pi} J_\mu(ma_j) \\
+\nonumber \alpha_{m,\mu}(j) &= -\mu \psi_{j}^0+m\theta_p \\
+\nonumber \Omega_{m,\mu}(j) &=m\omega_{0} +\mu \omega_s (a_j)
+\end{align}
+\end{subequations}
+
+\begin{itemize}
+	\item $r_{m,\mu}(j)$: Amplitude in Coulomb/Rad
+
+	\item $e^{ix sin(y)}=\sum_{\mu= - \infty}^{+\infty} J_{\mu}(x)e^{i\mu x}$: Identität der Besselfunktion!
+	
+	\item $m$: Fourierreihenindex zur Darstellung der Deltadistribution
+	\item $\mu$: Reihenindex aus der Identität der Besselfunktion
+	
+	
+\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item Longitudinale Stromsignal im "`bunched Beam''
+	
+	\begin{align}
+		I^P(t) = T(\theta_p;t) = q \sum_{j = 1}^{N} \sum_{m=-\infty}^{+\infty} \omega_j \delta(\theta_j(t)- \theta_p - 2\pi m)
+	\end{align}
+\begin{itemize}
+	\item Größen sind analog zu \eqref{eq:rho_p_bunched} 
+	
+\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item $\omega_{m,\mu} = \dfrac{\Omega_{m,\mu}(j)}{m} = \omega_0 + \frac{\mu}{m} \omega_s(a_j)$:
+	Hierbei mit $\omega_{m,\mu}^{\pm}= \omega_0 \pm (\frac{|\mu|}{m}\omega_s(a_j))$  
+	
+	\item $\Theta = \theta - \omega_0 t$
+	
+\end{itemize}
+
+
+\begin{itemize}
+	\item Dichtefluktuation zerlegt als Welle:
+	
+		\begin{align}
+		\rho_j(\theta,t) = \frac{q}{2\pi} \sum_{\substack{m = -\infty \\ \neq 0}}^{+\infty} \sum_{\substack{\mu = -\infty\\ \neq 0}}^{+\infty} J_{\mu}(ma_j)e^{i\mu \psi_j^0}e^{-[\Omega_{m,\mu}(j)t-m\theta]}
+		\end{align}
+		\begin{itemize}
+			
+	\item  Hierbei ist die Größe nicht als Messgröße zu interpretieren sondern als Modellgröße. Daher ist es ohne ein P versehen!
+	
+	
+	\end{itemize} 
+\end{itemize}
+
+
+\begin{itemize}
+	\item Hinweis: S. 34 wurde nicht mit berücksichtigt da die eingeführten Größen alle auf der Seite beschrieben wurden! Da sich auch in keiner weiteren Größe vorkamen wurden sie nicht berücksichtigt!
+	
+	\item Synchrotronfrequenzbreite: 
+	\begin{align}
+		\Delta \Omega_{m,\mu}=\mu\Delta\omega_s
+	\end{align}
+
+	\begin{itemize}
+		\item $\omega_s$: Breite der Synchrotonfrequenzen
+	\end{itemize}
+	
+	\item Da $J_{\mu}(ma)$ nur für $\mu \leq ma $ einen Beitrag liefer und sonst sehr schnell Abfällt muss dies nicht immer in Betracht gezogen werden! 
+\end{itemize}
+
+\begin{itemize}
+	\item Fourier-Transformierte Ladungsdichte des Schottky Signals: 
+	\begin{align}
+		\label{eq: ft_rho_bunched}
+		\tilde{\rho}^P(\Omega) =\tilde{\rho}(\theta_p;\Omega) = q \sum_{j=1}^{N}\sum_{m = - \infty}^{+\infty} J_\mu(ma_j)e^{-i\mu\psi_0}e^{+im\theta_p}\delta(\Omega-m\omega_0-\mu\omega_s(aj))
+		\end{align}
+	\begin{itemize}
+		\item Hier sollte für die Erklärung aller Größen auf Gleichung \eqref{eq:rho_p_bunched} zuhilfe genommen werden
+	\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item Das Makroskopische Ladungsdichtesignal ist durch 
+	\begin{align}
+		\langle  \tilde{\rho}^P_n \rangle = \frac{q}{2 \pi} \sum_{j=1}^{N} J_0(\frac{\Omega}{\omega_0})a_je^{+i(\Omega/\omega_0)^\theta_p} \\
+		= \frac{qN}{2\pi}\int_{0}^{\infty} da \Psi_0(a)J_0(na)e^{+in\theta_p}
+	\end{align}
+	\begin{itemize}
+		\item $\Psi_0$ ist hierbei eine normalisierte Distribution
+		\item $q$ ist die Ladungszahl in Coulomb
+		\item$a$ ist die Amplitude der Synchrotronschwingungen(Index bei Distribution ausgelassen!)
+		\item $J_0$: Besselfunktion
+		\item $\theta_p$: Ort der PU 
+		\item n: gibt die  anzahl der Perioden von $T=\frac{2\pi}{\omega_0}$ d.h. n-ter durchlauf
+		
+	\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item $g(\theta,\dot{\theta})d\theta d\dot{\theta}=\Psi_0(a,\psi)\,da \,d\psi$
+	 \item Der Makroskopische Strom im Bunch ergibt sich aus: 
+	 \begin{align}
+	 	\label{eq:makr_strom_bunch}
+	 	\langle I(\theta_p;t) \rangle= \frac{1}{2}C_0+\sum_{n=1}^{\infty}C_n cos[2\pi f_0 t + \phi_n]= \\ \sum_{n=-\infty}^{+\infty} \langle  I_n(t)\rangle e^{+in\theta_p}
+	 \end{align}
+	 
+	 \begin{itemize}
+	 	\item $\langle I_n(t)\rangle =  qNf_0 \int_{0}^{\infty}da\; \Psi_0(a)J_0(na)\, e^{-in\omega_0t}$\\
+	 	\item Die Größen sind hierbei $\eqref{eq: ft_rho_bunched}$ zu entnehmen
+		\item $C_0 = qNf_0$ Produkt aus Ladung,Anzahl und Frequenz
+		\item $C_n = 2(qNf_0)\int_{0}^{\infty}da \; \Psi_0(a)\, J_0(na)$ mit $\phi_n = +n\theta_p$
+		
+	 \end{itemize}
+\end{itemize}
+
+
+\begin{itemize}
+	
+	\item  Die Longitudinale Ladungsdichte Fluktuationen: 
+	\begin{align}
+		\label{eq:lcdf_bunch_ft}
+		 \widetilde{\delta \rho}^P(\Omega) &= \widetilde{\rho}^P(\Omega) - \langle \widetilde{\rho}^P(\Omega)\rangle \\
+		 &=  q \sum_{j=1}^{N} \sum_{\substack{m,\mu = -\infty \\ \neq 0}}^{+\infty}J_\mu(ma_j)e^{-i\mu \psi_0^j+im\theta_p}\delta(\Omega-m\omega_0-\mu \omega_s(a_j))
+	\end{align}
+	\begin{itemize}
+		\itemf $\langle \widetilde{\delta\rho}^p \rangle = 0$ 
+	\end{itemize}
+\end{itemize}
+
+
+\subsection{transversal} 
+
+\begin{itemize}
+	\item betatron Bänder: 
+	
+	\begin{itemize}
+		\item $\Omega_{m,\mu}=(m+Q)\omega_0+\mu \omega_s(a)$
+		
+		\item Analog kann jetzt wieder der Spread definiert werden: $\Omega^{\pm}_{m,\mu}=\mu\Delta\omega_s \pm \Delta Q \cdot \omega_0$
+		
+		\item $\Gamma_\mu = (\omega_s/\mu\Delta\omega_s)$
+		
+		
+	\end{itemize}
+
+	\item Cross-Power Spektraldichte
+	
+	\begin{dmath}
+		(P_D^{PK})_k(\Omega) = \frac{q^2N}{4(2\pi)} \int_{0}^{\infty} \int_{0}^{\infty} \mathrm{d}a \, \mathrm{d}A \, A^2 \psi(a, A) \sum_{m, \mu = -\infty}^{\infty} \sum_{\pm} J_\mu \left[ (m - k \pm Q) a - Q \frac{\xi}{\eta}a \right] J_\mu\left[(m \pm Q)a - Q \frac{\xi}{\eta} a\right] e^{-i m (\theta_P - \theta_K) - i k \theta_P} \delta\left[ \Omega - (m \pm Q) \omega_0 - \mu \omega_s(a) \right]
+	\end{dmath}
+	
+	\begin{itemize}
+		\item $q$: Ladung
+		\item $N$: Anzahl der Partikel
+		\item $k$: Blochkomponente
+		\item $A$: Betatronamplitude
+		\item $a$: Synchrotonamplitude
+		\item $\psi(a, A)$: Verteilungsfunktion
+		\item $Q$: Tune
+		\item $\eta$: siehe \eqref{eq:offsetenergy}
+		\item $\xi$: siehe \eqref{eq:chromaticity}
+	\end{itemize}
+	
+	\item Durchschnittliche Intensität der nicht-überlappenden Betatron Bänder
+	
+		\begin{align}
+			\langle |D_{n\pm}|^2 \rangle = \frac{q^2 N}{4(2\pi)^2} \langle A^2 \rangle \sum_{\mu = -\infty}^{+\infty}F_{n,\mu}^{(\pm)}
+		\end{align}
+		
+		wobei 
+		
+		\begin{align*}
+			F_{n,\mu}^\pm = \int_{0}^{\infty} \mathrm{d}a \, \Psi_0(a)J^2_\mu[(n\pm Q)a-Q\frac{\xi}{\eta}a]
+		\end{align*}
+	
+		\begin{itemize}
+			\item $Q$: Betatron tune
+			\item $n$: n-ter Umlauf! 
+			\item $a$: Synchorotonamplitude
+			\item $\eta$, $\xi$: siehe \eqref{eq:offsetenergy} bzw. \eqref{eq:chromaticity}
+			
+		\end{itemize}
+	
+\end{itemize}
+
+\end{document}
