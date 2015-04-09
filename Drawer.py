@@ -3,6 +3,7 @@
 
 import numpy as np
 import sys
+import h5py
 
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -11,7 +12,8 @@ if len(sys.argv) < 2:
 	print("You forgot the file!")
 	sys.exit(1)
 
-data = np.array(np.loadtxt(sys.argv[1]))
+f = h5py.File(sys.argv[1], "r")
+data = f["signal"]
 
 fig = plt.figure()
 
