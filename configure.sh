@@ -53,7 +53,8 @@ then
 	echo "Detected MAC"
 	if [ $(which g++-4.9) -a $(which gcc-4.9) ]
 	then
-		addOption="${addOption} -DCMAKE_CXX_COMPILER=$(which g++-4.9) -DCMAKE_CC_COMPILER=$(which gcc-4.9)"
+		export CC=$(which gcc-4.9)
+		export CXX=$(which g++-4.9)
 		echo "found g++ and gcc version 4.9, add -DCMAKE_CXX_COMPILER=g++-4.9 and -DCMAKE_CC_COMPILER=gcc-4.9 to cmake"
 	else
 		echo "Could not detect gcc version 4.9, use cmake's default compiler. "

@@ -91,7 +91,6 @@ void print_signal(long double **sign, int length, int k){
 
 		conv_sign[i]=(double) (*sign)[i];
 
-
 	}
 
 
