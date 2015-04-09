@@ -83,10 +83,10 @@ void truncate_signals(){
 void print_signal(long double **sign, int length, int k){
 
 
-	double* conv_sign =(double*) malloc(sizeof(double)*k*length);
+	double* conv_sign =(double*) malloc(sizeof(double)*k*2);
 
 
-	for(int i = 0; i < length*k; i++){
+	for(int i = 0; i < 2*k; i++){
 
 
 		conv_sign[i]=(double) (*sign)[i];
@@ -97,7 +97,7 @@ void print_signal(long double **sign, int length, int k){
 	hid_t file_id;
 	hsize_t dims[1];
 	herr_t status;
-	dims[0] = length*k;
+	dims[0] = 2*k;
 	file_id = H5Fcreate("signal.h5",H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
 	status = H5LTmake_dataset(file_id,"/signal",1,dims,H5T_NATIVE_DOUBLE,conv_sign);
 	status = H5Fclose(file_id);
