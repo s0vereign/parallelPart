@@ -28,18 +28,6 @@
 
 \begin{itemize}
 
-\item $\theta_j(t)$ (Orbit)
-\begin{align}
-\label{eq:theta_j}\theta_j(t) = \omega_j t + \theta_j^0
-\end{align}
-
-	\begin{itemize}
-	
-	\item $\omega_j$: Umlauffrequenz
-	\item $\theta_j^0$: Anfangsphase von Teilchen $j$
-	
-	\end{itemize}
-
 \item $\Delta \phi_m^i$ (Anfangsphasen)
 \begin{align}
 \label{delta_phi}\Delta \phi_m^i = m (\theta_j^0 - \theta_P)
@@ -64,18 +52,16 @@
 	
 	\end{itemize}
 
-\item $[P_\rho(\Omega)]_n$ (Durchschnittsintensität der longitudinalen Ladungsdichteschwankung)
-\begin{align} \label{eq:average_power_longitudinal_charge_density_fluktuation}
-	[P_\rho(\Omega)]_n = \frac{q^2N}{2\pi |n|} \psi\left(\frac{\Omega}{n}\right)
-\end{align}
-
 \end{itemize}
 
 \section{Allgemein}	
 
 \begin{itemize}
 
-\item Dichtefeld: $\mathfrak{F}(\vec{r}, \vec{v}, t) = \sum_{i=1}^{N} \delta(\vec{r} - \vec{r_i}(t)) \delta(\vec{v} - \vec{v_i}(t))$
+\item Dichtefeld $\mathfrak{F}(\vec{r}, \vec{v}, t)$:
+\begin{align}
+\mathfrak{F}(\vec{r}, \vec{v}, t) = \sum_{i=1}^{N} \delta(\vec{r} - \vec{r_i}(t)) \delta(\vec{v} - \vec{v_i}(t))
+\end{align}
 
 	\begin{itemize}
 		
@@ -87,10 +73,10 @@
 	\end{itemize}
 	\begin{itemize}
 		
-		\itemf gemittelt: \[ f(\vec{r}, \vec{v}, t) = \int_{V(\vec{r}, \vec{v}} \mathrm{d}\vec{r} \mathrm{d}\vec{v} \;  \mathfrak{F}(\vec{r}, \vec{v}, t) = \langle \mathfrak{F}(\vec{r}, \vec{v}, t) \rangle \]
+		\itemf gemittelt: \[ f(\vec{r}, \vec{v}, t) = \int_{V(\vec{r}, \vec{v})} \mathrm{d}\vec{r} \mathrm{d}\vec{v} \;  \mathfrak{F}(\vec{r}, \vec{v}, t) = \langle \mathfrak{F}(\vec{r}, \vec{v}, t) \rangle \]
 	\end{itemize}
 
-\item Offenergyfunktion $\eta$ 
+\item Offenergyfunktion $\eta$:
 \begin{equation}\label{eq:offsetenergy}
 \frac{\Delta \omega}{\omega_0} = - \eta \frac{\Delta p}{p_0}
 \end{equation}
@@ -100,11 +86,11 @@
 		\item $\Delta \omega$: Frequenzunschärfe
 		\item $\omega_0$: Umlauffrequenz
 		\item $\Delta p$: Impulsunschärfe (Impulsverteilung)
-		\item $p_0$: Sollimpuls / mittlerer Impuls
+		\item $p_0$: mittlerer Impuls
 	
 	\end{itemize}
 
-\item Chromaticity $\xi$
+\item Chromaticity $\xi$:
 \begin{align} \label{eq:chromaticity}
 \frac{\Delta Q}{Q_0} = \xi \frac{\Delta p}{p_0} = - \frac{\xi}{\eta} \frac{\Delta \omega}{\omega_0}
 \end{align}
@@ -112,8 +98,8 @@
 	\begin{itemize}
 	
 		\item $\Delta Q$: Abweichung des Tunes vom Durchschnitt
-		\item $Q_0$: Tune
-		\item $\eta$: Offenergyfunktion
+		\item $Q_0$: mittlerer Tune
+		\item $\eta$: Offenergyfunktion - \eqref{eq:offsetenergy}
 		\item $\Delta \omega$: Frequenzabweichung
 		\item $\omega_0$: Umlauffrequenz
 	
@@ -122,6 +108,34 @@
 \end{itemize}
 
 \section{kontinuierlicher Strahl}
+
+\subsection{Konvention}
+
+\begin{itemize}
+
+\item $\theta_j(t)$ (Orbit)
+\begin{align}
+\label{eq:theta_j}\theta_j(t) = \omega_j t + \theta_j^0
+\end{align}
+
+	\begin{itemize}
+	
+	\item $\omega_j$: Umlauffrequenz
+	\item $\theta_j^0$: Anfangsphase von Teilchen $j$
+	
+	\end{itemize}
+
+\item Bezeichnungskonventionen
+
+	\begin{itemize}
+	
+		\item $q$: Ladung
+		\item $N$: Teilchenanzahl
+		\item $\theta_j$: Position der PU als Winkel
+		\item $Q$: Tune (Anzahl Betatronschwingung pro Umdrehung. $Q = n' + Q_f$, wobei $n' \in \mathbb{N}$ die kompletten Umläufe, und $Q_f \in \mathbb{Q} \cap [0,1)$ die "`Restschwingung'')
+	\end{itemize}
+
+\end{itemize}
 
 \subsection{longitudinal}
 
@@ -134,18 +148,16 @@ I_j^P(t) &= q \omega_j \sum_{m = - \infty}^{\infty} \delta(\theta_j(t) - \theta_
 \label{eq:i_coasting_longitudinal_2}
 &= q \cdot f_j \sum_{m' = -\infty}^{\infty} e^{-i m' ( \theta_j(t) - \theta_P)} \\
 \label{eq:i_coasting_longitudinal_3}
-I^P(t) &= q \sum_{j=1}^N f_j + 2 q \sum_{j=1}^{N}\sum_{m=1}^{\infty} f_j \cos (m \omega_j t + \Delta \phi_m^j)
+I^P(t) &= \sum_{j=1}^{N} I_j^P(t) \\
+&= q \sum_{j=1}^N f_j + 2 q \sum_{j=1}^{N}\sum_{m=1}^{\infty} f_j \cos (m \omega_j t + \Delta \phi_m^j)
 \end{align}
 
 	\begin{itemize}
 	
-	\item $q$: Ladung
-	\item $\omega_j$, $j_j$: (Kreis-)Frequenz von Teilchen $j$
-	\item $\theta_j(t)$: Position des Teilchens $j$ zur Zeit $t$ als Winkel, $\theta[t] = [0, 2\pi)$ - \eqref{eq:theta_j}
-	\item $\theta_P$: Position der PU als Winkel
+	\item $\omega_j$, $f_j$: (Kreis-)Frequenz von Teilchen $j$
+	\item $\theta_j(t)$: Position des Teilchens - \eqref{eq:theta_j}
 	\item $\Delta \phi_m^j$: Anfangsphasen zusammengefasst - \eqref{delta_phi}
-	\item $N$: Teilchenanzahl
-	\item $m$: In \eqref{eq:i_coasting_longitudinal_1}: Periodizität, in \eqref{eq:i_coasting_longitudinal_2}, \eqref{eq:i_coasting_longitudinal_3}: Fourierreihenindex zur Darstellung der Deltadistribution
+	\item $m$: In \eqref{eq:i_coasting_longitudinal_1}: Periodizität; in \eqref{eq:i_coasting_longitudinal_2}, \eqref{eq:i_coasting_longitudinal_3}: Fourierreihenindex zur Darstellung der Deltadistribution
 	
 	\end{itemize}
 
@@ -168,7 +180,7 @@ I^P(t) &= q \sum_{j=1}^N f_j + 2 q \sum_{j=1}^{N}\sum_{m=1}^{\infty} f_j \cos (m
 	
 	\itemf Fouriertransformiert
 	\begin{align}
-		\widetilde{\delta I}^P(\Omega) = q \cdot \sum_{j=1}^{N}\sum_{m=-\infty}^{\infty} \omega_j e^{-i \Delta \phi_m^j} \delta(\Omega - m \omega_j)
+		\widetilde{\delta I}^P(\Omega) = q  \sum_{j=1}^{N}\sum_{m=-\infty}^{\infty} \omega_j e^{-i \Delta \phi_m^j} \delta(\Omega - m \omega_j)
 	\end{align}
 	
 	\end{itemize}
@@ -183,12 +195,9 @@ I^P(t) &= q \sum_{j=1}^N f_j + 2 q \sum_{j=1}^{N}\sum_{m=1}^{\infty} f_j \cos (m
 
 	\begin{itemize}
 	
-		\item $q$: Ladung
 		\item $\omega_j$: Umlauffrequenz
-		\item $\theta_P$: Position der PU als Winkel
 		\item $\theta_j^0$: Anfangsphase des Teilchens
 		\item $\Delta \phi_m^j$: Anfangsphasen - \eqref{delta_phi}
-		\item $N$: Teilchenanzahl
 		\item $m$: Fourierreihenindex zur Darstellung der Deltadistribution
 	
 	\end{itemize}
@@ -200,15 +209,18 @@ I^P(t) &= q \sum_{j=1}^N f_j + 2 q \sum_{j=1}^{N}\sum_{m=1}^{\infty} f_j \cos (m
 		\end{align}
 	
 		\itemf Schottky-Schwankung
+		\begin{subequations}
 		\begin{align}
-			\delta \rho^P(t) = \rho^P(t) - \langle \rho^P(t)\rangle = \frac{q}{\pi}\sum_{j=1}^{N}\sum_{m=1}^{\infty}\cos(m\omega_j t + \Delta \phi_m^j)
+			\delta \rho^P(t) &= \rho^P(t) - \langle \rho^P(t)\rangle \\
+			&= \frac{q}{\pi}\sum_{j=1}^{N}\sum_{m=1}^{\infty}\cos(m\omega_j t + \Delta \phi_m^j)
 		\end{align}
+		\end{subequations}
 	
 	\end{itemize}
 
-\item Frequenzbreite $|\Delta \omega_n|$: [$Hz$]
+\item Frequenzbreite $|\Delta \omega_n|$: [$\text{Hz}$]
 \begin{align}
-	|\Delta \omega_n| = | n \Delta \omega| = |n \eta \omega_0 \left(\frac{\Delta p}{p_0}\right)|
+	|\Delta \omega_n| = | n \Delta \omega| = \left| n \eta \omega_0 \left(\frac{\Delta p}{p_0}\right) \right|
 \end{align}
 \begin{itemize}
 	\item $n$: n-te Umdrehung (?)
@@ -218,7 +230,7 @@ I^P(t) &= q \sum_{j=1}^N f_j + 2 q \sum_{j=1}^{N}\sum_{m=1}^{\infty} f_j \cos (m
 	\item $p_0$: mittlerer Impuls
 \end{itemize}
 \begin{itemize}
-\itemf Überlagerungsbedingung \[ |n\Delta \omega| = \Delta \omega_n| \gtrsim \omega_0 \]
+\itemf Überlagerungsbedingung \[ |n\Delta \omega| = | \Delta \omega_n| \gtrsim \omega_0 \]
 \end{itemize}
 
 \end{itemize}
@@ -231,20 +243,17 @@ I^P(t) &= q \sum_{j=1}^N f_j + 2 q \sum_{j=1}^{N}\sum_{m=1}^{\infty} f_j \cos (m
 \begin{subequations}
 \begin{align}
 d^P(t) &= \sum_{j=1}^{N} d_j^P(t) = \sum_{j=1}^{N} x_j(t) I_j^P(t) \\
- &= \sum_{j=1}^{N} q f_j A_j \sum_{m=-\infty}^{\infty} \cos((m+Q)\omega_j t + \Delta \phi_m^j + \phi_j^0)
+ &= \sum_{j=1}^{N} q f_j A_j \sum_{m=-\infty}^{\infty} \cos \left[(m+Q)\omega_j t + \Delta \phi_m^j + \phi_j^0 \right]
 \end{align}
 \end{subequations}
 
 	\begin{itemize}
 	
-		\item $N$: Teilchenanzahl
 		\item $d_j^P(t)$: Dipolmoment von Teilchen $j$
 		\item $x_j(t)$: Auslenkung der Betatronschwingung in x-Richtung - \eqref{eq:betatron_x}
 		\item $I^P_j(t)$: Longitudinalstrom - \eqref{eq:i_coasting_longitudinal_2}
-		\item $q$: Ladung
 		\item $f_j$: Umlauffrequenz von Teilchen $j$
 		\item $A_j$: Amplitude der Betatronschwingung
-		\item $Q$: Tune (Anzahl Betatronschwingung pro Umdrehung. $Q = n' + Q_f$, wobei $n' \in \mathbb{N}$ die kompletten Umläufe, und $Q_f \in \mathbb{Q} \cap [0,1)$ die "`Restschwingung'')
 		\item $\omega_j$: Umlaufkreisfrequenz
 		\item $\Delta \phi_m^i$: Anfangsphasen - \eqref{delta_phi}
 		\item $\phi_j^0$: Anfangsphase der Betatronschwingung
@@ -266,7 +275,7 @@ d^P(t) &= \sum_{j=1}^{N} d_j^P(t) = \sum_{j=1}^{N} x_j(t) I_j^P(t) \\
 		\itemf Fouriertransformiert
 		\begin{dmath}
 			\widetilde{\delta d}^P(\Omega) = \widetilde{d}^P(\Omega) = q \cdot  \sum_{j=1}^{N} \sum_{m=-\infty}^{\infty} \frac{\omega_j A_j}{2} e^{-i \Delta \phi^j_m} \cdot \\
-			\left\lbrace \delta(\Omega - (m + Q) \omega_j) e^{-i \phi_j^0} + \delta(\Omega - (m - Q)\omega_j)e^{+i\phi_j^0} \right\rbrace
+			\left\lbrace \delta[\Omega - (m + Q) \omega_j] e^{-i \phi_j^0} + \delta[\Omega - (m - Q)\omega_j]e^{+i\phi_j^0} \right\rbrace
 		\end{dmath}
 	
 	\end{itemize}
@@ -276,10 +285,10 @@ d^P(t) &= \sum_{j=1}^{N} d_j^P(t) = \sum_{j=1}^{N} x_j(t) I_j^P(t) \\
 	|\Delta \omega_n^\pm| = | n \eta \mp (Q_0 \xi + n' \eta)| \omega_0 \left| \frac{\Delta p}{p_0} \right|
 \end{align}
 \begin{itemize}
-	\item $n$: n-te Umdrehung (?)
+	\item $n$: n-te Umdrehung
 	\item $\eta$: siehe \eqref{eq:chromaticity}
+		\item $\xi$: siehe \eqref{eq:offsetenergy}
 	\item $Q_0$: mittlerer Tune
-	\item $\xi$: siehe \eqref{eq:offsetenergy}
 	\item $n'$: $\lfloor Q \rfloor$, also ganzzahliger Anteil von $Q$ und damit die Anzahl der vollständigen Betatronschwingungen innerhalb eines Umlaufes
 	\item $\omega_0$: Umlauffrequenz
 	\item $\Delta p$: Impulsbreite
@@ -290,7 +299,8 @@ d^P(t) &= \sum_{j=1}^{N} d_j^P(t) = \sum_{j=1}^{N} x_j(t) I_j^P(t) \\
 	\itemf Überlappbedingung
 	\begin{subequations}
 	\begin{align}
-	\frac{1}{2} \left( | \Delta \omega_n^+| + | \Delta \omega_n^-| \right) &\ge 2 Q_0^f \omega_0  \qquad \text{oder} \\
+	\frac{1}{2} \left( | \Delta \omega_n^+| + | \Delta \omega_n^-| \right) &\ge 2 Q_0^f \omega_0
+	\intertext{oder}
 	\frac{1}{2} \left(|\Delta \omega_n^+| + |\Delta \omega_{n+1}^-| \right) &\ge (1 - 2 Q_0^f)\omega_0
 	\end{align}
 	\end{subequations}
@@ -328,66 +338,59 @@ P_I(\Omega) = \int_{-\infty}^{\infty} \mathrm{d}\tau C_I(\tau) e^{i\Omega \tau}
 \end{subequations}
 
 	\begin{itemize}
-	\item $q$: Ladung
-	\item $N$: Anzahl Teilchen
 	\item $\psi(\omega)$: Verteilungsfunktion mit $\int_{\mathbb{R}} \mathrm{d} \omega \, \psi(\omega) = 1$
-	\item $\omega$: Umlauffrequenzen (eigentlich der Teilchen, aber $\sum_{i=1}^{N} F(\omega_j)$ wird mit \\ $N \int \mathrm{d}\omega \, F(\omega) \, \psi_0(\omega)$ ersetzt)
+	\item $\omega$: Umlauffrequenzen (eigentlich der Teilchen, aber $\sum_{i=1}^{N} F(\omega_j)$ wird durch \\ $N \int \mathrm{d}\omega \, F(\omega) \, \psi_0(\omega)$ ersetzt)
 	\item $m$: Fourierreihenindex zur Darstellung der Deltadistribution  - \eqref{eq:chargedensity_coasting_longitudinal}
 
 	\end{itemize}
 
-\item Intensitätsspektrumsdichte (gekreuzt)
+\item Intensitätsspektrumsdichte (Kreuzkorrelation)
 \begin{align}
-P_\rho^{PK}(\Omega) = \sum_{n = -\infty}^{\infty} (P_\rho)_n(\Omega) e^{in(\theta_p - \theta_k)}
-\end{align}
-wobei \[
-\left( P_\rho \right)_n (\Omega) = \begin{cases}
+P_\rho^{PK}(\Omega) &= \sum_{n = -\infty}^{\infty} (P_\rho)_n(\Omega) e^{in(\theta_p - \theta_k)}
+\intertext{wobei}
+\nonumber \left( P_\rho \right)_n (\Omega) & = \begin{cases}
 	\frac{q^2N}{2\pi |n|} \psi_0\left(\frac{\Omega}{n} \right) & \textrm{für } n \neq 0\\
-	0 & \text{für } n = 0
-	
+	0 & \text{für } n = 0	
 \end{cases}
-\]
+\end{align}
 
 	\begin{itemize}
 	\item $\theta_P$: Phase der PU $P$
 	\item $\theta_K$: Phase der PU $K$
 	\item $n$: Fourierreihenindex zur Darstellung der Deltadistribution
-	\item $q$: Ladung
-	\item $N$: Teilcheanzahl
 	\item $\psi_0(\Omega / m)$: Verteilungsfunktion mit $\int_{\mathbb{R}}\mathrm{d}\omega \, \psi_0(\omega) = 1$
 	\end{itemize}
 
-\item Kreuzkorrelation des Intensitätsspektrum der Betatrondipolmomentstromschwankung $P^{PK}_d(\Omega)$:
+\item Intensitätsspektrum der Betatrondipolmomentschwankung (Kreuzkorrelation) $P^{PK}_d(\Omega)$: [$A^2m^2$]
 \begin{subequations}
 \begin{align}
 P_d^{PK}(\Omega) &= \sum_{n=-\infty}^{\infty} [P_d(\Omega)]_n e^{in(\theta_p - \theta_K)} \\
-&= \frac{q^2}{2\pi} \sum_{j=1}^{N}\sum_{n=-\infty}^{\infty}\sum_{\pm} \frac{1}{4} \omega_j^2 A_j^2 \delta(\Omega - (n \pm \Omega) \omega_j) e^{in(\theta_P - \theta_K)}
+&= \frac{q^2}{2\pi} \sum_{j=1}^{N}\sum_{n=-\infty}^{\infty}\sum_{\pm} \frac{1}{4} \omega_j^2 A_j^2 \delta[\Omega - (n \pm \Omega) \omega_j] e^{in(\theta_P - \theta_K)}
+\intertext{wobei}
+\nonumber
+[P_\rho(\Omega)]_n& = \frac{q^2N}{2\pi |n|} \psi\left(\frac{\Omega}{n}\right)
 \end{align}
 \end{subequations}
 
 	\begin{itemize}
-	\item $[P_d(\Omega)]_n$: siehe \eqref{eq:average_power_longitudinal_charge_density_fluktuation}
+	\item $[P_d(\Omega)]_n$: Durchschnittsintensität der longitudinalen Ladungsdichteschwankung
 	\item $\theta_P$: Phase der PU $P$
 	\item $\theta_K$: Phase der PU $K$
 	\item $n$: Fourierreihenindex zur Darstellung einer Deltadistribution
-	\item $q$: Ladung
 	\item $\omega_j$: Umlauffrequenz von Teilchen $j$
 	\item $A_j$: Betatronamplitude von Teilchen $j$
 	\end{itemize}
 	
-\item Intensitätsspektrumdichte $P_d(\Omega)$:
+\item Intensitätsspektrumdichte $P_d(\Omega)$: [$\frac{A^2}{s}m^3$]
 \begin{align}
 	P_d(\Omega) =\frac{q^2N}{4(2\pi)}\sum_{n=-\infty}^{\infty}\sum_{\pm} \int \mathrm{d}\omega \int \mathrm{d}A \, \psi(\omega, A) \omega^2 A^2 \delta(\Omega - (n \pm Q)\omega)
 \end{align}
 
 	\begin{itemize}
-		\item $q$: Ladung
-		\item $N$: Teilchenanzahl
 		\item $n$: Fourierreihenindex zur Darstellung der Deltadistribution
 		\item $\omega$: Umlauffrequenzen der Teilchen
 		\item $A$: Betatronamplituden der Teilchen
 		\item $\psi(\omega, A)$: Verteilungsfunktion
-		\item $Q$: Tune
 	\end{itemize}
 
 \item Dipolmomentladungsdichte $P_D(\Omega)$: [$A^2m^2$]
@@ -396,17 +399,13 @@ P_D(\Omega) &= \frac{q^2N}{4(2\pi)} \langle A^2 \rangle \sum_{n=-\infty}^{\infty
 \end{align}
 
 	\begin{itemize}
-	\item $q$: Ladung
-	\item $N$: Anzahl Teilchen
 	\item $A$: Betatronamplitude der Teilchen, $\langle A^2 \rangle = \int \mathrm{d}A \, A^2 \Phi_0(A)$
-	\item $\infty$: Unendlich
 	\item $\omega$: Umlauffrequenzen der Teilchen
 	\item $\psi_0(\omega)$: normierte Verteilungsfunktion
 	\item $n$: Fourierreihenindex zur Darstellung der Deltadistribution
 	\end{itemize}
 
 \end{itemize}
-
 \section{"`\,gebunchter\,'' Strahl}
 
 \subsection{Konventionen}
