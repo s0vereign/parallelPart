@@ -4,6 +4,7 @@
 
 cmake_minimum_required(VERSION 2.8.12)
 
+
 #################
 # Project
 #################
@@ -47,6 +48,12 @@ file(GLOB_RECURSE SRC_FILES "*.cpp")
 add_executable(parallelparts ${SRC_FILES})
 
 target_link_libraries(parallelparts ${OpenMP_CXX_FLAGS} ${LIBS} ) #${MPI_Libraries}
+
+
+
+
+
+
 
 if(UNIX)
 	target_link_libraries(parallelparts m)

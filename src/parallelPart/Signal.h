@@ -4,7 +4,7 @@
 #ifndef SOL
 #define SOL 3e8
 #endif
-
+#include <math.h>
 
 bool check(long double t, int k, long double circumference, long double beamspeed) {
 
@@ -23,18 +23,23 @@ void getSignals(
     long double times[]
 )  {
 
-    if(check(t, *k, circumference, beamspeed)) {
 
         int i;
         *k = *k + 1;
 
-        for(i = 0; i < len; i++) {
+	for(int i = 0; i < len;i++){
 
-            times[i] = x[i] / beamspeed + t;
+	if(x[i]>= 2*M_PI){
 
-        }
+		
+		times[i]=t;
 
-    }
+
+	}
+
+	
+
+	}
 
 }
 

@@ -130,7 +130,13 @@ void updateParticle(
 
     computeNewPosition(dt, x, y, z, *px, *py, *pz, Fx, Fy, Fz, gamma, m);
     computeNewImpulse(dt, px, py, pz, Fx, Fy, Fz);
+	
 
+
+	
+	    
+
+    
 }
 
 void compute(
@@ -157,6 +163,9 @@ void compute(
                 &px[i], &py[i], &pz[i],
                 q[i], m[i]
             );
+	
+
+	
 
         }
 
