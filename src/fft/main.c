@@ -4,7 +4,8 @@
 #include <stdlib.h>
 
 #include <math.h>
-
+#include <hdf5.h>
+#include <hdf5_hl.h>
 #define DT 1e-10
 
 int main(int argc, char** argv) {
@@ -39,15 +40,37 @@ int main(int argc, char** argv) {
 
     fread(tmp, sizeof(long double), lines, f);
     fclose(f);
-    
-#pragma omp parallel for default(none) shared(array, tmp, lines) private(i)
-    for(i = 0; i < lines; i++) {
-        
-        array[i] = (double) tmp[i];
-        
+
+    hid_t file_id;
+    int d1[1];
+    hsize_t dims[1];
+    herr_t status;
+
+    file_id = H5Fopen(argv[1], H5F_ACC_RDONLY, H5P_DEFAULT);
+    status  = H5LTget_dataset_info(file_id,"/signal",dims,NULL,NULL);
+    double* data = (double*) malloc(sizeof(double)*((int)dims[0]));
+    status = H5LTread_dataset_double(file_id,"/signal",data);
+    status = H5Fclose(file_id);
+
+    printf("File read! \n");
+
+
+
+    for(i = 0 ; i < (int)dims[0];i++){
+
+	printf("data:%e \n",data[i]);
+
+
     }
+/*
+
+
+
+
+
         
-    free(tmp);
+        
+        
     
     out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * floor(lines / 2 + 1));
 
@@ -76,5 +99,5 @@ int main(int argc, char** argv) {
 
     printf("Done\n--Finished--\n");
     
-    return EXIT_SUCCESS;
+    return EXIT_SUCCESS;*/
 }
