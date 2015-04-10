@@ -17,7 +17,7 @@
 #
 
 #If environment variable FFTWDIR is specified, it has same effect as FFTW_ROOT
-if( NOT FFTW_ROOT AND ENV{FFTWDIR} )
+if( NOT FFTW_ROOT AND DEFINED ENV{FFTWDIR} )
   set( FFTW_ROOT $ENV{FFTWDIR} )
 endif()
 
@@ -75,12 +75,12 @@ if( FFTW_ROOT )
   )
 
 else()
-
+  
   find_library(
     FFTW_LIB
     NAMES "fftw3"
     PATHS ${PKG_FFTW_LIBRARY_DIRS} ${LIB_INSTALL_DIR}
-  )
+    )
 
   find_library(
     FFTWF_LIB
@@ -103,7 +103,11 @@ else()
 
 endif( FFTW_ROOT )
 
-set(FFTW_LIBRARIES ${FFTW_LIB} ${FFTWF_LIB})
+set(FFTW_LIBRARIES ${FFTW_LIB})
+
+if(FFTW_LIB)
+    set(FFTW_LIBRARIES ${FFTW_LIBRARIES} ${FFTW_LIB})
+endif()
 
 if(FFTWL_LIB)
   set(FFTW_LIBRARIES ${FFTW_LIBRARIES} ${FFTWL_LIB})
