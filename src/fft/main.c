@@ -51,8 +51,6 @@ int main(int argc, char** argv) {
 	array[i] = array[2*i + 1];
     }
 
-    for(i=0;i<lines/2;i++) printf("%f\n", array[i]);
-
     printf("Done\nStarting FFT... ");
     fflush(stdout);
     
