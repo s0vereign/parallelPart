@@ -28,6 +28,17 @@ if(FFTW_FOUND)
 endif()
 
 
+
+
+################
+#Find HDF5 components
+###############
+
+find_package(HDF5 COMPONENTS HL)
+include_directories(${HDF5_INCLUDE_DIRS})
+set(LIBS ${LIBS} ${HDF5_LIBRARIES})
+
+
 #################
 # Build & Links
 #################
