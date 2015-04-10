@@ -145,31 +145,26 @@ void compute(
     long double px[], long double py[], long double pz[],
     long double m[], long double q[],
     int len, int *k, long double **times,
-    long double beamspeed, long double circumference
+    long double beamspeed, long double circumference,
+    long double *h
 ) {
 
     int i,j, l;
 
     long double t, I;
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
-	I = 0.0;
+	(*times)[2*j + 1] = 0;
 
         for(i = 0; i < len; i++) {
-	    x[i] += px[i] * dt;
-	    if( x[i] >= 2 * M_PI)
-		x[i] -= 2* M_PI;
-
-    	    I += q[i] * px[i] / (2 * M_PI);	
-
-#pragma omp parallel for default(none) private(l) shared(times, q, px, x, i) reduction(+: I)
-	    for(l = 1; l <= 1000; l++) {	
-                I += 2 * q[i] * px[i] / (2 * M_PI) * cos( l *x[i] );
+	    x[i] += px[0] * dt;
+	    if( x[i] >= 2 * M_PI) {
+	    	x[i] -= 2* M_PI;
+		(*times)[2*j + 1] += *h;
 	    }
         }
 
 
 	(*times)[2*j] = t;
-	(*times)[2*j + 1] = I;
 
     }
 

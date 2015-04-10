@@ -28,20 +28,23 @@ typedef struct part{
 void init(long double* t_start, long double *t_end, long double *dt,
             long double *beamspeed, long double *circumference,
             int *length,
-            long double **times, particle *p
+            long double **times, particle *p,
+	    long double *h
 ) {
     //loop-variable for later use
     int i;
 
     //initialise length (from array length): number of particles
-    *length = 1000;
+    *length = 1;
     
     *t_start = 0;//in seconds
-    *t_end   = 1e-9;//in seconds
-    *dt      = 1e-10;//in seconds
+    *t_end   = 1e-8;//in seconds
+    *dt      = 1e-13;//in seconds
     
     *beamspeed = 0.467 * SOL;
     *circumference = 108.5;//m
+
+    *h = 1e6 * (*dt);
 
     //generator: generates random numbers, initialising using a seed (unix time)
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();

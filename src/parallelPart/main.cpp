@@ -15,6 +15,7 @@ int main(int argc, char** argv) {
     long double t_start, t_end, dt;
     long double beamspeed, circumference;
     long double *times;
+    long double h;
     int len, k;
     particle p;
 
@@ -23,7 +24,8 @@ int main(int argc, char** argv) {
         &beamspeed, &circumference,
         &len,
         &times,
-        &p
+        &p,
+	&h
     );
 
 
@@ -36,7 +38,8 @@ int main(int argc, char** argv) {
         p.px,p.py,p.pz,
         p.m,p.q, len,
         &k, &times,
-        beamspeed, circumference);
+        beamspeed, circumference,
+	&h);
 
 
     printf("Printing...\n");
