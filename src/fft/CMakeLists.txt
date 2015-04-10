@@ -27,8 +27,14 @@ if(FFTW_FOUND)
 
 endif()
 
+#################
+# Find MPi (for HDF5)
+#################
 
-
+find_package(MPI)
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}  ${MPI_COMPILE_FLAGS})
+include_directories(${MPI_INCLUDE_PATH})
+set(LIBS ${LIBS} ${MPI_Libraries})
 
 ################
 #Find HDF5 components
@@ -37,7 +43,6 @@ endif()
 find_package(HDF5 COMPONENTS HL)
 include_directories(${HDF5_INCLUDE_DIRS})
 set(LIBS ${LIBS} ${HDF5_LIBRARIES})
-
 
 #################
 # Build & Links
