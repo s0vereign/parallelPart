@@ -154,8 +154,6 @@ void compute(
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
 	I = 0.0;
 
-//#pragma omp parallel for default(none) private(i) shared(times, t, j, x, y, z, px, py, pz, m, q, len, dt, k)
-
         for(i = 0; i < len; i++) {
 	    x[i] += px[i] * dt;
 	    if( x[i] >= 2 * M_PI)
@@ -163,6 +161,7 @@ void compute(
 
     	    I += q[i] * px[i] / (2 * M_PI);	
 
+#pragma omp parallel for default(none) private(l) shared(times, q, px, x, i) reduction(+: I)
 	    for(l = 1; l <= 1000; l++) {	
                 I += 2 * q[i] * px[i] / (2 * M_PI) * cos( l *x[i] );
 	    }
