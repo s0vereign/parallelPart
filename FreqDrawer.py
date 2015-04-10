@@ -18,7 +18,7 @@ fig = plt.figure()
 ax = fig.add_subplot(111)
 
 
-ax.plot(data[0], data[1] , 'ro')
+ax.plot(np.sqrt(data[0]**2 + data[1]**2) , 'ro')
 ax.set_xlabel("$\mathbf{n \cdot dt}$")
 
 plt.show()
