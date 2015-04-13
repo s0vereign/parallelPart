@@ -28,10 +28,6 @@ int main(int argc, char** argv) {
 	&h
     );
 
-
-
-    truncateFile();
-    truncate_signals();
     printf("Computing...\n");
     compute(t_start, t_end, dt,
         p.x,p.y,p.z,
@@ -46,10 +42,7 @@ int main(int argc, char** argv) {
     printf("%i Umrundungen\n", k);
     print_signal(&times,len,k);
 
-
     destruct(p, &times);
-
-
 
     return EXIT_SUCCESS;
 }
