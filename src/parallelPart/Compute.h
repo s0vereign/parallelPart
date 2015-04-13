@@ -155,10 +155,13 @@ void compute(
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
 	(*times)[2*j + 1] = 0;
 
+#pragma omp parallel for default(none) private(i) shared(len, x, px, dt, times, h, j)
         for(i = 0; i < len; i++) {
-	    x[i] += px[0] * dt;
+	    x[i] += px[i] * dt;
 	    if( x[i] >= 2 * M_PI) {
 	    	x[i] -= 2* M_PI;
+		printf("Was here.\n");
+#pragma omp critical
 		(*times)[2*j + 1] += *h;
 	    }
         }
