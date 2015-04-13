@@ -160,7 +160,6 @@ void compute(
 	    x[i] += px[i] * dt;
 	    if( x[i] >= 2 * M_PI) {
 	    	x[i] -= 2* M_PI;
-		printf("Was here.\n");
 #pragma omp critical
 		(*times)[2*j + 1] += *h;
 	    }
