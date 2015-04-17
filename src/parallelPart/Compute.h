@@ -151,14 +151,14 @@ void compute(
 
     int i,j, l;
 
-    double *tmp;
-    tmp = (double*) malloc(sizeof(double) * len);
+    //~ double *tmp;
+    //~ tmp = (double*) malloc(sizeof(double) * len);
 
-    hid_t file_id;
-	hsize_t dims[1];
-    double params[2] = { (double) dt, (double) px[0] / 2 / M_PI};
+    //~ hid_t file_id;
+	//~ hsize_t dims[1];
+    //~ double params[2] = { (double) dt, (double) px[0] / 2 / M_PI};
     
-    char buf[20];
+    //~ char buf[20];
 
     long double t, I;
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
@@ -175,15 +175,15 @@ void compute(
             }
         }    
 
-        for(i=0; i < len; i++) { tmp[i] = (double) x[i]; }
-        
-        snprintf(buf, 20, "distribution%i.h5", j);
-        file_id = H5Fcreate(buf,H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
-        dims[0] = len;
-        H5LTmake_dataset(file_id,"/signal",1,dims,H5T_NATIVE_DOUBLE,tmp);
-        dims[0] = 2;
-        H5LTmake_dataset(file_id,"/params",1,dims,H5T_NATIVE_DOUBLE,params);
-        H5Fclose(file_id);
+        //~ for(i=0; i < len; i++) { tmp[i] = (double) x[i]; }
+        //~ 
+        //~ snprintf(buf, 20, "distribution%i.h5", j);
+        //~ file_id = H5Fcreate(buf,H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
+        //~ dims[0] = len;
+        //~ H5LTmake_dataset(file_id,"/signal",1,dims,H5T_NATIVE_DOUBLE,tmp);
+        //~ dims[0] = 2;
+        //~ H5LTmake_dataset(file_id,"/params",1,dims,H5T_NATIVE_DOUBLE,params);
+        //~ H5Fclose(file_id);
 
     }
 
