@@ -1,6 +1,8 @@
 #ifndef INIT_H
 #define INIT_H
 
+#include <hdf5.h>
+#include <hdf5_hl.h>
 
 #include <chrono>
 #include <stdlib.h>
@@ -38,13 +40,16 @@ void init(long double* t_start, long double *t_end, long double *dt,
     *length = 1000;
     
     *t_start = 0;//in seconds
-    *t_end   = 1e-5;//in seconds
-    *dt      = 1e-6;//in seconds
+    *t_end   = 1e-6;//in seconds
+    *dt      = 1e-8;//in seconds
     
     *beamspeed = 0.467 * SOL;
     *circumference = 108.5;//m
 
     *h = 1e6 * (*dt);
+    
+    const double omega = 2 * M_PI * 1e6;
+    const double deltaOmega = 2 * M_PI * 1e4;
 
     //generator: generates random numbers, initialising using a seed (unix time)
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -58,8 +63,8 @@ void init(long double* t_start, long double *t_end, long double *dt,
      * of the energie, whereas delta E / E = beta**2 * delta p / p with
      * delta p / p = 1e-5. E = 122 MeV/u, 12C3+ are considered
      */
-    std::normal_distribution<long double> angle(M_PI, M_PI);
-    std::normal_distribution<long double> anglevelocity(M_PI * 2 * 1e6, 2 * M_PI * 1e4);
+    std::normal_distribution<long double> angle(M_PI, 0.5);
+    std::normal_distribution<long double> anglevelocity(omega, deltaOmega);
     
     //allocate memory for each component of position
     p->x = (long double*) malloc(sizeof(long double) * (*length));
@@ -83,13 +88,13 @@ void init(long double* t_start, long double *t_end, long double *dt,
         p->py[i] = 0; //in eV
         p->pz[i] = 0;// in eV
 
-	long double dist = angle(generator);
-	if (dist > 0) {
-		dist = fmod(dist, 2* M_PI);
-	}
-	else {
-		dist = 2 * M_PI - fmod(fabs(dist), 2* M_PI);
-	}
+        long double dist = angle(generator);
+        //~ if (dist > 0) {
+            //~ dist = fmod(dist, 2* M_PI);
+        //~ }
+        //~ else {
+            //~ dist = 2 * M_PI - fmod(fabs(dist), 2* M_PI);
+        //~ }
         p->x[i]  = dist;//in m
         p->y[i]  = 0;//in m
         p->z[i]  = 0;//in m
@@ -97,6 +102,20 @@ void init(long double* t_start, long double *t_end, long double *dt,
         p->m[i] = 11177.928732e6;//in eV
         
     }
+    
+    double *tmp;
+    tmp = (double*) malloc(sizeof(double) * (*length));
+    for(i=0; i < (*length); i++) { tmp[i] = (double) p->x[i]; }
+    
+    hid_t file_id;
+	hsize_t dims[1];
+    file_id = H5Fcreate("distribution.h5",H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
+    dims[0] = (*length);
+	H5LTmake_dataset(file_id,"/signal",1,dims,H5T_NATIVE_DOUBLE,tmp);
+    dims[0] = 2;
+    tmp[0] = (*dt);  tmp[1] = omega / (2 * M_PI);
+    H5LTmake_dataset(file_id,"/params",1,dims,H5T_NATIVE_DOUBLE,tmp);
+    H5Fclose(file_id);
 
     int s =(int) ceil(((*t_end) - (*t_start)) / (*dt)  + 3) * 2;
 
