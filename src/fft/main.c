@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
     lines = dims[0];
     array = (double*) fftw_malloc(sizeof(double) * lines);
     out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * floor(lines / 4 + 1));
-    p = fftw_plan_dft_r2c_1d(10, array, out, FFTW_MEASURE);
+    p = fftw_plan_dft_r2c_1d(lines/2, array, out, FFTW_MEASURE);
 
     printf("\b\b\b\b (%i records)... ", (int) lines / 2);
     fflush(stdout);
