@@ -19,14 +19,8 @@ fig = plt.figure()
 
 ax = fig.add_subplot(111)
 
-singleCol = type(data[0]) is np.float64
-upperBound = 1 if singleCol else len(data[0])
-one = np.ones(data.size)
-
-
-for i in range(0, int(upperBound)):
-    ax.plot(data[::2], data[1::2])
-    #~ ax.plot(data[:i] if not singleCol else data, 'ro')
-    ax.set_xlabel("$\mathbf{n \cdot dt}$")
+ax.plot(data[::2], data[1::2])
+#~ ax.plot(data[:i] if not singleCol else data, 'ro')
+ax.set_xlabel("$\mathbf{n \cdot dt}$")
 
 plt.show()
