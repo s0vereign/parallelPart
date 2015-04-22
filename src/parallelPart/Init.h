@@ -40,8 +40,8 @@ void init(long double* t_start, long double *t_end, long double *dt,
     *length = 1000;
     
     *t_start = 0;//in seconds
-    *t_end   = 1e-6;//in seconds
-    *dt      = 1e-8;//in seconds
+    *t_end   = 8e-6;//in seconds
+    *dt      = 1e-10;//in seconds
     
     *beamspeed = 0.467 * SOL;
     *circumference = 108.5;//m
@@ -84,7 +84,7 @@ void init(long double* t_start, long double *t_end, long double *dt,
     for(i=0; i < (*length); i++) {
 
         //initialise everything else
-        p->px[i] = anglevelocity(generator);
+        p->px[i] = 2*M_PI*1e6;
         p->py[i] = 0; //in eV
         p->pz[i] = 0;// in eV
 

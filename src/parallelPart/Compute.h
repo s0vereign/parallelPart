@@ -155,7 +155,7 @@ void compute(
     tmp = (double*) malloc(sizeof(double) * len);
 
     hid_t file_id;
-	hsize_t dims[1];
+    hsize_t dims[1];
     double params[2] = { (double) dt, (double) px[0] / 2 / M_PI};
     
     char buf[20];
@@ -169,21 +169,21 @@ void compute(
         for(i = 0; i < len; i++) {
             x[i] += px[i] * dt;
             if( x[i] >= 2 * M_PI) {
-                x[i] -= 2* M_PI;
+                x[i] = 0;
 #pragma omp critical
                 (*times)[2*j + 1] += 1.0 / len;
             }
         }    
 
-        for(i=0; i < len; i++) { tmp[i] = (double) x[i]; }
-        
+      /* for(i=0; i < len; i++) { tmp[i] = (double) x[i]; }
+       
         snprintf(buf, 20, "distribution%i.h5", j);
         file_id = H5Fcreate(buf,H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
         dims[0] = len;
         H5LTmake_dataset(file_id,"/signal",1,dims,H5T_NATIVE_DOUBLE,tmp);
         dims[0] = 2;
         H5LTmake_dataset(file_id,"/params",1,dims,H5T_NATIVE_DOUBLE,params);
-        H5Fclose(file_id);
+        H5Fclose(file_id);*/
 
     }
 

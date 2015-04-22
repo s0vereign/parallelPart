@@ -101,7 +101,6 @@ void print_signal(long double **sign, int length, int k){
 	status = H5LTmake_dataset(file_id,"/signal",1,dims,H5T_NATIVE_DOUBLE,conv_sign);
 	size[0] = dims[0];
 	dims[0] = 1 ; 
-	status = H5LTmake_dataset(file_id,"/size",1,dims,H5T_NATIVE_INT,size);
 	status = H5Fclose(file_id);
 
 	free(conv_sign);
