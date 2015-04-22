@@ -60,6 +60,17 @@ int main(int argc, char** argv) {
     fflush(stdout);
 
     //printing...
+    hid_t dataspace, dataset;
+    file_id = H5Fcreate("fftw.h5", H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
+    hsize_t dim[2] = {(hsize_t) floor(lines/4), 2};
+    dataspace = H5Screate_simple(2, dim, NULL);
+    dataset = H5Dcreate(file_id, "/fft", H5T_NATIVE_DOUBLE, dataspace, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
+    H5Dwrite(dataset, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, out);
+    //H5LTmake_dataset(file_id, "/fft", 2, dims, H5T_NATIVE_DOUBLE, out);
+    H5Dclose(dataset);
+    H5Sclose(dataspace);
+    H5Fclose(file_id);
+
     FILE* f = fopen("fftw.txt", "w+");
     for(i = 0; i < floor(lines / 4 + 1); i++) {
 
