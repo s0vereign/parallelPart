@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
     long double beamspeed, circumference;
     long double *times;
     long double h;
-    int len, k;
+    int len, k;//len is the number of particles and k equals the length of the resulting output array!
     particle p;
 
 
@@ -39,7 +39,6 @@ int main(int argc, char** argv) {
 
 
     printf("Printing...\n");
-    printf("%i Umrundungen\n", k);
     print_signal(&times,len,k);
 
     destruct(p, &times);

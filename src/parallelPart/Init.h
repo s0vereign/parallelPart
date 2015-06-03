@@ -37,18 +37,18 @@ void init(long double* t_start, long double *t_end, long double *dt,
     int i;
 
     //initialise length (from array length): number of particles
-    *length = 1000;
+    *length = 1e4;
     
     *t_start = 0;//in seconds
-    *t_end   = 8e-6;//in seconds
+    *t_end   = 5e-4;//in seconds
     *dt      = 1e-10;//in seconds
     
     *beamspeed = 0.467 * SOL;
     *circumference = 108.5;//m
 
-    *h = 1e6 * (*dt);
+    *h = 1e4 * (*dt);
     
-    const double omega = 2 * M_PI * 1e6;
+    const double omega = 2 * M_PI * 1e4;
     const double deltaOmega = 2 * M_PI * 1e4;
 
     //generator: generates random numbers, initialising using a seed (unix time)
