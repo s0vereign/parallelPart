@@ -51,10 +51,10 @@ addOption=""
 if [ $(uname -s) = "Darwin" ]
 then
 	echo "Detected MAC"
-	if [ $(which g++-4.9) -a $(which gcc-4.9) ]
+	if [ $(which g++-5) -a $(which gcc-5) ]
 	then
-		export CC=$(which gcc-4.9)
-		export CXX=$(which g++-4.9)
+		export CC=$(which gcc-5)
+		export CXX=$(which g++-5)
 		echo "found g++ and gcc version 4.9, add -DCMAKE_CXX_COMPILER=g++-4.9 and -DCMAKE_CC_COMPILER=gcc-4.9 to cmake"
 	else
 		echo "Could not detect gcc version 4.9, use cmake's default compiler. "
