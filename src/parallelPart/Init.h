@@ -31,29 +31,28 @@ void init(long double* t_start, long double *t_end, long double *dt,
             long double *beamspeed, long double *circumference,
             int *length,
             long double **times, particle *p,
-	    long double *h
+	    long double *freq
 ) {
     //loop-variable for later use
     int i;
 
     //initialise length (from array length): number of particles
-    *length = 1000;
+    *length = 50000000;
     
     *t_start = 0;//in seconds
     *t_end   = 8e-6;//in seconds
-    *dt      = 1e-10;//in seconds
+    *dt      = 1e-9;//in seconds
     
     *beamspeed = 0.467 * SOL;
     *circumference = 108.5;//m
 
-    *h = 1e6 * (*dt);
-    
-    const double omega = 2 * M_PI * 1e6;
-    const double deltaOmega = 2 * M_PI * 1e4;
+    *freq = 1e6;
+    const double omega = 2 * M_PI * (*freq);
+    const double deltaOmega = 2 * M_PI * 1e4 * 0;
 
     //generator: generates random numbers, initialising using a seed (unix time)
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator (seed);
+    std::random_device generator;
     //get the first standard distribution: mean, standart deviation
     //as the momentum is expected in eV: both quantities also in eV
     /*
@@ -113,7 +112,7 @@ void init(long double* t_start, long double *t_end, long double *dt,
     dims[0] = (*length);
 	H5LTmake_dataset(file_id,"/signal",1,dims,H5T_NATIVE_DOUBLE,tmp);
     dims[0] = 2;
-    tmp[0] = (*dt);  tmp[1] = omega / (2 * M_PI);
+    tmp[0] = (*dt);  tmp[1] = (double) *freq; 
     H5LTmake_dataset(file_id,"/params",1,dims,H5T_NATIVE_DOUBLE,tmp);
     H5Fclose(file_id);
 
