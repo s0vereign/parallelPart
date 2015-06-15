@@ -37,11 +37,11 @@ void init(long double* t_start, long double *t_end, long double *dt,
     int i;
 
     //initialise length (from array length): number of particles
-    *length = 50000000;
+    *length = 1e4;
     
     *t_start = 0;//in seconds
-    *t_end   = 8e-6;//in seconds
-    *dt      = 1e-9;//in seconds
+    *t_end   = 5e-4;//in seconds
+    *dt      = 1e-10;//in seconds
     
     *beamspeed = 0.467 * SOL;
     *circumference = 108.5;//m

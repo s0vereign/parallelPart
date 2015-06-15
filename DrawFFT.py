@@ -22,6 +22,6 @@ ax = fig.add_subplot(111)
 
 ax.plot(data[:,0])
 ax.plot(data[:,1])
-ax.set_xlabel("$\mathbf{n \cdot dt}$")
-
+ax.set_xlabel("$\mathbf{\omega}$")
+ax.set_ylabel("$\~I^p(\omega)$")
 plt.show()
