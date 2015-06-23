@@ -16,7 +16,7 @@
 #endif
 
 long double computeGamma(long double px, long double py, long double pz, long double m) {
-    return std::sqrt(1 + (px*px + py*py + pz*pz) / (m*m));
+    return std::sqrt(1 - (px*px + py*py + pz*pz) / (m*m));
 }
 
 long double computeVi(long double pi, long double gamma, long double m) {
@@ -130,12 +130,6 @@ void updateParticle(
 
     computeNewPosition(dt, x, y, z, *px, *py, *pz, Fx, Fy, Fz, gamma, m);
     computeNewImpulse(dt, px, py, pz, Fx, Fy, Fz);
-	
-
-
-	
-	    
-
     
 }
 
@@ -146,7 +140,7 @@ void compute(
     long double m[], long double q[],
     int len, int *k, long double **times,
     long double beamspeed, long double circumference,
-    long double *h
+    long double *freq
 ) {
 
     int i,j, l;
@@ -156,7 +150,7 @@ void compute(
 
     //hid_t file_id;
     //hsize_t dims[1];
-    //double params[2] = { (double) dt, (double) px[0] / 2 / M_PI};
+    //double params[2] = { (double) dt, (double) *freq }; 
     //~ hid_t file_id;
 	//~ hsize_t dims[1];
     //~ double params[2] = { (double) dt, (double) px[0] / 2 / M_PI};
@@ -164,17 +158,18 @@ void compute(
     //~ char buf[20];
 
     long double t, I;
+    long double h = 1 / ((*freq) * dt);
     for( t = t_start,j = 0; t < t_end - dt; t += dt, j++) {
         (*times)[2*j] = t;
         (*times)[2*j + 1] = 0;
 
-#pragma omp parallel for default(none) private(i) shared(len, x, px, dt, times, h, j)
+#pragma omp parallel for default(none) private(i) shared(len, x, px, dt, times, j, freq, h)
         for(i = 0; i < len; i++) {
             x[i] += px[i] * dt;
             if( x[i] >= 2 * M_PI) {
-                x[i] = 0;
+                x[i] -= 2 * M_PI;
 #pragma omp critical
-                (*times)[2*j + 1] += 1.0 / len;
+                (*times)[2*j + 1] += h;
             }
         }    
 
