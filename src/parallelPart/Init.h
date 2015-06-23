@@ -37,18 +37,18 @@ void init(long double* t_start, long double *t_end, long double *dt,
     int i;
 
     //initialise length (from array length): number of particles
-    *length = 1e4;
+    *length = 5e5;
     
     *t_start = 0;//in seconds
     *t_end   = 5e-4;//in seconds
-    *dt      = 1e-10;//in seconds
+    *dt      = 1e-9;//in seconds
     
     *beamspeed = 0.467 * SOL;
     *circumference = 108.5;//m
 
     *freq = 1e6;
     const double omega = 2 * M_PI * (*freq);
-    const double deltaOmega = 2 * M_PI * 1e4 * 0;
+    const double deltaOmega = 2 * M_PI * 1e4;
 
     //generator: generates random numbers, initialising using a seed (unix time)
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
