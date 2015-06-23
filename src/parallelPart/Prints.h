@@ -80,13 +80,13 @@ void truncate_signals(){
 
 
 
-void print_signal(long double **sign, int length, int k){
-
+void print_signal(long double **sign, int length, int k ){
 
 	double* conv_sign =(double*) malloc(sizeof(double)*k*2);
-	int* 	size = (int*) malloc(sizeof(int));
-	for(int i = 0; i < 2*k; i++){
 
+	int i;
+#pragma omp parallel for default(none) private(i) shared(k, conv_sign, sign)
+	for(i = 0; i < 2*k; i++){
 
 		conv_sign[i]=(double) (*sign)[i];
 
@@ -99,8 +99,6 @@ void print_signal(long double **sign, int length, int k){
 	dims[0] = 2*k;
 	file_id = H5Fcreate("signal.h5",H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
 	status = H5LTmake_dataset(file_id,"/signal",1,dims,H5T_NATIVE_DOUBLE,conv_sign);
-	size[0] = dims[0];
-	dims[0] = 1 ; 
 	status = H5Fclose(file_id);
 
 	free(conv_sign);
