@@ -22,7 +22,7 @@
  * be set. i - integer, d - double
  * 
  */
-static int parse_args(PyObject *args, const char** filename, int* serial, double* interval_length, int *interval_count)
+static int parse_args(PyObject *args, char** filename, int* serial, double* interval_length, int *interval_count)
 {
     if (!PyArg_ParseTuple(args, "s|idi", filename, &serial, &interval_length, &interval_count)) {
         PyErr_SetString(PyExc_ValueError, "Couldn't parse arguments.");
@@ -108,7 +108,7 @@ static int insertInIntervals(double* data, int len, double length, int count, in
 static PyObject *process(PyObject *self, PyObject *args) {
 	
 	//the parameters and their defaults are set
-	const char* filename;
+	char* filename;
 	int serial = 1000;
 	double length = 2 * M_PI;
 	int count = 1000;
@@ -116,6 +116,7 @@ static PyObject *process(PyObject *self, PyObject *args) {
 	
 	//arguments parsed. if an error occurred, an exception is already
 	//thrown, and NULL is returned
+	printf("Parsing args\n");
 	return_code = parse_args(args, &filename, &serial, &length, &count);
 	if( return_code < 0 ) {
 		return NULL;
@@ -127,6 +128,7 @@ static PyObject *process(PyObject *self, PyObject *args) {
 	//reads the data from the given file and stores it in the array
 	//return NULL if an error occurred, an exception is already thrown
 	//in this case
+	printf("Reading file\n");
 	return_code = readFile(&filename, &array, &lines);
 	if( return_code < 0) {
 		return NULL;
